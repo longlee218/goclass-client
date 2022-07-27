@@ -1,0 +1,94 @@
+.app__header_content_mobile {
+  display: none;
+}
+
+.drawer_mobile_menu_scrollable {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.6rem;
+  max-height: 100%;
+  overflow-y: auto;
+  padding: 16px 0 0 32px;
+}
+
+.drawer_mobile_user {
+  display: flex;
+  flex-direction: row;
+}
+
+.user_info_basic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user_info_basic_avatar {
+  border-radius: 50%;
+  height: 96px;
+  width: 96px;
+}
+
+.user_info_basic_fullname {
+  font-size: 1.6rem;
+  margin: 12px 0 0;
+}
+
+.drawer_mobile_listwrap {
+  margin-top: 24px;
+}
+
+.drawer_mobile_list {
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 0 0 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.079);
+  padding: 16px 0;
+}
+
+.drawer_mobile_list_item {
+  font-size: 1.4rem;
+  line-height: 20px;
+}
+
+.drawer_mobile_list li a {
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  color: #333;
+  cursor: pointer;
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 500;
+  padding: 20px 0 20px 20px;
+  transition: 0.3s;
+}
+
+.drawer_mobile_list li a.drawer_mobile_item_active,
+.drawer_mobile_list li a:hover {
+  background-color: #f0f0f0;
+  color: #292929;
+}
+
+.drawer_mobile_list li em {
+  color: #757575;
+  display: inline-block;
+  margin-right: 20px;
+  text-align: center;
+  width: 20px;
+}
+
+/* overide ant style drawer */
+.ant-drawer-body {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.6rem !important;
+  max-height: 100%;
+  overflow-y: auto !important;
+  padding: 16px 0 0 28px !important;
+}
+
+@media only screen and (max-width: 1024px) {
+  .app__header_content_mobile {
+    display: flex;
+  }
+}

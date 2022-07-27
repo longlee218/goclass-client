@@ -1,0 +1,66 @@
+body section.section-auth {
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  /* background-image: url('https://app.classkick.com/assets/images/tile.png'); */
+}
+
+main .login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#login-form {
+  margin-top: 6vh;
+}
+
+#login-card {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+#login-card > div:first-child {
+  padding-bottom: 0 !important;
+}
+
+.login__body-header {
+  margin-top: 1.5rem;
+}
+
+.login__body-content {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
+}
+
+.login__body-content .google-signin-img {
+  width: 18px;
+  margin-bottom: 2px;
+}
+
+.login__body__header {
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+button.btn-login-google {
+  margin-top: 4px;
+  background-color: var(--white);
+  border: 2px solid var(--gray);
+  color: var(--gray);
+  padding: 0.14em 2em;
+}
+
+.google-signin-container {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+}
+
+.google-signin-container img {
+  margin-right: 10px;
+}

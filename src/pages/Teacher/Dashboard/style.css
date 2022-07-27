@@ -1,0 +1,11 @@
+.student_asking {
+  margin-top: 5rem;
+  height: auto !important;
+}
+.student_asking_title h3 {
+  color: #757575;
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 1.8;
+  text-transform: uppercase;
+}

@@ -1,0 +1,57 @@
+.userinfo-modal {
+  z-index: 2;
+  position: absolute;
+  inset: 0 0 auto auto;
+  margin: 0;
+  transform: translate(-28px, 57px);
+}
+
+.userinfo-modal__tippy {
+  animation: 300ms ease 0ms 1 normal none running Tippy-modal--fadein;
+  background: var(--white);
+  border-radius: 10px;
+  box-shadow: 0 -4px 32px rgb(0 0 0 / 20%);
+  color: #1d2129;
+  margin: 0;
+  overflow: hidden;
+  padding-left: 0;
+  transition: all 0.3s ease-in-out;
+  will-change: opacity, transform;
+  min-width: 230px;
+  max-width: 260px;
+  padding: 8px 24px !important;
+}
+
+.userinfo-modal__tippy hr {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  margin: 8px 0;
+}
+
+.userinfo-modal__tippy a {
+  color: #666;
+  display: block;
+  font-size: 1.5rem;
+  padding: 10px 0;
+}
+
+.user-avatar {
+  border-radius: 50%;
+  height: 50px;
+  margin: 10px 0;
+  object-fit: cover;
+  width: 50px;
+}
+.fullname-user {
+  color: var(--dark);
+  font-size: 1.6rem;
+  font-weight: 600;
+  white-space: nowrap;
+  width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.action-link > a:first-child {
+  height: 40px;
+}

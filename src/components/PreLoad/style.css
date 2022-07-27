@@ -1,0 +1,16 @@
+#preload {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+#preload div:first-child {
+  margin: auto;
+  width: 250px;
+  text-align: center;
+  z-index: 99;
+}
+#preload div:first-child > div {
+  margin-top: 10px;
+}

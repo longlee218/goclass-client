@@ -1,16 +1,14 @@
 import { Col, Row, Typography } from 'antd';
-import React, { useState } from 'react';
 
 import ClassCard from '../ClassCard/ClassCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import PopoverInfoClassGroup from '../PopoverInfoClassGroup';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 
 const ClassCardGroup = ({ classData, setShowDrawer }) => {
-  const [, setShowPopClassGroup] = useState(false);
-  const onVisibleChangePopover = (visible) => setShowPopClassGroup(visible);
   return (
     <div className='manager-class_wrapper__class-group'>
       {classData.map(({ group, classRooms }) => (
@@ -21,9 +19,7 @@ const ClassCardGroup = ({ classData, setShowDrawer }) => {
                 {group?.name || 'Khác'}
               </Typography.Title>
               {group && (
-                <PopoverInfoClassGroup
-                  onVisibleChangePopover={onVisibleChangePopover}
-                >
+                <PopoverInfoClassGroup classGroup={group}>
                   <Link to='#'>
                     <em style={{ cursor: 'pointer' }}>
                       <FontAwesomeIcon icon={faEllipsis} size='lg' />

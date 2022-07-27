@@ -1,6 +1,6 @@
 import './style.css';
 
-import { Card, Dropdown, Menu, Typography } from 'antd';
+import { Card, Dropdown, Menu, Modal, Typography } from 'antd';
 import {
   faCopy,
   faEllipsis,
@@ -11,7 +11,9 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 import React from 'react';
+import alertActions from '../../redux/alert/alert.action';
 import classRoomActions from '../../redux/class_room/class_room.action';
+import classRoomService from '../../services/classRoom.service';
 import { useDispatch } from 'react-redux';
 
 const ActionMenu = (idClassRoom, setShowDrawer, dispatch) => {
@@ -24,8 +26,23 @@ const ActionMenu = (idClassRoom, setShowDrawer, dispatch) => {
     console.log('Duplicate:::', idClassRoom);
   };
 
-  const onDeleteClassRoom = (e) => {
-    console.log('Delete:::', idClassRoom);
+  const onDeleteClassRoomCofirm = () => {
+    Modal.confirm({
+      title: 'Xác nhận',
+      content: 'Bạn có chắc muốn xóa lớp học ?',
+      okText: 'Tiếp tục',
+      cancelText: 'Hủy',
+      onOk: () => {
+        dispatch(alertActions.loading());
+        classRoomService
+          .delete(idClassRoom)
+          .then(() => {
+            dispatch(classRoomActions.delete(idClassRoom));
+            dispatch(alertActions.success('Xóa thành công!'));
+          })
+          .catch((error) => dispatch(alertActions.error(error.message)));
+      },
+    });
   };
 
   return (
@@ -48,7 +65,7 @@ const ActionMenu = (idClassRoom, setShowDrawer, dispatch) => {
         key='delete'
         icon={<FontAwesomeIcon icon={faTrash} />}
         style={{ color: 'red' }}
-        onClick={onDeleteClassRoom}
+        onClick={onDeleteClassRoomCofirm}
       >
         Xóa
       </Menu.Item>
@@ -65,6 +82,7 @@ const ClassCard = ({ classRoom, setShowDrawer }) => {
       size='small'
       bordered={true}
       title={name}
+      onClick={() => console.log('click into card')}
       extra={
         <div className='class-card__btn'>
           <Dropdown

@@ -30,7 +30,14 @@ export function classRoomReducer(state = initState, action) {
     case classRoomType.UPDATE_CLASS:
       return state;
     case classRoomType.DELETE_CLASS:
-      return state;
+      const id = action.payload;
+      const { classRoomGroup } = state;
+      classRoomGroup.forEach((clg) => {
+        clg.classRooms = clg.classRooms.filter(
+          (classRoom) => classRoom._id !== id
+        );
+      });
+      return { ...state, classRoomGroup };
     default:
       return state;
   }

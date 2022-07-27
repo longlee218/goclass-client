@@ -151,7 +151,7 @@ const ClassAddedDrawer = ({ visible, setVisible }) => {
             desc: classRoom?.desc ?? '',
           }}
         >
-          <Form.Item name='id'>
+          <Form.Item name='id' noStyle>
             <Input hidden name='id' />
           </Form.Item>
           <Row gutter={16} style={{ marginRight: 0 }}>

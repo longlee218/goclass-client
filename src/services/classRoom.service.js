@@ -14,6 +14,17 @@ const classRoomService = {
       return Promise.reject(error);
     }
   },
+  delete: async (classRoomId) => {
+    try {
+      const { data } = await HttpClient({
+        url: '/class-room/' + classRoomId,
+        method: 'DELETE',
+      });
+      return data;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
   update: async (payload, id) => {
     try {
       const { data } = await HttpClient({

@@ -99,14 +99,13 @@ const ClassAddedDrawer = ({ visible, setVisible }) => {
     dispatch(alertActions.loading());
     setIsLoading(true);
     let promiseAction = null;
-    if (values.id) {
+    if (classRoom?._id) {
       promiseAction = classRoomService.update(
         {
           ...values,
           ...(valueRadio !== 0 ? { classRoomGroupId: valueRadio } : {}),
-          id: undefined,
         },
-        values.id
+        classRoom._id
       );
     } else {
       promiseAction = classRoomService.create({
@@ -145,15 +144,11 @@ const ClassAddedDrawer = ({ visible, setVisible }) => {
           requiredMark={false}
           onFinish={onFinish}
           initialValues={{
-            id: classRoom?._id ?? '',
             name: classRoom?.name ?? '',
             session: classRoom?.session ?? '',
             desc: classRoom?.desc ?? '',
           }}
         >
-          <Form.Item name='id' noStyle>
-            <Input hidden name='id' />
-          </Form.Item>
           <Row gutter={16} style={{ marginRight: 0 }}>
             <Col span={24}>
               <Form.Item

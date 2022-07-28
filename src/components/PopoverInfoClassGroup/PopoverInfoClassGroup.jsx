@@ -10,16 +10,6 @@ import { useState } from 'react';
 const ContentClassGroup = (classGroup, setVisible) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const onClick = () => {
-    message.loading({ content: 'Đang tái...', key: 'delete-classgroup' });
-    setTimeout(() => {
-      message.success({
-        content: 'Xóa thành công!',
-        key: 'delete-classgroup',
-        duration: 2,
-      });
-    }, 3000);
-  };
 
   const onSubmitForm = (values) => {
     setIsLoading(true);

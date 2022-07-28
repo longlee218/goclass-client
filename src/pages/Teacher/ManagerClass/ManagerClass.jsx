@@ -6,16 +6,20 @@ import { useEffect, useState } from 'react';
 
 import ClassAddedDrawer from '../../../components/ClassAddedDrawer';
 import ClassCardGroup from '../../../components/ClassCardGroup';
+import ClassNewSessionDrawer from '../../../components/ClassNewSessionDrawer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import classRoomActions from '../../../redux/class_room/class_room.action';
 import { classRoomsSelector } from '../../../redux/class_room/class_room.selector';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const { Search } = Input;
 
 const ManagerClass = () => {
   const dispatch = useDispatch();
   const classRooms = useSelector(classRoomsSelector);
-  const [showClassAddedDrawer, setShowClassAddedDrawer] = useState(false);
+  const [showAddDrawer, setShowAddDrawer] = useState(false);
+  const [showNewSsDrawer, setShowNewSsDrawer] = useState(false);
   const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
@@ -26,7 +30,9 @@ const ManagerClass = () => {
     dispatch(classRoomActions.get());
   }, [dispatch]);
 
-  const onClickAddClass = () => setShowClassAddedDrawer(true);
+  const onClickAddClass = () => setShowAddDrawer(true);
+  const onClickNewSessionClass = () => setShowNewSsDrawer(true);
+
   const onChangeSearchInput = (e) => {
     setSearchText(e.target.value);
     dispatch(classRoomActions.filter(e.target.value));
@@ -53,8 +59,12 @@ const ManagerClass = () => {
             >
               Tạo lớp
             </Button>
-            <Button type='text' className='wrapp-text-bold'>
-              Tạo lớp cho khóa mới
+            <Button
+              className='wrapp-text-bold'
+              onClick={onClickNewSessionClass}
+            >
+              <FontAwesomeIcon icon={faPlus} />
+              &nbsp; Tạo lớp cho khóa mới
             </Button>
           </div>
         </div>
@@ -62,14 +72,14 @@ const ManagerClass = () => {
           <ClassCardGroup
             key='wrapper-class-group'
             classData={classRooms}
-            setShowDrawer={setShowClassAddedDrawer}
+            setShowDrawer={setShowAddDrawer}
           />
         </div>
       </div>
-      <ClassAddedDrawer
-        key='drawer-class-added'
-        visible={showClassAddedDrawer}
-        setVisible={setShowClassAddedDrawer}
+      <ClassAddedDrawer visible={showAddDrawer} setVisible={setShowAddDrawer} />
+      <ClassNewSessionDrawer
+        visible={showNewSsDrawer}
+        setVisible={setShowNewSsDrawer}
       />
     </>
   );

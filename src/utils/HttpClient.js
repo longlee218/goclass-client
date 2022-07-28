@@ -42,6 +42,12 @@ HttpClient.interceptors.response.use(
       await authService.getNewToken();
       return HttpClient(originalRequest);
     }
+    const { response } = error;
+    const { data } = response;
+    if (data?.message) {
+      const error = new Error(data.message);
+      return Promise.reject(error);
+    }
     return Promise.reject(error);
   }
 );

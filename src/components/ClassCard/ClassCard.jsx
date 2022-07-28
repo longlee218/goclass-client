@@ -17,13 +17,13 @@ import classRoomService from '../../services/classRoom.service';
 import { useDispatch } from 'react-redux';
 
 const ActionMenu = (idClassRoom, setShowDrawer, dispatch) => {
-  const onEditClassRoom = (e) => {
+  const onEditClassRoom = () => {
     dispatch(classRoomActions.find(idClassRoom));
     setShowDrawer(true);
   };
 
-  const onDuplicateClassRoom = (e) => {
-    console.log('Duplicate:::', idClassRoom);
+  const onDuplicateClassRoom = () => {
+    dispatch(classRoomActions.duplicate(idClassRoom));
   };
 
   const onDeleteClassRoomCofirm = () => {

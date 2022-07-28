@@ -50,6 +50,21 @@ const classRoomService = {
       return Promise.reject(error);
     }
   },
+  duplicate: async (id) => {
+    try {
+      const { data } = await HttpClient({
+        url: '/class-room-duplicate',
+        method: 'POST',
+        data: {
+          id,
+        },
+      });
+      const { data: dataResponse } = data;
+      return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
 };
 
 export default classRoomService;

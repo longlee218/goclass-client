@@ -35,6 +35,7 @@ const VALUES_SESSION = new Array(60)
 
 const ClassAddedDrawer = ({ visible, setVisible }) => {
   const dispatch = useDispatch();
+  const classGroups = useSelector((state) => state.classGroup);
   const classRoom = useSelector(classRoomFindBydId);
   const [listGroup, setListGroup] = useState([OTHER_GROUP]);
   const [nameGroup, setNameGroup] = useState('');
@@ -50,19 +51,21 @@ const ClassAddedDrawer = ({ visible, setVisible }) => {
   }, [classRoom]);
 
   useEffect(() => {
-    dispatch(classGroupActions.get()).then((data) => {
-      const listGroupRadio = data.map(({ _id, name }) => ({
-        value: _id,
-        name,
-      }));
-      setListGroup(() => {
-        return [OTHER_GROUP, ...listGroupRadio];
-      });
-      if (sthChange) {
-        setValueRadio(sthChange);
-      }
+    const listGroupRadio = classGroups.map(({ _id, name }) => ({
+      value: _id,
+      name,
+    }));
+    setListGroup(() => {
+      return [OTHER_GROUP, ...listGroupRadio];
     });
-  }, [dispatch, sthChange]);
+    if (sthChange) {
+      setValueRadio(sthChange);
+    }
+  }, [sthChange, classGroups]);
+
+  useEffect(() => {
+    dispatch(classGroupActions.get());
+  }, [dispatch]);
 
   const onClose = () => {
     setValueRadio(0);

@@ -5,5 +5,6 @@ const classRoomType = {
   CREATE_CLASS: 'CREATE_CLASS',
   UPDATE_CLASS: 'UPDATE_CLASS',
   DELETE_CLASS: 'DELETE_CLASS',
+  DUPLICATE_CLASS: 'DUPLICATE_CLASS',
 };
 export default classRoomType;

@@ -21,6 +21,25 @@ const classRoomActions = {
         });
     };
   },
+  duplicateSuccess: (payload) => ({
+    type: classRoomType.DUPLICATE_CLASS,
+    payload,
+  }),
+  duplicate: function (id) {
+    const self = this;
+    return async (dispatch) => {
+      dispatch(alertActions.loading());
+      try {
+        const classRoomDuplicate = await classRoomService.duplicate(id);
+        dispatch(alertActions.success());
+        dispatch(self.duplicateSuccess(classRoomDuplicate));
+        return classRoomDuplicate;
+      } catch (error) {
+        dispatch(alertActions.error(error.message));
+        return error;
+      }
+    };
+  },
   filter: (text) => ({
     type: classRoomType.FILTER_CLASS,
     payload: text,

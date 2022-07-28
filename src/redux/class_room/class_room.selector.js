@@ -16,6 +16,15 @@ export const classRoomsSelector = (state) => {
   return classRoomGroupFilter;
 };
 
+export const classRoomsOnlySelector = (state) => {
+  const { classRoomGroup } = state.classRoom;
+  let arrClassRooms = [];
+  classRoomGroup.forEach(({ classRooms }) => {
+    arrClassRooms = arrClassRooms.concat(classRooms);
+  });
+  return arrClassRooms;
+};
+
 export const classRoomFindBydId = (state) => {
   const { id, classRoomGroup } = state.classRoom;
   const classRooms = classRoomGroup.reduce(

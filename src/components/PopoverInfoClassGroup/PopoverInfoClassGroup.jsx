@@ -2,6 +2,7 @@ import { Button, Form, Input, Modal, Popover, message } from 'antd';
 
 import React from 'react';
 import alertActions from '../../redux/alert/alert.action';
+import classGroupActions from '../../redux/class_group/class_group.action';
 import classGroupService from '../../services/classGroup.service';
 import classRoomActions from '../../redux/class_room/class_room.action';
 import { useDispatch } from 'react-redux';
@@ -28,19 +29,14 @@ const ContentClassGroup = (classGroup, setVisible) => {
   const onClickDelete = () => {
     Modal.confirm({
       title: 'Xác nhận',
-      content: 'Bạn có chắc muốn nhóm ?',
+      content: 'Bạn có chắc muốn xóa nhóm ?',
       okText: 'Tiếp tục',
       cancelText: 'Hủy',
       onOk: () => {
-        dispatch(alertActions.loading());
-        classGroupService
-          .delete(classGroup._id)
-          .then(() => {
-            dispatch(alertActions.success('Xóa thành công!'));
-            dispatch(classRoomActions.get());
-            setVisible(false);
-          })
-          .catch((error) => dispatch(alertActions.error(error.message)));
+        dispatch(classGroupActions.delete(classGroup._id)).then(() => {
+          dispatch(classRoomActions.get());
+          setVisible(false);
+        });
       },
     });
   };

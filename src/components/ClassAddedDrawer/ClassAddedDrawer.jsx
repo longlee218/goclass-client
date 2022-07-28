@@ -16,6 +16,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import alertActions from '../../redux/alert/alert.action';
+import classGroupActions from '../../redux/class_group/class_group.action';
 import classGroupService from '../../services/classGroup.service';
 import classRoomActions from '../../redux/class_room/class_room.action';
 import { classRoomFindBydId } from '../../redux/class_room/class_room.selector';
@@ -49,22 +50,19 @@ const ClassAddedDrawer = ({ visible, setVisible }) => {
   }, [classRoom]);
 
   useEffect(() => {
-    const fetchAllGroups = () => {
-      classGroupService.get().then((data) => {
-        const listGroupRadio = data.map(({ _id, name }) => ({
-          value: _id,
-          name,
-        }));
-        setListGroup(() => {
-          return [OTHER_GROUP, ...listGroupRadio];
-        });
-        if (sthChange) {
-          setValueRadio(sthChange);
-        }
+    dispatch(classGroupActions.get()).then((data) => {
+      const listGroupRadio = data.map(({ _id, name }) => ({
+        value: _id,
+        name,
+      }));
+      setListGroup(() => {
+        return [OTHER_GROUP, ...listGroupRadio];
       });
-    };
-    fetchAllGroups();
-  }, [sthChange]);
+      if (sthChange) {
+        setValueRadio(sthChange);
+      }
+    });
+  }, [dispatch, sthChange]);
 
   const onClose = () => {
     setValueRadio(0);
@@ -79,17 +77,14 @@ const ClassAddedDrawer = ({ visible, setVisible }) => {
   const onCreateGroup = (e) => {
     e.preventDefault();
     if (nameGroup) {
-      dispatch(alertActions.loading());
       setIsLoadingGroup(true);
-      classGroupService
-        .create(nameGroup)
+      dispatch(classGroupActions.create(nameGroup))
         .then((data) => {
-          dispatch(alertActions.success());
           setNameGroup(null);
           setSthChange(data._id);
         })
-        .catch((error) => {
-          dispatch(message.error(error.message));
+        .then(() => {
+          dispatch(classRoomActions.get());
         })
         .finally(() => setIsLoadingGroup(false));
     }

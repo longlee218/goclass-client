@@ -19,7 +19,9 @@ export function classGroupReducer(state = initState, action) {
         return s;
       });
     case classGroupType.DELETE_CLASS_GROUP:
-      return state.filter(({ _id }) => _id !== payload._id);
+      console.log(state);
+      console.log({ payload });
+      return state.filter(({ _id }) => _id !== payload);
     default:
       return state;
   }

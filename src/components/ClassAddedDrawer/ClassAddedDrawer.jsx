@@ -125,7 +125,10 @@ const ClassAddedDrawer = ({ visible, setVisible }) => {
     <Drawer
       className='add-class-drawer'
       title='Thêm lớp học'
-      width={500}
+      width='30em'
+      contentWrapperStyle={{
+        maxWidth: '100vw',
+      }}
       placement='right'
       onClose={onClose}
       visible={visible}

@@ -4,20 +4,14 @@ import { Button, Checkbox, Col, Drawer, Row, Space, Typography } from 'antd';
 import React, { useState } from 'react';
 
 import { classRoomsOnlySelector } from '../../redux/class_room/class_room.selector';
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 const ClassNewSessionDrawer = ({ visible, setVisible }) => {
   const classRoomsOnly = useSelector(classRoomsOnlySelector);
   const [listClass, setListClass] = useState([]);
-  const [resetData, setResetData] = useState(true);
-
-  useEffect(() => {
-    setResetData(false);
-  }, []);
 
   const onClose = () => {
-    setResetData(true);
+    setListClass([]);
     setVisible(false);
   };
 
@@ -38,7 +32,10 @@ const ClassNewSessionDrawer = ({ visible, setVisible }) => {
     <Drawer
       className='add-class-session-drawer'
       title='Tạo lớp cho khóa học mới'
-      width={500}
+      width='30em'
+      contentWrapperStyle={{
+        maxWidth: '100vw',
+      }}
       placement='right'
       onClose={onClose}
       visible={visible}
@@ -49,7 +46,7 @@ const ClassNewSessionDrawer = ({ visible, setVisible }) => {
         </Space>
       }
     >
-      {!resetData && (
+      {visible && (
         <Space direction='vertical' size={32}>
           <div style={{ marginRight: 8 }}>
             <Typography.Text italic>
@@ -61,7 +58,14 @@ const ClassNewSessionDrawer = ({ visible, setVisible }) => {
           <Checkbox.Group style={{ width: '100%' }} onChange={onChangeCheckbox}>
             <Row gutter={[0, 12]}>
               {classRoomsOnly.map((classRoom, i) => (
-                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                <Col
+                  key={classRoom._id}
+                  xs={24}
+                  sm={24}
+                  md={12}
+                  lg={12}
+                  xl={12}
+                >
                   <Checkbox key={classRoom._id} value={i}>
                     {classRoom.name}
                   </Checkbox>

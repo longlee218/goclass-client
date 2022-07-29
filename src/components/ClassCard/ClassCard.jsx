@@ -108,7 +108,7 @@ const ClassCard = ({ classRoom, setShowDrawer }) => {
 
 ClassCard.propTypes = {
   classRoom: PropTypes.object.isRequired,
-  setShowDrawer: PropTypes.bool.isRequired,
+  setShowDrawer: PropTypes.func.isRequired,
 };
 
 export default ClassCard;

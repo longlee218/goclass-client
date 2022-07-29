@@ -1,3 +1,5 @@
+import './App.less';
+
 import AppRoutes from './AppRoutes';
 import PreLoad from './components/PreLoad';
 import alertActions from './redux/alert/alert.action';

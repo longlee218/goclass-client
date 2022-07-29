@@ -36,7 +36,15 @@ const ClassCardGroup = ({ classData, setShowDrawer }) => {
               </Col>
             ) : (
               classRooms.map((classRoom) => (
-                <Col xs={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
+                <Col
+                  key={classRoom._id}
+                  xs={24}
+                  sm={12}
+                  md={8}
+                  lg={6}
+                  xl={6}
+                  xxl={6}
+                >
                   <ClassCard
                     classRoom={classRoom}
                     setShowDrawer={setShowDrawer}
@@ -51,7 +59,7 @@ const ClassCardGroup = ({ classData, setShowDrawer }) => {
   );
 };
 ClassCardGroup.propTypes = {
-  classData: PropTypes.object.isRequired,
-  setShowDrawer: PropTypes.bool.isRequired,
+  classData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setShowDrawer: PropTypes.func.isRequired,
 };
 export default ClassCardGroup;

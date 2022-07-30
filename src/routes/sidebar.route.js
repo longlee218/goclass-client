@@ -26,7 +26,7 @@ const sidebarRoutes = [
     icon: faGraduationCap,
   },
   {
-    path: teacherRouteConfig.managerClass,
+    path: teacherRouteConfig.myClass,
     title: 'Lớp',
     icon: faBookAtlas,
   },

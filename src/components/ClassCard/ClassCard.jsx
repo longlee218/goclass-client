@@ -1,6 +1,7 @@
 import './style.css';
 
 import { Card, Dropdown, Menu, Modal, Typography } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   faCopy,
   faEllipsis,
@@ -14,19 +15,23 @@ import React from 'react';
 import alertActions from '../../redux/alert/alert.action';
 import classRoomActions from '../../redux/class_room/class_room.action';
 import classRoomService from '../../services/classRoom.service';
+import { teacherRouteConfig } from '../../config/route.config';
 import { useDispatch } from 'react-redux';
 
 const ActionMenu = (idClassRoom, setShowDrawer, dispatch) => {
-  const onEditClassRoom = () => {
+  const onEditClassRoom = (e) => {
+    e.domEvent.stopPropagation();
     dispatch(classRoomActions.find(idClassRoom));
     setShowDrawer(true);
   };
 
-  const onDuplicateClassRoom = () => {
+  const onDuplicateClassRoom = (e) => {
+    e.domEvent.stopPropagation();
     dispatch(classRoomActions.duplicate(idClassRoom));
   };
 
-  const onDeleteClassRoomCofirm = () => {
+  const onDeleteClassRoomCofirm = (e) => {
+    e.domEvent.stopPropagation();
     Modal.confirm({
       title: 'Xác nhận',
       content: 'Bạn có chắc muốn xóa lớp học ?',
@@ -75,25 +80,35 @@ const ActionMenu = (idClassRoom, setShowDrawer, dispatch) => {
 
 const ClassCard = ({ classRoom, setShowDrawer }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { _id, name, countStudents, session } = classRoom;
   return (
     <Card
+      hoverable
       key={_id}
       size='small'
       bordered={true}
       title={name}
-      onClick={() => console.log('click into card')}
+      onClick={(e) => {
+        e.preventDefault();
+        navigate(teacherRouteConfig.myClassDetail.replace(':id', _id));
+      }}
       extra={
-        <div className='class-card__btn'>
-          <Dropdown
-            overlay={ActionMenu(_id, setShowDrawer, dispatch)}
-            trigger={['click']}
-          >
-            <em>
-              <FontAwesomeIcon icon={faEllipsis} />
-            </em>
-          </Dropdown>
-        </div>
+        <Dropdown
+          destroyPopupOnHide
+          arrow
+          overlay={ActionMenu(_id, setShowDrawer, dispatch)}
+          trigger={['hover', 'click']}
+          children={
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              <FontAwesomeIcon icon={faEllipsis} size='lg' />
+            </div>
+          }
+        />
       }
     >
       <div className='d-flex justify-content-between'>

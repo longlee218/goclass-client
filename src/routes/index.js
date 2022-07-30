@@ -5,6 +5,7 @@ import {
 } from '../config/route.config';
 
 import { AuthLayout } from '../components/Layout';
+import ClassDetail from '../pages/Teacher/ClassDetail';
 import Login from '../pages/General/Login';
 import ManagerClass from '../pages/Teacher/ManagerClass';
 import SignUp from '../pages/General/SignUp';
@@ -24,8 +25,14 @@ const teacherRoutes = [
     roles: ['teacher'],
   },
   {
-    path: teacherRouteConfig.managerClass,
+    path: teacherRouteConfig.myClass,
     component: ManagerClass,
+    isPrivate: true,
+    roles: ['teacher'],
+  },
+  {
+    path: teacherRouteConfig.myClassDetail,
+    component: ClassDetail,
     isPrivate: true,
     roles: ['teacher'],
   },

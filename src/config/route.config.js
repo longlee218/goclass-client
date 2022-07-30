@@ -3,7 +3,8 @@ const PREFIX_STUDENT = '/student';
 
 export const teacherRouteConfig = {
   dashboard: PREFIX_TEACHER + '/dashboard',
-  managerClass: PREFIX_TEACHER + '/manage-class',
+  myClass: PREFIX_TEACHER + '/my-class',
+  myClassDetail: PREFIX_TEACHER + '/my-class/:id',
 };
 
 export const studentRouteConfig = {

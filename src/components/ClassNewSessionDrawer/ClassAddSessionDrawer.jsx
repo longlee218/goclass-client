@@ -57,6 +57,7 @@ const ClassNewSessionDrawer = ({ visible, setVisible }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(classRoomActions.addNewSession(listClass));
+    setVisible(false);
   };
 
   return (

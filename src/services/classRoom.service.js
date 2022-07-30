@@ -65,6 +65,18 @@ const classRoomService = {
       return Promise.reject(error);
     }
   },
+  addNewSession: async (payload) => {
+    try {
+      const res = await HttpClient({
+        url: '/class-room-new-session', // return 201
+        method: 'POST',
+        data: payload,
+      });
+      return res;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
 };
 
 export default classRoomService;

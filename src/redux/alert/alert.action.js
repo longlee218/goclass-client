@@ -11,11 +11,11 @@ const alertActions = {
   }),
   warning: (message) => ({
     type: alertType.WARNING,
-    payload: { content: message, key: 'message', duration: 5 },
+    payload: { content: message, key: 'message', duration: 8 },
   }),
   error: (message) => ({
     type: alertType.ERROR,
-    payload: { content: message, key: 'message', duration: 5 },
+    payload: { content: message, key: 'message', duration: 8 },
   }),
   clear: () => ({
     type: alertType.CLEAR,

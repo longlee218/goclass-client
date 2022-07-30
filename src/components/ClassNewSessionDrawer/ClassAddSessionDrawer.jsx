@@ -2,11 +2,22 @@ import './style.css';
 
 import { Button, Checkbox, Col, Drawer, Row, Space, Typography } from 'antd';
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
+import classRoomActions from '../../redux/class_room/class_room.action';
 import { classRoomsOnlySelector } from '../../redux/class_room/class_room.selector';
-import { useSelector } from 'react-redux';
+
+const Description = () => (
+  <div style={{ marginRight: 8 }}>
+    <Typography.Text italic>
+      Khi tạo lớp cho khóa mới hệ thống sẽ tự động tạo lớp mới và copy danh sách
+      học sinh từ các lớp ở khóa cũ. Chọn các lớp bên dưới để thực hiện copy.
+    </Typography.Text>
+  </div>
+);
 
 const ClassNewSessionDrawer = ({ visible, setVisible }) => {
+  const dispatch = useDispatch();
   const classRoomsOnly = useSelector(classRoomsOnlySelector);
   const [listClass, setListClass] = useState([]);
 
@@ -19,13 +30,33 @@ const ClassNewSessionDrawer = ({ visible, setVisible }) => {
     const arr = [];
     values.forEach((index) => {
       const item = classRoomsOnly[index];
+      const existClass = listClass.find(
+        (classExist) => classExist._id === item._id
+      );
+      const name = existClass ? existClass.name : item.name;
       arr.push({
         _id: item._id,
-        name: item.name,
+        name,
         session: item.session,
       });
     });
     setListClass(arr);
+  };
+
+  const onEditClassName = (newText, index) => {
+    setListClass((classRooms) =>
+      classRooms.map((classRoom, i) => {
+        if (i === index) {
+          return { ...classRoom, name: newText };
+        }
+        return classRoom;
+      })
+    );
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(classRoomActions.addNewSession(listClass));
   };
 
   return (
@@ -48,13 +79,7 @@ const ClassNewSessionDrawer = ({ visible, setVisible }) => {
     >
       {visible && (
         <Space direction='vertical' size={32}>
-          <div style={{ marginRight: 8 }}>
-            <Typography.Text italic>
-              Khi tạo lớp cho khóa mới hệ thống sẽ tự động tạo lớp mới và copy
-              danh sách học sinh từ các lớp ở khóa cũ. Chọn các lớp bên dưới để
-              thực hiện copy.
-            </Typography.Text>
-          </div>
+          <Description />
           <Checkbox.Group style={{ width: '100%' }} onChange={onChangeCheckbox}>
             <Row gutter={[0, 12]}>
               {classRoomsOnly.map((classRoom, i) => (
@@ -75,8 +100,15 @@ const ClassNewSessionDrawer = ({ visible, setVisible }) => {
           </Checkbox.Group>
           {listClass.length !== 0 && (
             <>
-              {listClass.map((classItem) => (
-                <Typography.Text editable>{classItem.name}</Typography.Text>
+              {listClass.map((classItem, index) => (
+                <Typography.Text
+                  editable={{
+                    tooltip: 'Sửa tên lớp',
+                    onChange: (value) => onEditClassName(value, index),
+                  }}
+                >
+                  {classItem.name}
+                </Typography.Text>
               ))}
             </>
           )}
@@ -84,9 +116,10 @@ const ClassNewSessionDrawer = ({ visible, setVisible }) => {
             <Col span={24}>
               <Button
                 type='primary'
-                className='btn-success'
                 shape='round'
-                htmlType='submit'
+                htmlType='button'
+                disabled={listClass.length === 0}
+                onClick={onSubmit}
               >
                 Lưu
               </Button>

@@ -40,6 +40,20 @@ const classRoomActions = {
       }
     };
   },
+  addNewSession: function (payload) {
+    const self = this;
+    return async (dispatch) => {
+      dispatch(alertActions.loading());
+      try {
+        await classRoomService.addNewSession(payload);
+        dispatch(alertActions.success());
+        dispatch(self.get());
+      } catch (error) {
+        dispatch(alertActions.error(error.message));
+        return error;
+      }
+    };
+  },
   filter: (text) => ({
     type: classRoomType.FILTER_CLASS,
     payload: text,

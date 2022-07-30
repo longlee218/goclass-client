@@ -10,14 +10,12 @@ import {
   Row,
   Select,
   Space,
-  message,
 } from 'antd';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import alertActions from '../../redux/alert/alert.action';
 import classGroupActions from '../../redux/class_group/class_group.action';
-import classGroupService from '../../services/classGroup.service';
 import classRoomActions from '../../redux/class_room/class_room.action';
 import { classRoomFindBydId } from '../../redux/class_room/class_room.selector';
 import classRoomService from '../../services/classRoom.service';
@@ -124,7 +122,7 @@ const ClassAddedDrawer = ({ visible, setVisible }) => {
   return (
     <Drawer
       className='add-class-drawer'
-      title='Thêm lớp học'
+      title={classRoom?._id ? 'Sửa lớp' : 'Thêm mới lớp'}
       width='30em'
       contentWrapperStyle={{
         maxWidth: '100vw',

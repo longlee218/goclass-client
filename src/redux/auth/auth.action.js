@@ -127,10 +127,8 @@ const authAction = {
         })
         .catch((error) => {
           dispatch(fail());
-          const { response } = error;
-          const { data } = response;
-          dispatch(alertActions.error(data.message));
-          return Promise.reject(data);
+          dispatch(alertActions.error(error.message));
+          return Promise.reject(error);
         });
     };
   },

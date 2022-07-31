@@ -86,7 +86,7 @@ button {
 
 .app__with-sidebar {
   display: flex;
-  min-height: 100vh;
+  min-height: calc(100vh - 66px);
 }
 
 .app__with-sidebar_wrap {

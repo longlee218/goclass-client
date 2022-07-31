@@ -14,11 +14,11 @@ import {
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import alertActions from '../../redux/alert/alert.action';
-import classGroupActions from '../../redux/class_group/class_group.action';
-import classRoomActions from '../../redux/class_room/class_room.action';
-import { classRoomFindBydId } from '../../redux/class_room/class_room.selector';
-import classRoomService from '../../services/classRoom.service';
+import alertActions from '../../../redux/alert/alert.action';
+import classGroupActions from '../../../redux/class_group/class_group.action';
+import classRoomActions from '../../../redux/class_room/class_room.action';
+import { classRoomFindBydId } from '../../../redux/class_room/class_room.selector';
+import classRoomService from '../../../services/classRoom.service';
 import { useEffect } from 'react';
 
 const { Option } = Select;

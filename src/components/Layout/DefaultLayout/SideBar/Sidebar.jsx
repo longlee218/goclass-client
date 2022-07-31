@@ -10,6 +10,7 @@ import { useLocation } from 'react-router';
 const SideBar = () => {
   const location = useLocation();
   const { pathname } = location;
+
   return (
     <div className='sidbar_wrapper'>
       <div>
@@ -23,7 +24,11 @@ const SideBar = () => {
             <Link
               to={route.path}
               aria-current='page'
-              className={pathname === route.path ? 'sidebar-item-active' : ''}
+              className={
+                new RegExp(`^${route.path}`).test(pathname)
+                  ? 'sidebar-item-active'
+                  : ''
+              }
             >
               <FontAwesomeIcon icon={route.icon} fontSize={18} />
               <span>{route.title}</span>

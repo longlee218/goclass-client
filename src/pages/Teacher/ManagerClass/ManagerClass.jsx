@@ -1,12 +1,14 @@
 import './style.css';
 
 import { Button, Input } from 'antd';
+import {
+  ClassAddedDrawer,
+  ClassNewSessionDrawer,
+} from '../../../components/Drawer';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
-import ClassAddedDrawer from '../../../components/ClassAddedDrawer';
 import ClassCardGroup from '../../../components/ClassCardGroup';
-import ClassNewSessionDrawer from '../../../components/ClassNewSessionDrawer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import classRoomActions from '../../../redux/class_room/class_room.action';

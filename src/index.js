@@ -1,4 +1,5 @@
 import App from './App';
+import { AppProvider } from './hooks/useAppContext';
 import GlobalStyle from './components/GlobalStyles';
 import { Provider } from 'react-redux';
 import React from 'react';
@@ -11,7 +12,9 @@ root.render(
   <Provider store={store}>
     <React.StrictMode>
       <GlobalStyle>
-        <App />
+        <AppProvider>
+          <App />
+        </AppProvider>
       </GlobalStyle>
     </React.StrictMode>
   </Provider>

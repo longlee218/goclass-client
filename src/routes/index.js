@@ -13,35 +13,45 @@ import StudentDashboard from '../pages/Student/Dashboard';
 import TeacherDashboard from '../pages/Teacher/Dashboard';
 
 const publicRoutes = [
-  { path: publicRouteConfig.login, component: Login, layout: AuthLayout },
-  { path: publicRouteConfig.signUp, component: SignUp, layout: AuthLayout },
+  { path: publicRouteConfig.login, page: Login, layout: AuthLayout },
+  { path: publicRouteConfig.signUp, page: SignUp, layout: AuthLayout },
 ];
 
 const teacherRoutes = [
   {
     path: teacherRouteConfig.dashboard,
-    component: TeacherDashboard,
+    page: TeacherDashboard,
     isPrivate: true,
     roles: ['teacher'],
   },
   {
     path: teacherRouteConfig.myClass,
-    component: ManagerClass,
+    page: ManagerClass,
     isPrivate: true,
     roles: ['teacher'],
+    child: [
+      {
+        path: teacherRouteConfig.myClassDetail,
+        page: ClassDetail,
+        isPrivate: true,
+        roles: ['teacher'],
+        father: [teacherRouteConfig.myClass],
+      },
+    ],
   },
   {
     path: teacherRouteConfig.myClassDetail,
-    component: ClassDetail,
+    page: ClassDetail,
     isPrivate: true,
     roles: ['teacher'],
+    father: [teacherRouteConfig.myClass],
   },
 ];
 
 const studentRoutes = [
   {
     path: studentRouteConfig.dashboard,
-    component: StudentDashboard,
+    page: StudentDashboard,
     isPrivate: true,
     roles: ['teacher', 'student'],
   },

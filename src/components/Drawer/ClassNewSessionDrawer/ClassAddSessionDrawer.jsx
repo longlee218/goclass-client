@@ -4,8 +4,8 @@ import { Button, Checkbox, Col, Drawer, Row, Space, Typography } from 'antd';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import classRoomActions from '../../redux/class_room/class_room.action';
-import { classRoomsOnlySelector } from '../../redux/class_room/class_room.selector';
+import classRoomActions from '../../../redux/class_room/class_room.action';
+import { classRoomsOnlySelector } from '../../../redux/class_room/class_room.selector';
 
 const Description = () => (
   <div style={{ marginRight: 8 }}>

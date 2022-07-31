@@ -1,23 +1,64 @@
 import './style.css';
 
+import { Layout, Typography } from 'antd';
 import React, { useState } from 'react';
 import {
   faBars,
   faBell,
   faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons';
+import {
+  studentRouteConfig,
+  teacherRouteConfig,
+} from '../../../../config/route.config';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Layout } from 'antd';
 import MenuDrawer from '../../../MenuDrawer';
 import SvgLogo from '../../../SvgLogo';
 import UserInfo from '../../../UserInfo';
+import { useAppContext } from '../../../../hooks/useAppContext';
 import { useEffect } from 'react';
+import { useLocation } from 'react-router';
 import { useRef } from 'react';
 
 const { Header: AntdHeader } = Layout;
 
+const CenterHeader = ({ pathname, titleHeader }) => {
+  const inputSearch = (
+    <div className='search-wrapper' aria-expanded='false'>
+      <div className='search-icon'></div>
+      <input
+        type='text'
+        spellCheck='false'
+        placeholder='Tìm kiếm lớp học, đề thi, học sinh,...'
+        className='search-input'
+      />
+    </div>
+  );
+
+  return (
+    <div className='app__header_content_search app__navbar_action flex-1'>
+      {[
+        teacherRouteConfig.dashboard,
+        teacherRouteConfig.myClass,
+        studentRouteConfig.dashboard,
+      ].includes(pathname) ? (
+        inputSearch
+      ) : (
+        <Typography.Title
+          style={{ color: '#6D6E70', fontWeight: 600 }}
+          level={4}
+        >
+          {titleHeader}
+        </Typography.Title>
+      )}
+    </div>
+  );
+};
+
 const Header = () => {
+  const { pathname } = useLocation();
+  const { titleHeader } = useAppContext();
   const [visibleDrawer, setVisibleDrawer] = useState(false);
   const [isShowUserInfo, setIsShowUserInfo] = useState(false);
   const refModal = useRef(null);
@@ -60,17 +101,8 @@ const Header = () => {
             {process.env.REACT_APP_APPNAME}
           </h4> */}
         </div>
-        <div className='app__header_content_search app__navbar_action flex-1'>
-          <div className='search-wrapper' aria-expanded='false'>
-            <div className='search-icon'></div>
-            <input
-              type='text'
-              spellCheck='false'
-              placeholder='Tìm kiếm lớp học, đề thi, học sinh,...'
-              className='search-input'
-            />
-          </div>
-        </div>
+        {/* <CenterHeader pathName={pathname} titleHeader={titleHeader} /> */}
+        <CenterHeader pathname={pathname} titleHeader={titleHeader} />
         <div className='app__header_content_info app_navbar_info flex-1'>
           <div className='app__header_content_info_search'>
             <a href='#'>

@@ -39,7 +39,7 @@ const SignUpChoose = ({ setIsShow, setIsShowTeacher, setIsShowStudent }) => {
               onClick={onClickIAmStudent}
             >
               <img alt='i_am_student' src={IAmStudent} />
-              <Typography.Title level={5} className='text-teal'>
+              <Typography.Title level={5} className='text-primary'>
                 Student
               </Typography.Title>
             </button>
@@ -55,7 +55,7 @@ const SignUpChoose = ({ setIsShow, setIsShowTeacher, setIsShowStudent }) => {
               onClick={onClickIAmTeacher}
             >
               <img alt='i_am_teacher' src={IAmTeacher} />
-              <Typography.Title level={5} className='text-teal'>
+              <Typography.Title level={5} className='text-primary'>
                 Teacher
               </Typography.Title>
             </button>

@@ -1,7 +1,6 @@
 import './style.css';
 
 import { Card, Dropdown, Menu, Modal, Typography } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
 import {
   faCopy,
   faEllipsis,
@@ -17,6 +16,7 @@ import classRoomActions from '../../redux/class_room/class_room.action';
 import classRoomService from '../../services/classRoom.service';
 import { teacherRouteConfig } from '../../config/route.config';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const ActionMenu = (idClassRoom, setShowDrawer, dispatch) => {
   const onEditClassRoom = (e) => {
@@ -91,7 +91,7 @@ const ClassCard = ({ classRoom, setShowDrawer }) => {
       title={name}
       onClick={(e) => {
         e.preventDefault();
-        navigate(teacherRouteConfig.myClassDetail.replace(':id', _id));
+        navigate(teacherRouteConfig.myClass + '/' + _id);
       }}
       extra={
         <Dropdown

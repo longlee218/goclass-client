@@ -46,7 +46,7 @@ const CenterHeader = ({ pathname, titleHeader }) => {
         inputSearch
       ) : (
         <Typography.Title
-          style={{ color: '#6D6E70', fontWeight: 600 }}
+          style={{ fontWeight: 600, color: 'var(--white)' }}
           level={4}
         >
           {titleHeader}

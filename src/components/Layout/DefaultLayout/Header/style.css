@@ -1,5 +1,5 @@
 .app__header {
-  background-color: #fff !important;
+  background-color: var(--primary) !important;
   align-items: center;
   border-bottom: 1px solid #e8ebed;
   display: flex;
@@ -37,7 +37,8 @@
 }
 
 .search-wrapper {
-  border: 2px solid #e8e8e8;
+  /* border: 2px solid #e8e8e8; */
+  background-color: #fff;
   border-radius: 20px;
   flex: 1 1;
   height: 40px;

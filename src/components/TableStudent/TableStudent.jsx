@@ -164,7 +164,7 @@ const TableStudent = ({ dataStudent, setVisibleDrawer }) => {
       key: 'email',
       ...getColumnSearchProps('email'),
       render: (_, { isExist, email }) => {
-        let color = 'warning';
+        let color = 'error';
         let icon = faWarning;
         let tooltipText = 'Chưa có tài khoản';
         if (isExist) {
@@ -177,7 +177,7 @@ const TableStudent = ({ dataStudent, setVisibleDrawer }) => {
             <Typography.Text type={color}>
               {email}
               &nbsp; &nbsp;
-              <FontAwesomeIcon icon={icon} color={color} />
+              <FontAwesomeIcon icon={icon} />
             </Typography.Text>
           </Tooltip>
         );
@@ -219,7 +219,7 @@ const TableStudent = ({ dataStudent, setVisibleDrawer }) => {
           </Typography.Text>
         </Space>
         <Button
-          type='primary'
+          type='default'
           shape='round'
           onClick={() => setVisibleDrawer(true)}
         >

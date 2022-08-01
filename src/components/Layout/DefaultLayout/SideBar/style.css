@@ -21,7 +21,7 @@
 
 .sidebar__wrapper_list li a.sidebar-item-active {
   background-color: var(--white-100);
-  color: var(--teal);
+  color: var(--primary);
 }
 
 .sidebar__wrapper_list li a {
@@ -38,7 +38,7 @@
 
 .sidebar__wrapper_list li a:not([class^='sidebar-item-active']):hover {
   background-color: #f5f5f5;
-  color: var(--teal);
+  color: var(--primary);
 }
 
 .sidebar__wrapper_list li a span {
@@ -49,8 +49,8 @@
 
 .sidebar__fastaction_button {
   align-items: center;
-  background-color: var(--teal);
-  border-color: var(--teal);
+  background-color: var(--primary);
+  border-color: var(--primary);
   border-radius: 50%;
   color: var(--white);
   cursor: pointer;

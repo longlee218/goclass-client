@@ -29,22 +29,20 @@ const teacherRoutes = [
     page: ManagerClass,
     isPrivate: true,
     roles: ['teacher'],
-    child: [
-      {
-        path: teacherRouteConfig.myClassDetail,
-        page: ClassDetail,
-        isPrivate: true,
-        roles: ['teacher'],
-        father: [teacherRouteConfig.myClass],
-      },
-    ],
+    // child: [
+    //   {
+    //     path: teacherRouteConfig.myClassDetail,
+    //     page: ClassDetail,
+    //     isPrivate: true,
+    //     roles: ['teacher'],
+    //   },
+    // ],
   },
   {
     path: teacherRouteConfig.myClassDetail,
     page: ClassDetail,
     isPrivate: true,
     roles: ['teacher'],
-    father: [teacherRouteConfig.myClass],
   },
 ];
 

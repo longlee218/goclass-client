@@ -19,7 +19,7 @@
   --white-100: #e8ebed;
   --gray: #6c757d;
   --gray-dark: #343a40;
-  --primary: #007bff;
+  --primary: #0f1e94;
   --success: #28a745;
   --info: #17a2b8;
   --warning: #ffc107;
@@ -111,16 +111,16 @@ button {
 
 .btn-success {
   color: var(--white);
-  border-color: var(--teal);
-  background: var(--teal);
+  border-color: var(--primary);
+  background: var(--primary);
   text-shadow: 0 -1px 0 rgb(0 0 0 / 12%);
   box-shadow: 0 2px 0 rgb(0 0 0 / 5%);
 }
 
 .btn-success:hover,
 .btn-success:focus {
-  border-color: var(--green);
-  background: var(--green);
+  border-color: var(--primary);
+  background: var(--primary);
   color: var(--white);
 }
 
@@ -159,6 +159,10 @@ p .text-bold {
 
 .text-teal {
   color: var(--teal) !important;
+}
+
+.text-primary {
+  color: var(--primary) !important;
 }
 
 .text-danger :hover {

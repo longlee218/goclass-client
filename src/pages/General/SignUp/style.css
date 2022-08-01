@@ -45,7 +45,7 @@ button.signUp__body-content__button {
   background: 0 0;
   transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
     background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  color: var(--teal);
+  color: var(--primary);
 }
 
 button.signUp__body-content__button:hover {

@@ -110,7 +110,7 @@ const TableStudent = ({ dataStudent, setVisibleDrawer }) => {
       searchedColumn === dataIndex ? (
         <Highlighter
           highlightStyle={{
-            backgroundColor: '#ffc069',
+            backgroundColor: '#ffc700',
             padding: 0,
           }}
           searchWords={[searchText]}
@@ -164,7 +164,7 @@ const TableStudent = ({ dataStudent, setVisibleDrawer }) => {
       key: 'email',
       ...getColumnSearchProps('email'),
       render: (_, { isExist, email }) => {
-        let color = 'error';
+        let color = 'warning';
         let icon = faWarning;
         let tooltipText = 'Chưa có tài khoản';
         if (isExist) {
@@ -174,7 +174,7 @@ const TableStudent = ({ dataStudent, setVisibleDrawer }) => {
         }
         return (
           <Tooltip title={tooltipText} placement='right'>
-            <Typography.Text type={color}>
+            <Typography.Text type={color} strong>
               {email}
               &nbsp; &nbsp;
               <FontAwesomeIcon icon={icon} />
@@ -213,13 +213,14 @@ const TableStudent = ({ dataStudent, setVisibleDrawer }) => {
           </Typography.Text>
           <Typography.Text>
             Mã lớp:&nbsp;
-            <Typography.Text strong copyable type='success'>
+            <Typography.Text strong copyable type='danger'>
               Education-9234LKĐJS
             </Typography.Text>
           </Typography.Text>
         </Space>
         <Button
-          type='default'
+          type='primary'
+          danger
           shape='round'
           onClick={() => setVisibleDrawer(true)}
         >

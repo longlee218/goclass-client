@@ -55,8 +55,9 @@ const ManagerClass = () => {
           <div className='manager-class_warapper__btngroup'>
             <Button
               shape='round'
-              className='wrapp-text-bold btn-success'
-              style={{ color: '#fff' }}
+              type='primary'
+              danger
+              className='wrapp-text-bold btn-warning'
               onClick={onClickAddClass}
             >
               Tạo lớp

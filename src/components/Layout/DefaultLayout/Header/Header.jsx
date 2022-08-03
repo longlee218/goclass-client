@@ -96,12 +96,14 @@ const Header = () => {
           </em>
         </div>
         <div className='app__header_content_logo app__navbar_logo flex-1'>
-          <SvgLogo />
-          {/* <h4 className='app__header_content_logo_text'>
+          {/* <SvgLogo /> */}
+          <h4
+            className='app__header_content_logo_text'
+            style={{ color: 'var(--white)' }}
+          >
             {process.env.REACT_APP_APPNAME}
-          </h4> */}
+          </h4>
         </div>
-        {/* <CenterHeader pathName={pathname} titleHeader={titleHeader} /> */}
         <CenterHeader pathname={pathname} titleHeader={titleHeader} />
         <div className='app__header_content_info app_navbar_info flex-1'>
           <div className='app__header_content_info_search'>
@@ -109,11 +111,11 @@ const Header = () => {
               <FontAwesomeIcon icon={faMagnifyingGlass} fontSize={19} />
             </a>
           </div>
-          <button className='app__header_content_button'>
+          {/* <button className='app__header_content_button'>
             Lớp đang kiểm tra
-          </button>
+          </button> */}
           <div className='app__header_content_notification'>
-            <FontAwesomeIcon icon={faBell} fontSize={19} />
+            <FontAwesomeIcon icon={faBell} fontSize={19} color='#fff' />
           </div>
           <img
             className='app__header_content_avatar'

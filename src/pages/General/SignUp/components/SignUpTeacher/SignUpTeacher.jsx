@@ -84,7 +84,7 @@ const SignUpTeacher = ({ setIsShowSelectRole, setIsShowTeacher }) => {
           setIsLoading(false);
         });
     }
-  }, [values]);
+  }, [dispatch, navigate, values]);
 
   const onFinishFailed = (errorInfo) => {
     setValues(null);

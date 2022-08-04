@@ -33,6 +33,20 @@ const otherService = {
       return Promise.reject(error);
     }
   },
+  checkExistEmail: async (email) => {
+    try {
+      const { data } = await HttpClient({
+        url: '/email-exist',
+        method: 'GET',
+        params: {
+          email,
+        },
+      });
+      return data.isExist || false;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
 };
 
 export default otherService;

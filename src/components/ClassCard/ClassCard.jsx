@@ -98,7 +98,7 @@ const ClassCard = ({ classRoom, setShowDrawer }) => {
           destroyPopupOnHide
           arrow
           overlay={ActionMenu(_id, setShowDrawer, dispatch)}
-          trigger={['hover', 'click']}
+          trigger={['click']}
           children={
             <div
               onClick={(e) => {

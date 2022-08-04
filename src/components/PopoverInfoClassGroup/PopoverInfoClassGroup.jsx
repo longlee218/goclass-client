@@ -8,7 +8,7 @@ import classRoomActions from '../../redux/class_room/class_room.action';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 
-const ContentClassGroup = (classGroup, setVisible) => {
+const ContentClassGroup = (classGroup, setVisible, formEdit) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -51,6 +51,7 @@ const ContentClassGroup = (classGroup, setVisible) => {
         name: classGroup?.name || '',
       }}
       onFinish={onSubmitForm}
+      form={formEdit}
     >
       <Form.Item
         name='name'
@@ -91,7 +92,12 @@ const ContentClassGroup = (classGroup, setVisible) => {
 
 const PopoverInfoClassGroup = ({ classGroup, children }) => {
   const [visible, setVisible] = useState(false);
+  const [formEdit] = Form.useForm();
+
   const onVisibleChangePopover = (newVisible) => {
+    if (!newVisible) {
+      formEdit.resetFields();
+    }
     setVisible(newVisible);
   };
 
@@ -100,7 +106,7 @@ const PopoverInfoClassGroup = ({ classGroup, children }) => {
       onVisibleChange={onVisibleChangePopover}
       trigger='click'
       title='Cập nhật nhóm'
-      content={ContentClassGroup(classGroup, setVisible)}
+      content={ContentClassGroup(classGroup, setVisible, formEdit)}
       placement='bottomLeft'
       visible={visible}
     >

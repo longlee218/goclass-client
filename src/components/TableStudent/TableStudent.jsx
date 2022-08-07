@@ -10,8 +10,23 @@ import {
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Highlighter from 'react-highlight-words';
+import studentActions from '../../redux/student/student.action';
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
-const TableStudent = ({ dataStudent, setVisibleDrawer }) => {
+const TableStudent = ({
+  classInfo,
+  setPage,
+  page,
+  limit,
+  setLimit,
+  onEditStudent,
+  onRemoveStudent,
+  paginateStudents,
+  loading,
+  setLoading,
+}) => {
+  const dispatch = useDispatch();
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
@@ -27,118 +42,119 @@ const TableStudent = ({ dataStudent, setVisibleDrawer }) => {
     setSearchText('');
   };
 
-  const getColumnSearchProps = (dataIndex) => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters,
-    }) => (
-      <div
-        style={{
-          padding: 8,
-        }}
-      >
-        <Input
-          ref={searchInput}
-          placeholder={`Search ${dataIndex}`}
-          value={selectedKeys[0]}
-          onChange={(e) =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
-          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+  const getColumnSearchProps = useCallback(
+    (dataIndex) => ({
+      filterDropdown: ({
+        setSelectedKeys,
+        selectedKeys,
+        confirm,
+        clearFilters,
+      }) => (
+        <div
           style={{
-            marginBottom: 8,
-            display: 'block',
+            padding: 8,
           }}
-        />
-        <Space>
-          <Button
-            type='primary'
-            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-            icon={<FontAwesomeIcon icon={faSearch} />}
-            size='small'
+        >
+          <Input
+            ref={searchInput}
+            placeholder={`Search ${dataIndex}`}
+            value={selectedKeys[0]}
+            onChange={(e) =>
+              setSelectedKeys(e.target.value ? [e.target.value] : [])
+            }
+            onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
             style={{
-              width: 90,
+              marginBottom: 8,
+              display: 'block',
             }}
-          >
-            &nbsp;Search
-          </Button>
-          <Button
-            onClick={() => clearFilters && handleReset(clearFilters)}
-            size='small'
-            style={{
-              width: 90,
-            }}
-          >
-            Reset
-          </Button>
-          <Button
-            type='link'
-            size='small'
-            onClick={() => {
-              confirm({
-                closeDropdown: false,
-              });
-              setSearchText(selectedKeys[0]);
-              setSearchedColumn(dataIndex);
-            }}
-          >
-            Filter
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: (filtered) => (
-      <FontAwesomeIcon
-        icon={faSearch}
-        style={{
-          color: filtered ? '#1890ff' : undefined,
-        }}
-      />
-    ),
-    onFilter: (value, record) => {
-      const item = record[dataIndex];
-      return item.toString().toLowerCase().includes(value.toLowerCase());
-    },
-    onFilterDropdownVisibleChange: (visible) => {
-      if (visible) {
-        setTimeout(() => searchInput.current?.select(), 100);
-      }
-    },
-    render: (text) =>
-      searchedColumn === dataIndex ? (
-        <Highlighter
-          highlightStyle={{
-            backgroundColor: '#ffc700',
-            padding: 0,
-          }}
-          searchWords={[searchText]}
-          autoEscape
-          textToHighlight={text ? text.toString() : ''}
-        />
-      ) : (
-        text
+          />
+          <Space>
+            <Button
+              type='primary'
+              onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+              icon={<FontAwesomeIcon icon={faSearch} />}
+              size='small'
+              style={{
+                width: 90,
+              }}
+            >
+              &nbsp;Search
+            </Button>
+            <Button
+              onClick={() => clearFilters && handleReset(clearFilters)}
+              size='small'
+              style={{
+                width: 90,
+              }}
+            >
+              Reset
+            </Button>
+            <Button
+              type='link'
+              size='small'
+              onClick={() => {
+                confirm({
+                  closeDropdown: false,
+                });
+                setSearchText(selectedKeys[0]);
+                setSearchedColumn(dataIndex);
+              }}
+            >
+              Filter
+            </Button>
+          </Space>
+        </div>
       ),
-  });
+      filterIcon: (filtered) => (
+        <FontAwesomeIcon
+          icon={faSearch}
+          style={{
+            color: filtered ? '#1890ff' : undefined,
+          }}
+        />
+      ),
+      onFilter: (value, record) => {
+        const item = record[dataIndex];
+        return item.toString().toLowerCase().includes(value.toLowerCase());
+      },
+      onFilterDropdownVisibleChange: (visible) => {
+        if (visible) {
+          setTimeout(() => searchInput.current?.select(), 100);
+        }
+      },
+      render: (text) =>
+        searchedColumn === dataIndex ? (
+          <Highlighter
+            highlightStyle={{
+              backgroundColor: '#ffc700',
+              padding: 0,
+            }}
+            searchWords={[searchText]}
+            autoEscape
+            textToHighlight={text ? text.toString() : ''}
+          />
+        ) : (
+          text
+        ),
+    }),
+    [searchText, searchedColumn]
+  );
 
   const columns = [
     {
       title: 'Tên học sinh',
-      dataIndex: 'name',
-      key: 'name',
-      sorter: (a, b) => a.name.length - b.name.length,
-      ...getColumnSearchProps('name'),
-      sortDirections: ['descend'],
+      dataIndex: 'studentName',
+      key: 'studentName',
+      ...getColumnSearchProps('studentName'),
+      sorter: true,
     },
     {
       title: 'Mã học sinh',
-      dataIndex: 'code',
-      key: 'code',
+      dataIndex: 'studentCode',
+      key: 'studentCode',
       render: (value) => (value ? value : '- -'),
-      sorter: (a, b) => a.name.length - b.name.length,
-      ...getColumnSearchProps('code'),
-      sortDirections: ['descend'],
+      ...getColumnSearchProps('studentCode'),
+      sorter: true,
     },
     {
       title: 'Giới tính',
@@ -157,17 +173,32 @@ const TableStudent = ({ dataStudent, setVisibleDrawer }) => {
           value: '',
         },
       ],
+      render: (_, { gender }) => {
+        let textGender = '';
+        switch (gender) {
+          case 'male':
+            textGender = 'Nam';
+            break;
+          case 'female':
+            textGender = 'Nữ';
+            break;
+          default:
+            textGender = 'Khác';
+            break;
+        }
+        return <Typography.Text>{textGender}</Typography.Text>;
+      },
     },
     {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
       ...getColumnSearchProps('email'),
-      render: (_, { isExist, email }) => {
+      render: (_, docs) => {
         let color = 'warning';
         let icon = faWarning;
         let tooltipText = 'Chưa có tài khoản';
-        if (isExist) {
+        if (docs.student.isActive) {
           color = 'success';
           icon = faCheck;
           tooltipText = 'Đã có tài khoản';
@@ -175,77 +206,76 @@ const TableStudent = ({ dataStudent, setVisibleDrawer }) => {
         return (
           <Tooltip title={tooltipText} placement='right'>
             <Typography.Text type={color} strong>
-              {email}
+              {docs.email}
               &nbsp; &nbsp;
               <FontAwesomeIcon icon={icon} />
             </Typography.Text>
           </Tooltip>
         );
       },
-      sorter: (a, b) => a.email.length - b.email.length,
-      sortDirections: ['descend'],
+      sorter: true,
     },
     {
       title: 'Hành động',
       key: 'action',
       width: 150,
-      render: (_, record) => (
+      render: (_, { _id }) => (
         <Space size={32}>
-          <Typography.Text type='secondary'>
-            <FontAwesomeIcon icon={faPen} />
-          </Typography.Text>
-          <Typography.Text type='secondary'>
-            <FontAwesomeIcon icon={faX} />
-          </Typography.Text>
+          <Button type='text' onClick={() => onEditStudent(_id)}>
+            <FontAwesomeIcon
+              icon={faPen}
+              style={{
+                color: 'var(--secondary)',
+              }}
+            />
+          </Button>
+          <Button type='text' onClick={() => onRemoveStudent(_id)}>
+            <FontAwesomeIcon
+              icon={faX}
+              style={{
+                color: 'var(--secondary)',
+              }}
+            />
+          </Button>
         </Space>
       ),
     },
   ];
-  const defaultTitle = () => (
-    <Space direction='vertical' size={16} style={{ width: '100%' }}>
-      <div className='d-flex justify-content-between'>
-        <Space size={32}>
-          <Typography.Text>
-            Lớp: <b>Django</b>
-          </Typography.Text>
-          <Typography.Text>
-            Sĩ số: <b>32</b>
-          </Typography.Text>
-          <Typography.Text>
-            Mã lớp:&nbsp;
-            <Typography.Text strong copyable type='danger'>
-              Education-9234LKĐJS
-            </Typography.Text>
-          </Typography.Text>
-        </Space>
-        <Button
-          type='primary'
-          danger
-          shape='round'
-          onClick={() => setVisibleDrawer(true)}
-        >
-          Thêm học sinh
-        </Button>
-      </div>
-      <Typography.Paragraph editable>
-        Lớp lập trình Django cơ bản dành cho người mới bắt đầu
-      </Typography.Paragraph>
-    </Space>
-  );
+
+  const handleTableChange = (newPagination, filters, sorter) => {
+    setPage(newPagination.current);
+    setLimit(newPagination.pageSize);
+    setLoading(true);
+    dispatch(
+      studentActions.get(classInfo._id, {
+        page: newPagination.current,
+        limit: newPagination.pageSize,
+        sortField: sorter.field,
+        sortOrder: sorter.order,
+        ...(filters.studentName ? { studentName: filters.studentName[0] } : {}),
+        ...(filters.email ? { email: filters.email[0] } : {}),
+        ...(filters.studentCode ? { studentCode: filters.studentCode[0] } : {}),
+        ...(filters.gender ? { gender: filters.gender } : {}),
+      })
+    ).then(() => setLoading(false));
+  };
   return (
     <Table
-      title={defaultTitle}
+      bordered
+      title={() => <Typography.Text>Danh sách học sinh</Typography.Text>}
       columns={columns}
-      dataSource={dataStudent}
+      dataSource={paginateStudents.students}
       pagination={{
-        current: 1,
-        pageSize: 10,
-        total: 12,
+        current: page,
+        pageSize: limit,
+        total: paginateStudents.totalDocs,
         position: ['bottomCenter'],
       }}
+      onChange={handleTableChange}
       scroll={{
         x: 1300,
       }}
+      loading={loading}
     />
   );
 };

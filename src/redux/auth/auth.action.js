@@ -116,9 +116,15 @@ const authAction = {
         .login(username, password)
         .then((user) => {
           dispatch(success(user));
-          if (nextUrl) {
-            window.location.replace(nextUrl);
-          } else if (user.roles.includes('teacher')) {
+          // if (nextUrl) {
+          //   console.log(nextUrl);
+          //   window.location.replace(nextUrl);
+          // } else if (user.roles.includes('teacher')) {
+          //   window.location.replace(teacherRouteConfig.dashboard);
+          // } else if (user.roles.includes('student')) {
+          //   window.location.replace(studentRouteConfig.dashboard);
+          // }
+          if (user.roles.includes('teacher')) {
             window.location.replace(teacherRouteConfig.dashboard);
           } else if (user.roles.includes('student')) {
             window.location.replace(studentRouteConfig.dashboard);

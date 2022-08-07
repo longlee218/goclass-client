@@ -3,6 +3,7 @@ import './style.css';
 import { Col, Layout, Row } from 'antd';
 
 import SignUpChoose from './components/SignUpChoose/SignUpChoose';
+import SignUpStudent from './components/SignUpStudent';
 import SignUpTeacher from './components/SignUpTeacher/SignUpTeacher';
 import SvgLogo from '../../../components/SvgLogo';
 import { useEffect } from 'react';
@@ -53,6 +54,12 @@ const SignUp = () => {
               <SignUpTeacher
                 setIsShowSelectRole={setShowSelectRole}
                 setIsShowTeacher={setshowSignUpTeacher}
+              />
+            )}
+            {showSignUpStudent && (
+              <SignUpStudent
+                setIsShowSelectRole={setShowSelectRole}
+                setIsShowStudent={setshowSignUpStudent}
               />
             )}
           </Col>

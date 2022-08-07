@@ -32,6 +32,7 @@ const ContentClassGroup = (classGroup, setVisible, formEdit) => {
       content: 'Bạn có chắc muốn xóa nhóm ?',
       okText: 'Tiếp tục',
       cancelText: 'Hủy',
+      closable: true,
       onOk: () => {
         dispatch(classGroupActions.delete(classGroup._id)).then(() => {
           dispatch(classRoomActions.get());

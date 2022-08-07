@@ -3,6 +3,9 @@ import classRoomService from '../../services/classRoom.service';
 import classRoomType from './class_room.type';
 
 const classRoomActions = {
+  reset: () => ({
+    type: classRoomType.RESET_CLASS,
+  }),
   get: () => {
     const success = (payload) => ({
       type: classRoomType.GET_CLASS_SUCCESS,

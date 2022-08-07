@@ -33,6 +33,9 @@ HttpClient.interceptors.response.use(
   },
   async function (error) {
     const originalRequest = error.config;
+    if (error.code === 'ECONNABORTED') {
+      return Promise.reject(error);
+    }
     if (
       error.response.status === 401 &&
       originalRequest._retry &&

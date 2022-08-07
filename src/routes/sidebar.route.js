@@ -9,7 +9,7 @@ import {
 
 import { teacherRouteConfig } from '../config/route.config';
 
-const sidebarRoutes = [
+export const sidebarTeacherRoutes = [
   {
     path: teacherRouteConfig.dashboard,
     title: 'Home',
@@ -42,4 +42,20 @@ const sidebarRoutes = [
   },
 ];
 
-export default sidebarRoutes;
+export const sidebarStudentRoutes = [
+  {
+    path: teacherRouteConfig.dashboard,
+    title: 'Home',
+    icon: faHome,
+  },
+  {
+    path: '#',
+    title: 'Bài tập',
+    icon: faBookOpen,
+  },
+  {
+    path: '#',
+    title: 'Đề thi',
+    icon: faGraduationCap,
+  },
+];

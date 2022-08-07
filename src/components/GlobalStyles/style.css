@@ -26,6 +26,7 @@
   --danger: #dc3545;
   --light: #f8f9fa;
   --dark: #343a40;
+  --secondary: rgba(0, 0, 0, 0.45);
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
@@ -49,8 +50,9 @@ body {
   line-height: 1.5;
   text-rendering: optimizeSpeed;
   color: var(--gray-dark);
-  background-color: #f7f7f7;
+  /* background-color: #f7f7f7; */
   /* background-color: var(--white-50); */
+  background-color: rgb(250 250 250);
 }
 
 b,
@@ -86,7 +88,8 @@ button {
 
 .app__with-sidebar {
   display: flex;
-  min-height: calc(100vh - 66px);
+  /* min-height: calc(100vh - 66px); */
+  min-height: calc(100vh - 240px);
 }
 
 .app__with-sidebar_wrap {
@@ -96,7 +99,11 @@ button {
 
 .app__with-sidebar_body {
   /* max-width: calc(100% - 96px); */
-  padding: 18px 20px 0 20px;
+  /* padding: 18px 20px 0 20px;
+   */
+  margin-top: 30px;
+  overflow: hidden;
+  padding: 0 35px 80px;
 }
 
 .app__with-sidebar_body > section {

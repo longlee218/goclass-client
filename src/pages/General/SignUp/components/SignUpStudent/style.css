@@ -1,0 +1,13 @@
+#signUp-card-teacher {
+  background-color: var(--white);
+  max-width: 430px;
+  margin: 0 auto;
+}
+
+.signUp__card--teacher__text-helper {
+  margin-top: 1.25em;
+  display: flex;
+  flex-direction: row;
+  row-gap: 8px;
+  justify-content: space-between;
+}

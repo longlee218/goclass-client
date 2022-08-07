@@ -29,3 +29,13 @@ export const removeVietnameseTones = (str) => {
   );
   return str;
 };
+
+export const randomString = (n = 5) => {
+  let text = 'Edu-';
+  let possible =
+    'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789';
+  for (let i = 0; i < n; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+};

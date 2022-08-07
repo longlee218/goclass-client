@@ -10,15 +10,19 @@ import {
   Row,
   Select,
   Space,
-  Spin,
   Typography,
 } from 'antd';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import DatePickerVN from '../../DatePickerVN';
 import DrawerBase from '../DrawerBase';
 import FormItem from 'antd/lib/form/FormItem';
+import alertActions from '../../../redux/alert/alert.action';
 import otherService from '../../../services/other.service';
+import { randomString } from '../../../helpers/string.helper';
+import studentActions from '../../../redux/student/student.action';
+import { useDispatch } from 'react-redux';
+import { useReducer } from 'react';
 
 const { Option } = Select;
 
@@ -28,19 +32,80 @@ const GENDER_OPTIONS = [
   { value: 'other', name: 'Khác' },
 ];
 
+const INIT_SELECT_EMAIL = [];
+
+const reducerSelectEmail = (state, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case 'clear':
+      return [];
+    case 'get':
+      return payload.map((item) => ({
+        _id: item._id,
+        value: item.email,
+        email: item.email,
+        fullname: item.fullname,
+        gender: item.gender,
+      }));
+    case 'add':
+      return [
+        ...state,
+        {
+          _id: null,
+          value: '#_' + payload.email,
+          email: payload.email,
+          fullname: '',
+          gender: 'other',
+        },
+      ];
+    default:
+      break;
+  }
+};
+
 let timeOut = null;
 let currentEmail = '';
 
-const StudentAddedDrawer = ({ visible, setVisible }) => {
+const StudentAddedDrawer = ({
+  visible,
+  setVisible,
+  classId,
+  studentInfo,
+  setStudentInfo,
+}) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [valueGender, setValueGender] = useState('other');
-  const [listEmail, setListEmail] = useState([]);
+  const dispatch = useDispatch();
+  const [dob, setDob] = useState(undefined);
+  const [listEmail, dispatchEmail] = useReducer(
+    reducerSelectEmail,
+    INIT_SELECT_EMAIL
+  );
   const inputRef = useRef(null);
   const [formAddEmail] = Form.useForm();
   const [formAddStudent] = Form.useForm();
 
+  useEffect(() => {
+    if (studentInfo) {
+      formAddStudent.setFieldsValue({
+        _id: studentInfo._id,
+        student: studentInfo.student._id,
+        fullname: studentInfo.studentName,
+        email: studentInfo.email,
+        gender: studentInfo.gender || 'other',
+        code: studentInfo.studentCode,
+        dob: studentInfo.dob,
+      });
+    }
+  }, [studentInfo, formAddStudent]);
+
   const onClose = () => {
+    setDob(undefined);
+    setStudentInfo(undefined);
     formAddStudent.resetFields();
     formAddEmail.resetFields();
+    dispatchEmail({ type: 'clear', payload: [] });
+    setIsLoading(false);
     setVisible(false);
   };
 
@@ -53,12 +118,7 @@ const StudentAddedDrawer = ({ visible, setVisible }) => {
     const fetchEmail = () => {
       otherService.searchEmail(currentEmail).then((data) => {
         if (currentEmail === value.trim()) {
-          setListEmail(() => {
-            return data.map((item) => ({
-              value: item._id,
-              name: item.email,
-            }));
-          });
+          dispatchEmail({ type: 'get', payload: data });
         }
       });
     };
@@ -67,14 +127,9 @@ const StudentAddedDrawer = ({ visible, setVisible }) => {
 
   const onClickIntoEmailSelect = () => {
     if (listEmail.length === 0) {
-      otherService.searchEmail().then((data) =>
-        setListEmail(() =>
-          data.map((item) => ({
-            value: item._id,
-            name: item.email,
-          }))
-        )
-      );
+      otherService
+        .searchEmail()
+        .then((data) => dispatchEmail({ type: 'get', payload: data }));
     }
   };
 
@@ -83,14 +138,13 @@ const StudentAddedDrawer = ({ visible, setVisible }) => {
       .checkExistEmail(email)
       .then((isExist) => {
         if (!isExist) {
-          if (!listEmail.find(({ name }) => name === email)) {
-            setListEmail([
-              ...listEmail,
-              {
-                value: null,
-                name: email,
+          if (!listEmail.find(({ email: oldEmail }) => oldEmail === email)) {
+            dispatchEmail({
+              type: 'add',
+              payload: {
+                email,
               },
-            ]);
+            });
             formAddEmail.setFieldsValue({ email: '' });
           }
         }
@@ -102,15 +156,100 @@ const StudentAddedDrawer = ({ visible, setVisible }) => {
       });
   };
 
+  const onChangeSelectEmail = (id) => {
+    if (id.toString().startsWith('#_')) {
+      setDob(undefined);
+      formAddStudent.setFieldsValue({
+        _id: null,
+        student: null,
+        email: id.replace('#_', ''),
+        fullname: '',
+        gender: 'other',
+        code: '',
+        dob: null,
+      });
+    } else {
+      const student = listEmail.find(({ value }) => value === id);
+      if (student) {
+        formAddStudent.setFieldsValue({
+          _id: studentInfo?._id || null,
+          student: student._id,
+          email: student.email,
+          fullname: student.fullname,
+          gender: student.gender,
+          code: student.studentCode,
+          dob: dob,
+        });
+      }
+    }
+  };
+
+  const submitFormStudent = ({
+    _id,
+    email,
+    fullname,
+    gender,
+    code,
+    student,
+  }) => {
+    setIsLoading(true);
+    let promiseAction = _id
+      ? studentActions.update(
+          classId,
+          _id,
+          email,
+          dob,
+          fullname,
+          gender,
+          code,
+          student
+        )
+      : studentActions.create(
+          classId,
+          _id,
+          email,
+          dob,
+          fullname,
+          gender,
+          code,
+          student
+        );
+    dispatch(promiseAction)
+      .then(() => {
+        dispatch(alertActions.success());
+        dispatch(studentActions.get(classId, {}));
+        onClose();
+      })
+      .finally(() => setIsLoading(false));
+  };
+  // const submitFormStudent = (values) => {
+  //   console.log(values);
+  // };
+
+  const onClickMakeCode = () => {
+    formAddStudent.setFieldsValue({ code: randomString() });
+  };
+
   return (
     <DrawerBase
       key='add-student-drawer'
       className='add-student-drawer'
-      title='Thêm học sinh'
+      title={studentInfo ? 'Sửa thông tin học sinh' : 'Thêm học sinh'}
       onClose={onClose}
       visible={visible}
     >
-      <Form layout='vertical' requiredMark={false} form={formAddStudent}>
+      <Form
+        layout='vertical'
+        requiredMark={false}
+        form={formAddStudent}
+        onFinish={submitFormStudent}
+      >
+        <Form.Item name='_id' noStyle>
+          <Input name='_id' hidden />
+        </Form.Item>
+        <Form.Item name='student' noStyle>
+          <Input name='student' hidden />
+        </Form.Item>
         <Row gutter={16} style={{ marginRight: 0 }}>
           <Col span={24}>
             <Form.Item
@@ -121,13 +260,14 @@ const StudentAddedDrawer = ({ visible, setVisible }) => {
               ]}
             >
               <Select
-                onChange={(e) => console.log(e)}
+                onChange={onChangeSelectEmail}
                 showSearch
                 name='email'
                 type='text'
                 filterOption={false}
                 placeholder='Nhập email học sinh'
                 onSearch={onSearchEmail}
+                value={studentInfo?.email}
                 dropdownRender={(menu) => {
                   return (
                     <>
@@ -144,7 +284,7 @@ const StudentAddedDrawer = ({ visible, setVisible }) => {
                             rules={[
                               {
                                 required: true,
-                                message: 'Please input your username!',
+                                message: 'Không được bỏ trống.',
                               },
                               {
                                 type: 'email',
@@ -174,7 +314,7 @@ const StudentAddedDrawer = ({ visible, setVisible }) => {
               >
                 {listEmail.map((item, index) => (
                   <Option key={index} value={item.value}>
-                    {item.name}
+                    {item.email}
                   </Option>
                 ))}
               </Select>
@@ -206,27 +346,31 @@ const StudentAddedDrawer = ({ visible, setVisible }) => {
         </Row>
         <Row gutter={16} style={{ marginRight: 0 }}>
           <Col span={24}>
-            <Form.Item name='code' label='Mã học sinh'>
-              <Input.Group compact>
-                <Input
-                  placeholder='VD. 127262'
-                  name='code'
-                  style={{ width: 'calc(100% - 85px)' }}
-                />
-                <Button type='primary' style={{ marginLeft: '3px' }}>
-                  Lấy mã
-                </Button>
-              </Input.Group>
-            </Form.Item>
+            <Input.Group
+              compact
+              style={{ display: 'flex', alignItems: 'flex-end' }}
+            >
+              <Form.Item name='code' label='Mã học sinh' style={{ flex: 1 }}>
+                <Input placeholder='VD. 127262' style={{ width: '100%' }} />
+              </Form.Item>
+              <Button
+                type='primary'
+                htmlType='button'
+                style={{ marginLeft: '3px', marginBottom: '24px' }}
+                onClick={onClickMakeCode}
+              >
+                Lấy mã
+              </Button>
+            </Input.Group>
           </Col>
         </Row>
         <Row gutter={16} style={{ marginRight: 0 }}>
           <Col span={24}>
             <Form.Item label='Giới tính' name='gender'>
               <Radio.Group
+                name='gender'
                 onChange={(e) => setValueGender(e.target.value)}
-                value={valueGender}
-                defaultValue='other'
+                defaultValue={valueGender}
               >
                 {GENDER_OPTIONS.map(({ value, name }) => (
                   <Radio key={value} value={value} name='gender'>
@@ -244,6 +388,11 @@ const StudentAddedDrawer = ({ visible, setVisible }) => {
                 name='dob'
                 style={{ width: '100%' }}
                 placeholder='Chọn ngày sinh'
+                value={dob}
+                onChange={(e, dateString) => {
+                  console.log({ change: e.toISOString() });
+                  setDob(e.toISOString());
+                }}
               />
             </Form.Item>
           </Col>
@@ -257,6 +406,7 @@ const StudentAddedDrawer = ({ visible, setVisible }) => {
                 className='btn-success'
                 shape='round'
                 htmlType='submit'
+                loading={isLoading}
               >
                 Lưu
               </Button>

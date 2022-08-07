@@ -4,70 +4,37 @@ import { Button, Card, Form, Input, Select, Typography } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import {
   publicRouteConfig,
-  teacherRouteConfig,
+  studentRouteConfig,
 } from '../../../../../config/route.config';
 
 import Google17SVG from '../../../../../assets/images/google-icon-17.svg';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import authAction from '../../../../../redux/auth/auth.action';
-import otherService from '../../../../../services/other.service';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
 
-const { Option } = Select;
-
-const LIST_PREFIX = ['Mr.', 'Mrs.', 'Ms.', 'Miss.', 'Coach.', 'Dr.'];
-let index = 0;
-
-let timeOut = null;
-let currentValue = '';
-
-const SignUpTeacher = ({ setIsShowSelectRole, setIsShowTeacher }) => {
+const SignUpStudent = ({ setIsShowSelectRole, setIsShowStudent }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
   const [values, setValues] = useState(null);
-  const [listOrganization, setListOrganization] = useState([]);
-  // const [listPrefix, setListPrefix] = useState(LIST_PREFIX);
-  // const [prefixSelected, setPrefixSelected] = useState('');
 
   const onClickBackFormChooseRole = () => {
-    setIsShowTeacher(false);
+    setIsShowStudent(false);
     setIsShowSelectRole(true);
-  };
-
-  const onSearchOrganization = (value) => {
-    if (timeOut) {
-      clearTimeout(timeOut);
-      timeOut = null;
-    }
-    currentValue = value.trim();
-    const fetchOrganization = () => {
-      otherService.searchOrganization(currentValue).then((data) => {
-        if (currentValue === value.trim()) {
-          setListOrganization(() => {
-            return data.map((item) => ({
-              name: item.name,
-              address: item.address,
-            }));
-          });
-        }
-      });
-    };
-    timeOut = setTimeout(fetchOrganization, 300);
   };
 
   useEffect(() => {
     if (values) {
       setIsLoading(true);
-      dispatch(authAction.register({ ...values, role: 'teacher' }))
+      dispatch(authAction.register({ ...values, role: 'student' }))
         .then((user) => {
           setIsLoading(false);
-          navigate(teacherRouteConfig.dashboard, {
+          navigate(studentRouteConfig.dashboard, {
             replace: true,
             state: { isNew: true },
           });
@@ -82,21 +49,11 @@ const SignUpTeacher = ({ setIsShowSelectRole, setIsShowTeacher }) => {
     setValues(null);
   };
 
-  // const onChangePrefix = (e) => {
-  //   setPrefixSelected(e.target.value);
-  // };
-
-  // const onAddPrefix = (e) => {
-  //   e.preventDefault();
-  //   setListPrefix([...listPrefix, e.target.value || 'Chức vụ ' + (index + 1)]);
-  //   setPrefixSelected('');
-  // };
-
   return (
     <Card id='signUp-card-teacher' className='signUp__card--teacher'>
       <div className='d-flex justify-content-center pt-3 pb-3'>
         <Typography.Title level={4} className='h5'>
-          Đăng ký tài khoản Giáo Viên
+          Đăng ký tài khoản Học Sinh
         </Typography.Title>
       </div>
       <div id='teacher-form'>
@@ -113,35 +70,6 @@ const SignUpTeacher = ({ setIsShowSelectRole, setIsShowTeacher }) => {
           scrollToFirstError
         >
           <Form.Item noStyle>
-            {/* <Form.Item name='prefix'>
-              <Select
-                placeholder='Bạn đang là'
-                name='prefix'
-                dropdownRender={(prefixMenu) => (
-                  <>
-                    {prefixMenu}
-                    <Divider style={{ margin: '8px 0' }} />
-                    <Space align='center' style={{ padding: '0 8px 4px' }}>
-                      <Input
-                        placeholder='Please enter item'
-                        value={prefixSelected}
-                        onChange={onChangePrefix}
-                      />
-                      <Typography.Link
-                        onClick={onAddPrefix}
-                        style={{ whiteSpace: 'nowrap' }}
-                      >
-                        <PlusOutlined /> Thêm
-                      </Typography.Link>
-                    </Space>
-                  </>
-                )}
-              >
-                {listPrefix.map((item) => (
-                  <Option key={item}>{item}</Option>
-                ))}
-              </Select>
-            </Form.Item> */}
             <Form.Item
               name='fullname'
               rules={[
@@ -221,25 +149,6 @@ const SignUpTeacher = ({ setIsShowSelectRole, setIsShowTeacher }) => {
               }
             />
           </Form.Item>
-
-          <Form.Item name='organization'>
-            <Select
-              showSearch
-              name='organization'
-              type='text'
-              filterOption={false}
-              placeholder='Bạn hiện đang giảng dạy tại'
-              onSearch={onSearchOrganization}
-              notFoundContent={null}
-            >
-              {listOrganization.map((item, index) => (
-                <Option key={index} value={item.name}>
-                  {item.name}
-                  {item.address ? <i> - {item.address}</i> : ''}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
           <Form.Item>
             <Button
               shape='round'
@@ -316,4 +225,4 @@ const SignUpTeacher = ({ setIsShowSelectRole, setIsShowTeacher }) => {
   );
 };
 
-export default SignUpTeacher;
+export default SignUpStudent;

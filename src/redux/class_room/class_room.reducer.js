@@ -14,6 +14,9 @@ const initState = {
 export function classRoomReducer(state = initState, action) {
   const { type, payload } = action;
   switch (type) {
+    case classRoomType.RESET_CLASS: {
+      return { ...state, ...initState };
+    }
     case classRoomType.GET_CLASS_SUCCESS:
       return { ...state, classRoomGroup: payload };
     case classRoomType.FILTER_CLASS:

@@ -1,6 +1,18 @@
 import HttpClient from '../utils/HttpClient';
 
 const classRoomService = {
+  findById: async (id) => {
+    try {
+      const { data } = await HttpClient({
+        url: '/class-room/' + id,
+        method: 'GET',
+      });
+      const { data: dataResponse } = data;
+      return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
   create: async (payload) => {
     try {
       const { data } = await HttpClient({

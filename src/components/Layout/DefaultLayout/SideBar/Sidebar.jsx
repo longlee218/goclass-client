@@ -1,15 +1,29 @@
 import './style.css';
 
+import React, { useEffect } from 'react';
+import {
+  sidebarStudentRoutes,
+  sidebarTeacherRoutes,
+} from '../../../../routes/sidebar.route';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
-import React from 'react';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import sidebarRoutes from '../../../../routes/sidebar.route';
 import { useLocation } from 'react-router';
+import { useState } from 'react';
 
 const SideBar = () => {
   const location = useLocation();
   const { pathname } = location;
+  const [sidebarRoutes, setSidebarRoutes] = useState([]);
+
+  useEffect(() => {
+    setSidebarRoutes(
+      pathname.startsWith('/teacher/')
+        ? sidebarTeacherRoutes
+        : sidebarStudentRoutes
+    );
+  }, [pathname]);
 
   return (
     <div className='sidbar_wrapper'>

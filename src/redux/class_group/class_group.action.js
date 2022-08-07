@@ -48,6 +48,9 @@ const classGroupActions = {
       return Promise.reject(error);
     }
   },
+  reset: () => ({
+    type: classGroupType.RESET_CLASS_GROUP,
+  }),
 };
 
 export default classGroupActions;

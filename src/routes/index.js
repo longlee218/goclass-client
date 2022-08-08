@@ -4,6 +4,7 @@ import {
   teacherRouteConfig,
 } from '../config/route.config';
 
+import Assignment from '../pages/Teacher/Assignment';
 import { AuthLayout } from '../components/Layout';
 import ClassDetail from '../pages/Teacher/ClassDetail';
 import Login from '../pages/General/Login';
@@ -27,6 +28,20 @@ const teacherRoutes = [
   {
     path: teacherRouteConfig.myClass,
     page: ManagerClass,
+    isPrivate: true,
+    roles: ['teacher'],
+    // child: [
+    //   {
+    //     path: teacherRouteConfig.myClassDetail,
+    //     page: ClassDetail,
+    //     isPrivate: true,
+    //     roles: ['teacher'],
+    //   },
+    // ],
+  },
+  {
+    path: teacherRouteConfig.assignments,
+    page: Assignment,
     isPrivate: true,
     roles: ['teacher'],
     // child: [

@@ -1,4 +1,4 @@
-.manager-class_wrapper__actions {
+.assignment_wrapper__actions {
   margin-bottom: 0.5rem;
   margin-top: 0.5rem;
   margin-left: 0.25rem;
@@ -10,12 +10,10 @@
   flex-wrap: wrap;
 }
 
-.manager-class_warapper__btngroup {
-  display: flex;
-  column-gap: 8px;
+.assignment_wrapper__btngroup {
+  align-items: center;
 }
 
-.divider {
-  border-bottom: 1px solid #cbcbcb;
-  margin: 16px 0.25rem 26px 0.25rem;
+.assignment_wrapper__table {
+  margin-top: 16px;
 }

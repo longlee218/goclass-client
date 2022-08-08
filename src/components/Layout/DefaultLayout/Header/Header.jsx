@@ -91,6 +91,7 @@ const Header = () => {
             <FontAwesomeIcon
               icon={faBars}
               fontSize={20}
+              color='#fff'
               onClick={() => setVisibleDrawer(true)}
             />
           </em>

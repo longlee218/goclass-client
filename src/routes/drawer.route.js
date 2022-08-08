@@ -27,15 +27,15 @@ const drawerRoutes = [
       icon: faHome,
     },
     {
-      path: '#',
+      path: teacherRouteConfig.assignments,
       title: 'Bài tập',
       icon: faBookOpen,
     },
-    {
-      path: '#',
-      title: 'Đề thi',
-      icon: faGraduationCap,
-    },
+    // {
+    //   path: '#',
+    //   title: 'Đề thi',
+    //   icon: faGraduationCap,
+    // },
     {
       path: teacherRouteConfig.myClass,
       title: 'Lớp',

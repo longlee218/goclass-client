@@ -45,7 +45,7 @@ const ManagerClass = () => {
         <div className='manager-class_wrapper__actions'>
           <div className='manager-class_warapper__search'>
             <Search
-              placeholder='Lọc tên lớp học'
+              placeholder='Tìm kiếm'
               onSearch={() => {}}
               style={{ width: 300 }}
               onChange={onChangeSearchInput}
@@ -71,6 +71,7 @@ const ManagerClass = () => {
             </Button>
           </div>
         </div>
+
         <div className='manager-class_warapper__classes'>
           <ClassCardGroup
             key='wrapper-class-group'

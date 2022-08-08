@@ -220,7 +220,7 @@ const TableStudent = ({
       key: 'action',
       width: 150,
       render: (_, { _id }) => (
-        <Space size={32}>
+        <Space size={20}>
           <Button type='text' onClick={() => onEditStudent(_id)}>
             <FontAwesomeIcon
               icon={faPen}

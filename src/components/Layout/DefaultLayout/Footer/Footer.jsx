@@ -5,22 +5,49 @@ import {
 } from '../../../../config/route.config';
 import { useLocation, useNavigate } from 'react-router';
 
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useState } from 'react';
 
 const { Footer: AntFooter } = Layout;
 
 const Footer = () => {
-  const { user, login } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const { pathname } = useLocation();
+  const [navigateDashboard, setNavigateDashboard] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (pathname.startsWith('/student/')) {
+      if (user.roles.includes('teacher')) {
+        // go to teacher dashboard
+        setNavigateDashboard({
+          link: teacherRouteConfig.dashboard,
+          text: 'Quay lại màn Giáo Viên',
+        });
+      }
+    }
+    if (pathname.startsWith('/teacher/')) {
+      if (user.roles.includes('student')) {
+        // go to student dashboard
+        setNavigateDashboard({
+          link: studentRouteConfig.dashboard,
+          text: 'Vào màn Học Sinh',
+        });
+      }
+    }
+  }, [user, pathname]);
+
   return (
     [teacherRouteConfig.dashboard, studentRouteConfig.dashboard].includes(
       pathname
     ) && (
       <AntFooter style={{ textAlign: 'center', height: '17rem' }}>
-        <Typography.Link onClick={() => navigate(studentRouteConfig.dashboard)}>
-          Vào màn học sinh
-        </Typography.Link>
+        {navigateDashboard && (
+          <Typography.Link onClick={() => navigate(navigateDashboard.link)}>
+            {navigateDashboard.text}
+          </Typography.Link>
+        )}
         <br />
         <br />
         <Typography.Text strong type='secondary'>

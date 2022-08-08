@@ -31,6 +31,7 @@ const ClassDetail = () => {
     if (classRoom) {
       setTitleHeader(classRoom.name);
     }
+    return () => setTitleHeader('');
   }, [setTitleHeader, classRoom, dispatch]);
 
   useEffect(() => {

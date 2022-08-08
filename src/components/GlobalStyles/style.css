@@ -23,7 +23,7 @@
   --success: #28a745;
   --info: #17a2b8;
   --warning: #ffc107;
-  --danger: #dc3545;
+  --danger: #f73481;
   --light: #f8f9fa;
   --dark: #343a40;
   --secondary: rgba(0, 0, 0, 0.45);
@@ -198,6 +198,11 @@ button.mat-raised-button:not([class*='mat-elevation-z']) {
 .d-flex {
   display: flex;
 }
+
+.gap-8 {
+  gap: 8px;
+}
+
 .gap-10 {
   gap: 10px;
 }

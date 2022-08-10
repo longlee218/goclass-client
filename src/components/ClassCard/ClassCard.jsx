@@ -37,6 +37,9 @@ const ActionMenu = (idClassRoom, setShowDrawer, dispatch) => {
       content: 'Bạn có chắc muốn xóa lớp học ?',
       okText: 'Tiếp tục',
       cancelText: 'Hủy',
+      okButtonProps: {
+        danger: true,
+      },
       onOk: () => {
         dispatch(alertActions.loading());
         classRoomService

@@ -4,7 +4,9 @@ import {
   teacherRouteConfig,
 } from '../config/route.config';
 
+import AssignLayout from '../components/Layout/AssignLayout/AssignLayout';
 import Assignment from '../pages/Teacher/Assignment';
+import AssignmentStore from '../pages/Teacher/AssignmentStore';
 import { AuthLayout } from '../components/Layout';
 import ClassDetail from '../pages/Teacher/ClassDetail';
 import Login from '../pages/General/Login';
@@ -40,18 +42,23 @@ const teacherRoutes = [
     // ],
   },
   {
-    path: teacherRouteConfig.assignments,
-    page: Assignment,
+    path: teacherRouteConfig.assignmentStores,
+    page: AssignmentStore,
     isPrivate: true,
     roles: ['teacher'],
-    // child: [
-    //   {
-    //     path: teacherRouteConfig.myClassDetail,
-    //     page: ClassDetail,
-    //     isPrivate: true,
-    //     roles: ['teacher'],
-    //   },
-    // ],
+  },
+  {
+    path: teacherRouteConfig.assignmentStoresWithParam,
+    page: AssignmentStore,
+    isPrivate: true,
+    roles: ['teacher'],
+  },
+  {
+    path: teacherRouteConfig.assignmentWithParam,
+    page: Assignment,
+    layout: AssignLayout,
+    isPrivate: true,
+    roles: ['teacher'],
   },
   {
     path: teacherRouteConfig.myClassDetail,

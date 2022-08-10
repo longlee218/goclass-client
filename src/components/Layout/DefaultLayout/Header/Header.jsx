@@ -45,10 +45,7 @@ const CenterHeader = ({ pathname, titleHeader }) => {
       ].includes(pathname) ? (
         inputSearch
       ) : (
-        <Typography.Title
-          style={{ fontWeight: 600, color: 'var(--white)' }}
-          level={4}
-        >
+        <Typography.Title style={{ fontWeight: 600 }} level={4}>
           {titleHeader}
         </Typography.Title>
       )}
@@ -91,17 +88,13 @@ const Header = () => {
             <FontAwesomeIcon
               icon={faBars}
               fontSize={20}
-              color='#fff'
               onClick={() => setVisibleDrawer(true)}
             />
           </em>
         </div>
         <div className='app__header_content_logo app__navbar_logo flex-1'>
           {/* <SvgLogo /> */}
-          <h4
-            className='app__header_content_logo_text'
-            style={{ color: 'var(--white)' }}
-          >
+          <h4 className='app__header_content_logo_text'>
             {process.env.REACT_APP_APPNAME}
           </h4>
         </div>
@@ -116,7 +109,7 @@ const Header = () => {
             Lớp đang kiểm tra
           </button> */}
           <div className='app__header_content_notification'>
-            <FontAwesomeIcon icon={faBell} fontSize={19} color='#fff' />
+            <FontAwesomeIcon icon={faBell} fontSize={19} />
           </div>
           <img
             className='app__header_content_avatar'

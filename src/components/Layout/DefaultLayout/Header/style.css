@@ -1,5 +1,5 @@
 .app__header {
-  background-color: var(--primary) !important;
+  background-color: var(--white) !important;
   align-items: center;
   border-bottom: 1px solid #e8ebed;
   display: flex;
@@ -37,7 +37,7 @@
 }
 
 .search-wrapper {
-  /* border: 2px solid #e8e8e8; */
+  border: 2px solid #e8e8e8;
   background-color: #fff;
   border-radius: 20px;
   flex: 1 1;
@@ -51,7 +51,7 @@
 }
 
 .search-wrapper:focus-within {
-  border-color: #444;
+  border-color: var(--gray-dark);
 }
 
 .search-icon {
@@ -69,7 +69,7 @@
 
 .search-input {
   border: none;
-  caret-color: #444;
+  caret-color: var(--gray-dark);
   flex: 1 1;
   height: 100%;
   outline: none;

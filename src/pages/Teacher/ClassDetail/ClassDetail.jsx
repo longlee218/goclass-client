@@ -61,12 +61,15 @@ const ClassDetail = () => {
       title: 'Xác nhận',
       content: (
         <>
-          Bạn có chắc muốn xóa <b>{student.studentName}</b> khỏi lớp?
+          Bạn có chắc muốn xóa <b>{student.studentName}</b> khỏi lớp ?
         </>
       ),
       okText: 'Tiếp tục',
       cancelText: 'Hủy',
       closable: true,
+      okButtonProps: {
+        danger: true,
+      },
       onOk: () => {
         dispatch(studentActions.delete(classRoom._id, student._id)).then(() =>
           dispatch(studentActions.get(classRoom._id, {}))

@@ -3,7 +3,9 @@ const PREFIX_STUDENT = '/student';
 
 export const teacherRouteConfig = {
   dashboard: PREFIX_TEACHER + '/dashboard',
-  assignments: PREFIX_TEACHER + '/assignments',
+  assignmentStores: PREFIX_TEACHER + '/store-assignments',
+  assignmentStoresWithParam: PREFIX_TEACHER + '/store-assignments/:fatherId',
+  assignmentWithParam: PREFIX_TEACHER + '/assignments/:fatherId',
   myClass: PREFIX_TEACHER + '/my-class',
   myClassDetail: PREFIX_TEACHER + '/my-class/:id',
 };

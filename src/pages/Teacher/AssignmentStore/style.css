@@ -1,0 +1,48 @@
+.assignment_wrapper__actions {
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  margin-left: 0.25rem;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+  column-gap: 15px;
+  row-gap: 10px;
+  flex-wrap: wrap;
+}
+
+.assignment_wrapper__btngroup {
+  align-items: center;
+}
+
+.assignment_wrapper__table {
+  margin-top: 16px;
+}
+
+.menu-item-action {
+  display: flex;
+  color: var(--secondary);
+  height: 100%;
+  flex-direction: row;
+  align-items: stretch;
+  align-content: stretch;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.menu-item-action__icon {
+  line-height: 100%;
+  align-items: center;
+  align-content: center;
+  max-width: 100%;
+  display: flex;
+}
+
+.menu-item-action > i {
+  margin-right: 12px;
+  text-align: center;
+  width: 24px;
+}
+
+.menu-item-action > span {
+  margin: 10px 0;
+}

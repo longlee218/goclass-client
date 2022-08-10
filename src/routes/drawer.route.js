@@ -27,7 +27,7 @@ const drawerRoutes = [
       icon: faHome,
     },
     {
-      path: teacherRouteConfig.assignments,
+      path: teacherRouteConfig.assignmentStores,
       title: 'Bài tập',
       icon: faBookOpen,
     },

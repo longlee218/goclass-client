@@ -6,10 +6,16 @@ import React from 'react';
 
 const Assignment = () => {
   return (
-    <div>
-      <AssignForm />
-      <AssignSlides />
-    </div>
+    <>
+      <div className='assign-container'>
+        <div className='assign-wrapper bg-white'>
+          <AssignForm />
+        </div>
+        <div className='assign-wrapper'>
+          <AssignSlides />
+        </div>
+      </div>
+    </>
   );
 };
 

@@ -8,7 +8,7 @@ const AssignLayout = ({ children }) => {
       <ToastContainer autoClose={2000} />
       <Header />
       <div className='app__with-sidebar'>
-        <body className='app__with-sidebar_body'>
+        <body className='app__with-sidebar_body--assignment'>
           <section>{children}</section>
         </body>
       </div>

@@ -34,7 +34,6 @@
 
 .app__header--assignManager_left__home > button {
   margin-left: 10px;
-  /* background-color: rgba(158, 158, 158, 0.2); */
   display: flex;
   flex-flow: nowrap;
   justify-content: center;
@@ -58,7 +57,6 @@
 .assign-title {
   margin: auto 0;
   overflow: hidden;
-  /* padding-top: 2px; */
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -75,4 +73,68 @@
 
 .saving-text {
   margin: 0 8px;
+}
+
+.app__header--assignManager_center {
+  width: 332px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  max-width: 100%;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.app__header--assignManager_center > button {
+  text-transform: none;
+  min-width: 110px;
+  width: 110px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: transparent;
+}
+
+.app__header--assignManager_right {
+  height: 100%;
+  margin-top: 0;
+  margin-right: 0;
+  display: flex;
+  flex-direction: row;
+  flex: 1 1;
+  align-items: stretch;
+  align-content: stretch;
+  justify-content: flex-end;
+}
+
+.app__header--assignManager_right > button {
+  margin-left: 10px;
+  display: flex;
+  flex-flow: nowrap;
+  justify-content: center;
+  align-items: center;
+  min-width: 3em;
+  color: #6d6e70;
+  height: 100%;
+  padding: 0.2em 1em;
+  line-height: 1;
+  width: 60px;
+  transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+    background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: none;
+  margin-right: 10px;
+}
+
+.app__header--assignManager_right > button:hover {
+  background-color: rgba(158, 158, 158, 0.2);
+  color: #6d6e70;
+}
+
+.border-button {
+  position: absolute;
+  border-radius: 4px;
+  border: 2px solid #e5e5e5;
+  width: 332px;
+  height: 34px;
 }

@@ -1,0 +1,29 @@
+.assign-container {
+  background-color: #f7f7f7;
+  overflow: auto;
+  height: calc(100vh - 60px);
+  width: 100vw;
+}
+
+.assign-form__container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  align-content: stretch;
+}
+
+.assign-from__group {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.assign-wrapper {
+  padding: 24px 6rem 0px 6rem;
+}
+
+.bg-white {
+  background-color: #fff;
+  box-shadow: 0 0.125rem 0.25rem 0 rgb(0 0 0 / 10%);
+  margin-bottom: 3px;
+}

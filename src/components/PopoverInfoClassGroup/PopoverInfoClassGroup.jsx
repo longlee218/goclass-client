@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Popover, message } from 'antd';
+import { Button, Form, Input, Modal, Popover } from 'antd';
 
 import React from 'react';
 import alertActions from '../../redux/alert/alert.action';

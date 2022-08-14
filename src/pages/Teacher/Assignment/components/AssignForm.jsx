@@ -16,11 +16,11 @@ const AssignForm = () => {
               rules={[
                 {
                   required: true,
-                  message: 'Không được bỏ trống tên đề',
+                  message: 'Không được bỏ trống tên bài tập',
                 },
               ]}
             >
-              <Input type='text' placeholder='Tên đề' name='name'></Input>
+              <Input type='text' placeholder='Tên bài tập' name='name'></Input>
             </Form.Item>
           </Col>
           <Col span={2}>

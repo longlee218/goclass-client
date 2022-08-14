@@ -3,6 +3,9 @@ import studentService from '../../services/student.service';
 import studentType from './student.type';
 
 const studentActions = {
+  reset: () => ({
+    type: studentType.RESET_STUDENT,
+  }),
   create: (classId, _id, email, dob, fullname, gender, code, student) => {
     return async (dispatch) => {
       dispatch(alertActions.loading());

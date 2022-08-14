@@ -14,6 +14,7 @@ import React from 'react';
 import classRoomActions from '../../../redux/class_room/class_room.action';
 import { classRoomsSelector } from '../../../redux/class_room/class_room.selector';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import studentActions from '../../../redux/student/student.action';
 
 const { Search } = Input;
 
@@ -30,7 +31,8 @@ const ManagerClass = () => {
 
   useEffect(() => {
     dispatch(classRoomActions.get());
-  }, [dispatch]);
+    dispatch(studentActions.reset());
+  }, []);
 
   const onClickAddClass = () => setShowAddDrawer(true);
   const onClickNewSessionClass = () => setShowNewSsDrawer(true);

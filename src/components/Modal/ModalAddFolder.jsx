@@ -1,11 +1,18 @@
 import { Modal } from 'antd';
 import React from 'react';
 
-const ModalAddFolder = ({ visible, onOk, onCancel, children, isLoading }) => {
+const ModalAddFolder = ({
+  title,
+  visible,
+  onOk,
+  onCancel,
+  children,
+  isLoading,
+}) => {
   return (
     <Modal
       key='modal-add-folder'
-      title='Tạo thư mục'
+      title={title}
       visible={visible}
       centered
       onOk={onOk}

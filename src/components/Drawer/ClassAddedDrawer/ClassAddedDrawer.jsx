@@ -49,7 +49,7 @@ const ClassAddedDrawer = ({ visible, setVisible }) => {
   }, [classRoom]);
 
   useEffect(() => {
-    const listGroupRadio = classGroups.map(({ _id, name }) => ({
+    const listGroupRadio = classGroups?.map(({ _id, name }) => ({
       value: _id,
       name,
     }));

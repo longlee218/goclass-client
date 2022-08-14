@@ -18,6 +18,8 @@ const initState = {
 export default function studentReducer(state = initState, action) {
   const { type, payload } = action;
   switch (type) {
+    case studentType.RESET_STUDENT:
+      return { ...state, ...initState };
     case studentType.GET_STUDENT_OF_CLASS:
       return {
         ...state,

@@ -17,6 +17,14 @@
 .assignment_wrapper__table {
   margin-top: 16px;
 }
+.assigment_wrapper__grid {
+  margin-top: 16px;
+  padding: 5px 16px;
+  background-color: var(--white);
+  overflow-y: auto;
+  height: calc(100vh - 214px - 1rem);
+  border-radius: 4px;
+}
 
 .menu-item-action {
   display: flex;
@@ -45,4 +53,56 @@
 
 .menu-item-action > span {
   margin: 10px 0;
+}
+
+.assigment_wrapper__grid > .flex {
+  padding: 0 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.flex > .flex-item {
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.title-grid {
+  white-space: nowrap;
+  width: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media only screen and (min-width: 576px) {
+  .flex > .flex-item {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .flex > .flex-item {
+    flex: 0 0 16.666667%;
+    max-width: 16.666667%;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .flex > .flex-item {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .flex > .flex-item {
+    flex: 0 0 9.333333%;
+    max-width: 9.333333%;
+  }
 }

@@ -4,7 +4,7 @@ import { Select } from 'antd';
 const { Option } = Select;
 const LIST_ACCESSES = [
   { k: 'private', v: 'Riêng tư - Chỉ học sinh mới truy cập' },
-  { k: 'shared', v: 'Chia sẻ - Chia sẻ lên Thư viện đề' },
+  { k: 'shared', v: 'Chia sẻ - Chia sẻ lên Thư viện bài tập' },
 ];
 
 const SelectedAccess = ({ name, placeholder, value, disabled }) => {

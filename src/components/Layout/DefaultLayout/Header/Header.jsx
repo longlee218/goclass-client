@@ -30,7 +30,7 @@ const CenterHeader = ({ pathname, titleHeader }) => {
       <input
         type='text'
         spellCheck='false'
-        placeholder='Tìm kiếm lớp học, đề thi, học sinh,...'
+        placeholder='Tìm kiếm lớp học, bài tập, học sinh,...'
         className='search-input'
       />
     </div>

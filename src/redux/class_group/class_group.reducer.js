@@ -21,7 +21,7 @@ export function classGroupReducer(state = initState, action) {
     case classGroupType.DELETE_CLASS_GROUP:
       return state.filter(({ _id }) => _id !== payload);
     case classGroupType.RESET_CLASS_GROUP:
-      return { ...state, ...initState };
+      return initState;
     default:
       return state;
   }

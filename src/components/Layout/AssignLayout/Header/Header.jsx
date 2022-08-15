@@ -8,12 +8,16 @@ import {
   faShare,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router';
 
 import AssignDirector from '../../../AssignmentDirector';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import assignActions from '../../../../redux/assign/assign.action';
+import { assignSelector } from '../../../../redux/assign/assign.selector';
 import { teacherRouteConfig } from '../../../../config/route.config';
-import { useNavigate } from 'react-router';
+import { useEffect } from 'react';
 
 const { Header: AntdHeader } = Layout;
 
@@ -60,11 +64,20 @@ const dropdownActionsAssignment = (
         ),
       },
     ]}
-  ></Menu>
+  />
 );
 
 const Header = () => {
   const navigate = useNavigate();
+  const params = useParams();
+  const dispatch = useDispatch();
+  const assignment = useSelector(assignSelector);
+
+  useEffect(() => {
+    const id = params.id;
+    dispatch(assignActions.findAssignment(id));
+  }, [params, dispatch]);
+
   return (
     <>
       <AntdHeader className='app__header--assignManager'>
@@ -77,9 +90,10 @@ const Header = () => {
               <FontAwesomeIcon icon={faHome} />
             </Button>
             <div className='assign-title'>
-              <Typography.Text>Đề kiểm tra tiếng việt năm 2021</Typography.Text>
+              <Typography.Text>{assignment?.name}</Typography.Text>
             </div>
-            <div className='saving-text'>Saving...</div>
+            {/* <div className='saving-text'>Saving...</div> */}
+            <div className='saving-text'></div>
           </div>
         </div>
         <AssignDirector />

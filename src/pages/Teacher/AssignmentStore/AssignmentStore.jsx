@@ -17,7 +17,7 @@ import GridFolder from './components/GridFolder';
 import ModalAddFolder from '../../../components/Modal/ModalAddFolder';
 import TableFolder from './components/TableFolder';
 import alertActions from '../../../redux/alert/alert.action';
-import assignActions from '../../../redux/assign_folder/assign_folder.action';
+import assignFolderActions from '../../../redux/assign_folder/assign_folder.action';
 import { assignFolderSelector } from '../../../redux/assign_folder/assign_folder.selector';
 import assignmentFolderService from '../../../services/assignmentFolder.service';
 import classGroupActions from '../../../redux/class_group/class_group.action';
@@ -171,7 +171,7 @@ const AssignmentStore = () => {
         setIsOpenAddFolder(false);
         triggerFetch();
         setNameFolder('');
-        dispatch(assignActions.reset());
+        dispatch(assignFolderActions.reset());
       })
       .catch((error) => dispatch(alertActions.error(error.message)))
       .finally(() => setIsLoading(false));
@@ -186,7 +186,7 @@ const AssignmentStore = () => {
   const onCancelModalFolder = () => {
     setIsLoading(false);
     setIsOpenAddFolder(false);
-    dispatch(assignActions.reset());
+    dispatch(assignFolderActions.reset());
     setNameFolder('');
   };
 

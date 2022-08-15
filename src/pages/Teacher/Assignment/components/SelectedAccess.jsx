@@ -14,7 +14,6 @@ const SelectedAccess = ({ name, placeholder, value, disabled }) => {
       name={name}
       disabled={disabled}
       value={value}
-      allowClear
     >
       {LIST_ACCESSES.map(({ k, v }, i) => (
         <Option key={i} value={k}>

@@ -6,6 +6,7 @@ export function alertReducer(state = {}, action) {
     case alertType.PRELOAD:
       message.loading(action.payload);
       return {
+        ...state,
         type: 'alert-loading',
         message: action.payload,
       };
@@ -21,6 +22,7 @@ export function alertReducer(state = {}, action) {
       // });
       message.success(action.payload);
       return {
+        ...state,
         type: 'alert-success',
         message: action.payload,
       };
@@ -36,6 +38,7 @@ export function alertReducer(state = {}, action) {
       // });
       message.warning(action.payload);
       return {
+        ...state,
         type: 'alert-warning',
         message: action.payload,
       };
@@ -51,6 +54,7 @@ export function alertReducer(state = {}, action) {
       // });
       message.error(action.payload);
       return {
+        ...state,
         type: 'alert-danger',
         message: action.payload,
       };

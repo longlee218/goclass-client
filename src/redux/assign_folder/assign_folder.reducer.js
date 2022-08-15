@@ -1,7 +1,7 @@
 import assignFolderType from './assign_folder.type';
 
 const initState = [];
-export function assignReducer(state = initState, action) {
+export function assignFolderReducer(state = initState, action) {
   const { type, payload } = action;
   switch (type) {
     case assignFolderType.SET_ASSIGN_FOLDER:

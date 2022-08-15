@@ -13,6 +13,18 @@ const assignmentService = {
       return Promise.reject(error);
     }
   },
+  findById: async (id) => {
+    try {
+      const { data } = await HttpClient({
+        url: '/assignment/' + id,
+        method: 'GET',
+      });
+      const { data: dataResponse } = data;
+      return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
 };
 
 export default assignmentService;

@@ -1,6 +1,6 @@
 import assignFolderType from './assign_folder.type';
 
-const assignActions = {
+const assignFolderActions = {
   setFolder: (payload) => ({
     type: assignFolderType.SET_ASSIGN_FOLDER,
     payload,
@@ -10,4 +10,4 @@ const assignActions = {
   }),
 };
 
-export default assignActions;
+export default assignFolderActions;

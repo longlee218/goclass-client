@@ -4,11 +4,50 @@ import React from 'react';
 import SelectListGrade from './SelectListGrade';
 import SelectListSubject from './SelectListSubject';
 import SelectedAccess from './SelectedAccess';
+import { assignSelector } from '../../../../redux/assign/assign.selector';
+import { useCallback } from 'react';
+import useDebounce from '../../../../hooks/useDebounce';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
 
 const AssignForm = () => {
+  const assignment = useSelector(assignSelector);
+  const [title, setTitle] = useState(
+    assignment?.name || process.env.REACT_APP_NAME
+  );
+  const [form] = Form.useForm();
+
+  const onSubmit = useCallback(
+    useDebounce(function (e) {
+      console.log(e);
+    }),
+    []
+  );
+
+  useEffect(() => {
+    form.setFieldsValue({
+      name: assignment?.name,
+      access: assignment?.access || 'private',
+      subjects: assignment?.subjects || [],
+      grades: assignment?.grades || [],
+      desc: assignment?.desc || '',
+    });
+  }, [assignment, form]);
+
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
+
+  const onChangeInputName = (e) => {
+    const value = e.target.value;
+    setTitle(value);
+    form.setFieldsValue({ name: value });
+  };
+
   return (
     <div className='assign-form__container'>
-      <Form layout='vertical' name='editor-form-assign'>
+      <Form form={form} layout='vertical' name='editor-form-assign'>
         <Row gutter={[6, 12]} style={{ justifyContent: 'space-between' }}>
           <Col span={16}>
             <Form.Item
@@ -20,7 +59,12 @@ const AssignForm = () => {
                 },
               ]}
             >
-              <Input type='text' placeholder='Tên bài tập' name='name'></Input>
+              <Input
+                type='text'
+                placeholder='Tên bài tập'
+                name='name'
+                onChange={onSubmit}
+              />
             </Form.Item>
           </Col>
           <Col span={2}>
@@ -51,7 +95,6 @@ const AssignForm = () => {
                 name='access'
                 placeholder='Chủ Quyền truy cập'
                 disabled={false}
-                value=''
                 key='select-access'
               />
             </Form.Item>

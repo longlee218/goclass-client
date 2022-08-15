@@ -1,24 +1,31 @@
 import { Button, Dropdown, Menu, Typography } from 'antd';
 import { faFilePen, faStore } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate, useParams } from 'react-router';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import alertActions from '../../../../redux/alert/alert.action';
 import assignmentService from '../../../../services/assignment.service';
+import { teacherRouteConfig } from '../../../../config/route.config';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router';
 
 const MenuAddDropDown = () => {
   const params = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const onCreateBlankAssign = () => {
     const fatherId = params.fatherId;
     dispatch(alertActions.loading());
     assignmentService
       .initBlankAssign(fatherId)
-      .then((data) => {
+      .then((assignment) => {
         dispatch(alertActions.success());
-        console.log(data);
+        return navigate(
+          teacherRouteConfig.assignmentWithParam.replace(
+            ':fatherId',
+            assignment._id
+          )
+        );
       })
       .catch((error) => dispatch(alertActions.error(error.message)));
   };

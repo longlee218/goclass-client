@@ -4,14 +4,14 @@ import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import alertActions from '../../../../redux/alert/alert.action';
-import assignActions from '../../../../redux/assign_folder/assign_folder.action';
+import assignFolderActions from '../../../../redux/assign_folder/assign_folder.action';
 import assignmentFolderService from '../../../../services/assignmentFolder.service';
 import { useDispatch } from 'react-redux';
 
 const MenuActionFolder = ({ onOpenModalFolder, currentFolder, fetchData }) => {
   const dispatch = useDispatch();
   const onEditFolder = () => {
-    dispatch(assignActions.setFolder(currentFolder));
+    dispatch(assignFolderActions.setFolder(currentFolder));
     onOpenModalFolder();
   };
 

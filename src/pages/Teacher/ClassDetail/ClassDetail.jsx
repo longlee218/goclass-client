@@ -71,9 +71,13 @@ const ClassDetail = () => {
         danger: true,
       },
       onOk: () => {
-        dispatch(studentActions.delete(classRoom._id, student._id)).then(() =>
-          dispatch(studentActions.get(classRoom._id, {}))
-        );
+        dispatch(studentActions.delete(classRoom._id, student._id)).then(() => {
+          dispatch(studentActions.get(classRoom._id, {}));
+          setClassRoom((prev) => ({
+            ...prev,
+            countStudents: prev.countStudents - 1,
+          }));
+        });
       },
     });
   };
@@ -111,14 +115,27 @@ const ClassDetail = () => {
                 </Typography.Text>
               </Typography.Text>
             </Space>
-            <Button
-              type='primary'
-              danger
-              shape='round'
-              onClick={() => setIsShowAddedDrawer(true)}
-            >
-              Thêm học sinh
-            </Button>
+            <div className='d-flex gap-10'>
+              <Button
+                type='primary'
+                danger
+                shape='round'
+                onClick={() => setIsShowAddedDrawer(true)}
+              >
+                Thêm học sinh
+              </Button>
+              <Button
+                shape='round'
+                disabled={(classRoom?.countStudents || 0) === 0}
+              >
+                <img
+                  src='https://www.gstatic.com/apps/signup/resources/Meet_Product_Icon.svg'
+                  alt='google-meet'
+                  className='google-meet'
+                />
+                Google Meet
+              </Button>
+            </div>
           </div>
           <Typography.Paragraph
             editable={{
@@ -151,6 +168,7 @@ const ClassDetail = () => {
           classId={classRoom._id}
           studentInfo={studentSelect}
           setStudentInfo={setStudentSelect}
+          setClassRoom={setClassRoom}
         />
       )}
     </>

@@ -72,6 +72,7 @@ const StudentAddedDrawer = ({
   classId,
   studentInfo,
   setStudentInfo,
+  setClassRoom,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [valueGender, setValueGender] = useState('other');
@@ -193,8 +194,9 @@ const StudentAddedDrawer = ({
     student,
   }) => {
     setIsLoading(true);
-    let promiseAction = _id
-      ? studentActions.update(
+    if (_id) {
+      dispatch(
+        studentActions.update(
           classId,
           _id,
           email,
@@ -204,7 +206,16 @@ const StudentAddedDrawer = ({
           code,
           student
         )
-      : studentActions.create(
+      )
+        .then(() => {
+          dispatch(alertActions.success());
+          dispatch(studentActions.get(classId, {}));
+          onClose();
+        })
+        .finally(() => setIsLoading(false));
+    } else {
+      dispatch(
+        studentActions.create(
           classId,
           _id,
           email,
@@ -213,18 +224,20 @@ const StudentAddedDrawer = ({
           gender,
           code,
           student
-        );
-    dispatch(promiseAction)
-      .then(() => {
-        dispatch(alertActions.success());
-        dispatch(studentActions.get(classId, {}));
-        onClose();
-      })
-      .finally(() => setIsLoading(false));
+        )
+      )
+        .then(() => {
+          dispatch(alertActions.success());
+          dispatch(studentActions.get(classId, {}));
+          setClassRoom((prev) => ({
+            ...prev,
+            countStudents: prev.countStudents + 1,
+          }));
+          onClose();
+        })
+        .finally(() => setIsLoading(false));
+    }
   };
-  // const submitFormStudent = (values) => {
-  //   console.log(values);
-  // };
 
   const onClickMakeCode = () => {
     formAddStudent.setFieldsValue({ code: randomString() });

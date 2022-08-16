@@ -19,7 +19,7 @@
 }
 .assigment_wrapper__grid {
   margin-top: 16px;
-  padding: 5px 16px;
+  padding: 25px 16px;
   background-color: var(--white);
   overflow-y: auto;
   height: calc(100vh - 214px - 1rem);

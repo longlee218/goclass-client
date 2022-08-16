@@ -8,3 +8,11 @@
   background: #fff;
   border-top: 1px solid #e9e9e9;
 }
+.color-circle-select {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin: 0;
+  outline: 0;
+  margin-top: 6px;
+}

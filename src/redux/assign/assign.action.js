@@ -9,7 +9,6 @@ const assignActions = {
   }),
   findAssignment: function (id) {
     return async (dispatch) => {
-      dispatch(alertAction.loading());
       assignmentService
         .findById(id)
         .then((assignment) => {

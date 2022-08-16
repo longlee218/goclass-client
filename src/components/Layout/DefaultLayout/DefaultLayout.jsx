@@ -1,12 +1,14 @@
 import Footer from './Footer';
 import Header from './Header';
 import React from 'react';
+import ScrollToTop from '../../ScrollToTop/ScrollToTop';
 import SideBar from './SideBar';
 import { ToastContainer } from 'react-toastify';
 
 const DefaultLayout = ({ children }) => {
   return (
     <div id='main-layout'>
+      <ScrollToTop />
       <ToastContainer autoClose={2000} />
       <Header />
       <div className='app__with-sidebar'>

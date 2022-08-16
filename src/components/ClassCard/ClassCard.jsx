@@ -84,14 +84,24 @@ const ActionMenu = (idClassRoom, setShowDrawer, dispatch) => {
 const ClassCard = ({ classRoom, setShowDrawer }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { _id, name, countStudents, session } = classRoom;
+  const { _id, name, countStudents, session, color } = classRoom;
   return (
     <Card
       hoverable
       key={_id}
       size='small'
       bordered={true}
-      title={name}
+      title={
+        <div className='d-flex align-center'>
+          {color && (
+            <div
+              className='color-circle'
+              style={{ backgroundColor: color, marginRight: 10 }}
+            />
+          )}
+          <Typography>{name}</Typography>
+        </div>
+      }
       onClick={(e) => {
         e.preventDefault();
         navigate(teacherRouteConfig.myClass + '/' + _id);

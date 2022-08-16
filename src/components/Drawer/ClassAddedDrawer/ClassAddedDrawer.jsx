@@ -27,9 +27,26 @@ const OTHER_GROUP = {
   value: 0,
   name: 'Khác',
 };
+
 const VALUES_SESSION = new Array(60)
   .fill()
   .map((_, i) => `${2020 + i}-${2020 + i + 1}`);
+
+const LIST_COLOR_RGB = [
+  '',
+  'rgb(45, 204, 247)',
+  'rgb(255, 160, 69)',
+  'rgb(205, 110, 222)',
+  'rgb(240, 78, 143)',
+  'rgb(245, 198, 49)',
+  'rgb(21, 202, 154)',
+  'rgb(130, 143, 153)',
+  'rgb(255, 187, 187)',
+  'rgb(233, 85, 45)',
+  'rgb(140, 82, 37)',
+  'rgb(157, 238, 242)',
+  'rgb(200, 237, 128)',
+];
 
 const ClassAddedDrawer = ({ visible, setVisible }) => {
   const dispatch = useDispatch();
@@ -104,6 +121,10 @@ const ClassAddedDrawer = ({ visible, setVisible }) => {
         classRoom._id
       );
     } else {
+      console.log({
+        ...values,
+        ...(valueRadio !== 0 ? { classRoomGroupId: valueRadio } : {}),
+      });
       promiseAction = classRoomService.create({
         ...values,
         ...(valueRadio !== 0 ? { classRoomGroupId: valueRadio } : {}),
@@ -232,6 +253,26 @@ const ClassAddedDrawer = ({ visible, setVisible }) => {
                     </Form>
                   )}
                 </Radio>
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={16} style={{ marginRight: 0 }}>
+            <Col span={24}>
+              <Form.Item name='color' label='Màu sắc'>
+                <Select
+                  name='color'
+                  defaultValue={LIST_COLOR_RGB[1]}
+                  style={{ width: 'auto' }}
+                >
+                  {LIST_COLOR_RGB.map((colorCode, i) => (
+                    <Option key={i} value={colorCode}>
+                      <div
+                        className='color-circle-select'
+                        style={{ backgroundColor: colorCode }}
+                      />
+                    </Option>
+                  ))}
+                </Select>
               </Form.Item>
             </Col>
           </Row>

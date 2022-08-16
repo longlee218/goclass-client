@@ -4,10 +4,10 @@ const initState = {
   id: '',
   filter: '',
   classRoomGroup: [
-    {
-      group: null,
-      classRooms: [],
-    },
+    // {
+    //   group: null,
+    //   classRooms: [],
+    // },
   ],
 };
 

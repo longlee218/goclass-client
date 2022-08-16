@@ -230,6 +230,10 @@ button.mat-raised-button:not([class*='mat-elevation-z']) {
   justify-content: space-between;
 }
 
+.align-center {
+  align-items: center;
+}
+
 .pt-3 {
   padding-top: 1rem;
 }

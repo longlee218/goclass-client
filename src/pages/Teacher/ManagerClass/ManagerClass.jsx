@@ -65,6 +65,7 @@ const ManagerClass = () => {
               Tạo lớp
             </Button>
             <Button
+              shape='round'
               className='wrapp-text-bold'
               onClick={onClickNewSessionClass}
             >

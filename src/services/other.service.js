@@ -26,6 +26,7 @@ const otherService = {
           search,
           page,
           limit,
+          sort: 'email',
         },
       });
       return data.docs;

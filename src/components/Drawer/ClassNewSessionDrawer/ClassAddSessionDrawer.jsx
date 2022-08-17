@@ -79,7 +79,11 @@ const ClassNewSessionDrawer = ({ visible, setVisible }) => {
       }
     >
       {visible && (
-        <Space direction='vertical' size={32}>
+        <Space
+          direction='vertical'
+          size={32}
+          style={{ paddingBottom: '1.2em' }}
+        >
           <Description />
           <Checkbox.Group style={{ width: '100%' }} onChange={onChangeCheckbox}>
             <Row gutter={[0, 12]}>

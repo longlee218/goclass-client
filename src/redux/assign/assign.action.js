@@ -18,6 +18,18 @@ const assignActions = {
         .catch((error) => dispatch(alertAction.error(error.message)));
     };
   },
+  updateAssignment: function (id, payload) {
+    return async (dispatch) => {
+      dispatch(alertAction.loading());
+      assignmentService
+        .updateAssign(id, payload)
+        .then((assignment) => {
+          dispatch(alertAction.success());
+          dispatch(this.getAssignmentSuccess(assignment));
+        })
+        .catch((error) => dispatch(alertAction.error(error.message)));
+    };
+  },
 };
 
 export default assignActions;

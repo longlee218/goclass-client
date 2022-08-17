@@ -1,6 +1,6 @@
 import './style.css';
 
-import { Card, Dropdown, Menu, Modal, Typography } from 'antd';
+import { Button, Card, Dropdown, Menu, Modal, Typography } from 'antd';
 import {
   faCopy,
   faEllipsis,
@@ -118,7 +118,9 @@ const ClassCard = ({ classRoom, setShowDrawer }) => {
                 e.stopPropagation();
               }}
             >
-              <FontAwesomeIcon icon={faEllipsis} size='lg' />
+              <Button type='text'>
+                <FontAwesomeIcon icon={faEllipsis} size='lg' />
+              </Button>
             </div>
           }
         />

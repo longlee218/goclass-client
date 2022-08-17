@@ -21,7 +21,13 @@ const LiST_SUBJECT = [
   'Tập viết',
 ];
 
-const SelectListSubject = ({ name, placeholder, value, disabled }) => {
+const SelectListSubject = ({
+  name,
+  placeholder,
+  value,
+  disabled,
+  onChange,
+}) => {
   return (
     <Select
       mode='multiple'
@@ -29,6 +35,7 @@ const SelectListSubject = ({ name, placeholder, value, disabled }) => {
       name={name}
       disabled={disabled}
       value={value}
+      onChange={onChange}
       allowClear
     >
       {LiST_SUBJECT.map((subject, i) => (

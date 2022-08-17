@@ -22,7 +22,7 @@ const LiST_GRADES = [
   'Đại học',
 ];
 
-const SelectListGrade = ({ name, placeholder, value, disabled }) => {
+const SelectListGrade = ({ name, placeholder, value, disabled, onChange }) => {
   return (
     <Select
       mode='multiple'
@@ -30,6 +30,7 @@ const SelectListGrade = ({ name, placeholder, value, disabled }) => {
       name={name}
       disabled={disabled}
       value={value}
+      onChange={onChange}
       allowClear
     >
       {LiST_GRADES.map((grade, i) => (

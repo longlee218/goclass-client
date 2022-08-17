@@ -1,28 +1,67 @@
 import { Col, Form, Input, Row } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
 
 import React from 'react';
 import SelectListGrade from './SelectListGrade';
 import SelectListSubject from './SelectListSubject';
 import SelectedAccess from './SelectedAccess';
+import assignActions from '../../../../redux/assign/assign.action';
 import { assignSelector } from '../../../../redux/assign/assign.selector';
 import { useCallback } from 'react';
 import useDebounce from '../../../../hooks/useDebounce';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useState } from 'react';
 
 const AssignForm = () => {
+  const dispatch = useDispatch();
   const assignment = useSelector(assignSelector);
-  const [title, setTitle] = useState(
-    assignment?.name || process.env.REACT_APP_NAME
-  );
   const [form] = Form.useForm();
 
-  const onSubmit = useCallback(
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const onChangeInput = useCallback(
     useDebounce(function (e) {
-      console.log(e);
-    }),
-    []
+      dispatch(
+        assignActions.updateAssignment(assignment._id, {
+          [e.target.name]: e.target.value,
+        })
+      );
+    }, 1000),
+    [assignment]
+  );
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const onChangeSubjects = useCallback(
+    useDebounce(function (value) {
+      dispatch(
+        assignActions.updateAssignment(assignment._id, {
+          subjects: value,
+        })
+      );
+    }, 1000),
+    [assignment]
+  );
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const onChangeGrades = useCallback(
+    useDebounce(function (value) {
+      dispatch(
+        assignActions.updateAssignment(assignment._id, {
+          grades: value,
+        })
+      );
+    }, 1000),
+    [assignment]
+  );
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const onChangeAccess = useCallback(
+    useDebounce(function (value) {
+      dispatch(
+        assignActions.updateAssignment(assignment._id, {
+          access: value,
+        })
+      );
+    }, 1000),
+    [assignment]
   );
 
   useEffect(() => {
@@ -36,14 +75,8 @@ const AssignForm = () => {
   }, [assignment, form]);
 
   useEffect(() => {
-    document.title = title;
-  }, [title]);
-
-  const onChangeInputName = (e) => {
-    const value = e.target.value;
-    setTitle(value);
-    form.setFieldsValue({ name: value });
-  };
+    document.title = assignment.name;
+  }, [assignment]);
 
   return (
     <div className='assign-form__container'>
@@ -63,7 +96,7 @@ const AssignForm = () => {
                 type='text'
                 placeholder='Tên bài tập'
                 name='name'
-                onChange={onSubmit}
+                onChange={onChangeInput}
               />
             </Form.Item>
           </Col>
@@ -73,7 +106,7 @@ const AssignForm = () => {
                 name='subject'
                 placeholder='Chủ đề'
                 disabled={false}
-                value=''
+                onChange={onChangeSubjects}
                 key='select-subject'
               />
             </Form.Item>
@@ -84,7 +117,7 @@ const AssignForm = () => {
                 name='grades'
                 placeholder='Khối'
                 disabled={false}
-                value=''
+                onChange={onChangeGrades}
                 key='select-grades'
               />
             </Form.Item>
@@ -93,9 +126,10 @@ const AssignForm = () => {
             <Form.Item name='access'>
               <SelectedAccess
                 name='access'
-                placeholder='Chủ Quyền truy cập'
+                placeholder='Quyền truy cập'
                 disabled={false}
                 key='select-access'
+                onChange={onChangeAccess}
               />
             </Form.Item>
           </Col>
@@ -108,6 +142,8 @@ const AssignForm = () => {
                 rows={3}
                 showCount
                 maxLength={200}
+                name='desc'
+                onChange={onChangeInput}
               />
             </Form.Item>
           </Col>

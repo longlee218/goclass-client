@@ -44,6 +44,33 @@ html {
   font-size: 62.5%;
 }
 
+@media (min-width: 1024px) {
+  html ::-webkit-scrollbar {
+    border-radius: 0;
+    height: 8px;
+    width: 8px;
+  }
+}
+
+@media (min-width: 1024px) {
+  html ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+  }
+}
+
+@media (min-width: 1024px) {
+  html ::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 0;
+  }
+}
+
+::selection {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
 body {
   font-family: var(--font-family-sans-serif);
   font-size: 1.6rem;

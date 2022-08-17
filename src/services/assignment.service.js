@@ -13,6 +13,19 @@ const assignmentService = {
       return Promise.reject(error);
     }
   },
+  updateAssign: async (id, payload) => {
+    try {
+      const { data } = await HttpClient({
+        url: '/assignment/' + id,
+        method: 'PATCH',
+        data: payload,
+      });
+      const { data: dataResponse } = data;
+      return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
   findById: async (id) => {
     try {
       const { data } = await HttpClient({

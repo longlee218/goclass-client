@@ -27,3 +27,8 @@
   box-shadow: 0 0.125rem 0.25rem 0 rgb(0 0 0 / 10%);
   margin-bottom: 3px;
 }
+
+.btn_add--slide {
+  width: calc(235px + (1.2rem * 2));
+  height: calc(155px + (1.2rem * 2));
+}

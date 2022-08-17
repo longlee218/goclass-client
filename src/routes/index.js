@@ -12,6 +12,7 @@ import ClassDetail from '../pages/Teacher/ClassDetail';
 import Login from '../pages/General/Login';
 import ManagerClass from '../pages/Teacher/ManagerClass';
 import SignUp from '../pages/General/SignUp';
+import Slide from '../pages/Teacher/Slide';
 import StudentDashboard from '../pages/Student/Dashboard';
 import TeacherDashboard from '../pages/Teacher/Dashboard';
 
@@ -56,6 +57,13 @@ const teacherRoutes = [
   {
     path: teacherRouteConfig.assignmentWithParam,
     page: Assignment,
+    layout: AssignLayout,
+    isPrivate: true,
+    roles: ['teacher'],
+  },
+  {
+    path: teacherRouteConfig.slideWithParam,
+    page: Slide,
     layout: AssignLayout,
     isPrivate: true,
     roles: ['teacher'],

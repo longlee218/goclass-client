@@ -1,30 +1,26 @@
+import { Button, Space } from 'antd';
+
 import AssignSlide from './AssignSlide';
 import React from 'react';
-import { Row } from 'antd';
+import { assignSelector } from '../../../../redux/assign/assign.selector';
+import { useSelector } from 'react-redux';
 
 const AssignSlides = () => {
+  const assignment = useSelector(assignSelector);
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        flexDirection: 'row',
-        alignItems: 'center',
-        alignContent: 'center',
-        justifyContent: 'flex-start',
-        gap: '15px',
-      }}
+    <Space
+      direction='horizontal'
+      size={15}
+      style={{ display: 'flex', flexWrap: 'wrap' }}
+      align='center'
     >
-      <AssignSlide />
-      <AssignSlide />
-      <AssignSlide />
-      <AssignSlide />
-      <AssignSlide />
-      <AssignSlide />
-      <AssignSlide />
-      <AssignSlide />
-      <AssignSlide />
-    </div>
+      {assignment?.slides?.map((item) => (
+        <AssignSlide slide={item} />
+      ))}
+      <Button className='btn_add--slide' type='dashed'>
+        Thêm Slide
+      </Button>
+    </Space>
   );
 };
 

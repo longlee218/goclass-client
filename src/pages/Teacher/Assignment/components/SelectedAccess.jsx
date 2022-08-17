@@ -7,13 +7,14 @@ const LIST_ACCESSES = [
   { k: 'shared', v: 'Chia sẻ - Chia sẻ lên Thư viện bài tập' },
 ];
 
-const SelectedAccess = ({ name, placeholder, value, disabled }) => {
+const SelectedAccess = ({ name, placeholder, value, disabled, onChange }) => {
   return (
     <Select
       placeholder={placeholder}
       name={name}
       disabled={disabled}
       value={value}
+      onChange={onChange}
     >
       {LIST_ACCESSES.map(({ k, v }, i) => (
         <Option key={i} value={k}>

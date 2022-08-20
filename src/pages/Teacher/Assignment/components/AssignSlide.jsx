@@ -1,4 +1,5 @@
 import { Button, Card, Dropdown, Input, Menu, Typography } from 'antd';
+import React, { useCallback, useState } from 'react';
 import {
   faCopy,
   faEllipsisV,
@@ -7,59 +8,81 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import assignActions from '../../../../redux/assign/assign.action';
 import { teacherRouteConfig } from '../../../../config/route.config';
+import useDebounce from '../../../../hooks/useDebounce';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 
-const dropdownSlide = (
-  <Menu
-    items={[
-      {
-        key: 'share',
-        label: (
-          <div>
-            <FontAwesomeIcon icon={faReorder} style={{ marginRight: 10 }} />
-            <Typography.Text strong type='secondary'>
-              Sắp xếp
-            </Typography.Text>
-          </div>
-        ),
-      },
-      {
-        key: 'duplicate',
-        label: (
-          <div>
-            <FontAwesomeIcon icon={faCopy} style={{ marginRight: 10 }} />
-            &nbsp;
-            <Typography.Text strong type='secondary'>
-              Nhân đôi
-            </Typography.Text>
-          </div>
-        ),
-      },
-      {
-        key: 'delete',
-        label: (
-          <div>
-            <FontAwesomeIcon
-              icon={faTrash}
-              color='red'
-              style={{ marginRight: 10 }}
-            />
-            &nbsp;
-            <Typography.Text strong type='danger'>
-              Xóa
-            </Typography.Text>
-          </div>
-        ),
-      },
-    ]}
-  />
-);
+const DropdownSlide = ({ dispatch, slide, openModal, setSlideCurrent }) => {
+  const onDuplicateSlide = () => {
+    dispatch(assignActions.duplicateSlide(slide._id));
+  };
+  const onSortTheSlides = () => {
+    setSlideCurrent(slide);
+    openModal();
+  };
 
-const AssignSlide = ({ slide }) => {
+  return (
+    <Menu
+      items={[
+        {
+          key: 'share',
+          label: (
+            <div>
+              <FontAwesomeIcon icon={faReorder} style={{ marginRight: 10 }} />
+              <Typography.Text
+                strong
+                type='secondary'
+                onClick={onSortTheSlides}
+              >
+                Sắp xếp
+              </Typography.Text>
+            </div>
+          ),
+        },
+        {
+          key: 'duplicate',
+          label: (
+            <div>
+              <FontAwesomeIcon icon={faCopy} style={{ marginRight: 10 }} />
+              &nbsp;
+              <Typography.Text
+                strong
+                type='secondary'
+                onClick={onDuplicateSlide}
+              >
+                Nhân đôi
+              </Typography.Text>
+            </div>
+          ),
+        },
+        {
+          key: 'delete',
+          label: (
+            <div>
+              <FontAwesomeIcon
+                icon={faTrash}
+                color='red'
+                style={{ marginRight: 10 }}
+              />
+              &nbsp;
+              <Typography.Text strong type='danger'>
+                Xóa
+              </Typography.Text>
+            </div>
+          ),
+        },
+      ]}
+    />
+  );
+};
+
+const AssignSlide = ({ slide, openModal, setSlideCurrent }) => {
   const { _id, order, points, assignment } = slide;
+  const [slidePoint, setSlidePoint] = useState(points);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onClickCard = (e) => {
     e.preventDefault();
@@ -71,6 +94,18 @@ const AssignSlide = ({ slide }) => {
     navigate(link);
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const onChangeInputSlide = useCallback(
+    useDebounce((e) => {
+      dispatch(
+        assignActions.updateSlide(_id, {
+          [e.target.name]: e.target.value,
+        })
+      );
+    }, 1000).bind(this),
+    []
+  );
+
   return (
     <Card
       key={_id}
@@ -78,18 +113,35 @@ const AssignSlide = ({ slide }) => {
       style={{
         display: 'inline-block',
         boxShadow: '0 0 8px 1px rgb(64 67 69 / 17%)',
+        width: 'calc(225 + 1.6rem)',
       }}
       bodyStyle={{
-        height: 'calc(155px + (1.2rem * 2))',
+        height: 'calc(125px + (0.8rem * 2))',
         padding: 0,
       }}
       actions={[
         <Typography.Text strong>{order}</Typography.Text>,
-        <Input size='small' value={points} suffix={<small>pts</small>} />,
+        <Input
+          name='points'
+          onChange={(e) => {
+            setSlidePoint(e.target.value);
+            onChangeInputSlide(e);
+          }}
+          size='small'
+          value={slidePoint}
+          suffix={<small>điểm</small>}
+        />,
         <Dropdown
           placement='bottomLeft'
           arrow
-          overlay={dropdownSlide}
+          overlay={
+            <DropdownSlide
+              dispatch={dispatch}
+              slide={slide}
+              openModal={openModal}
+              setSlideCurrent={setSlideCurrent}
+            />
+          }
           trigger={['click']}
         >
           <Button type='text' onClick={(e) => e.stopPropagation()}>
@@ -99,7 +151,8 @@ const AssignSlide = ({ slide }) => {
       ]}
     >
       <div onClick={onClickCard}>
-        <svg viewBox='0 0 1004 655'>
+        {slide?.order} {slide?.name}
+        {/* <svg viewBox='0 0 1004 655'>
           <g className='root'>
             <g className='background'></g>
             <g className='content'>
@@ -687,7 +740,7 @@ const AssignSlide = ({ slide }) => {
               </feMerge>
             </filter>
           </defs>
-        </svg>
+        </svg> */}
       </div>
     </Card>
   );

@@ -10,7 +10,7 @@
   -ms-flex-pack: justify;
   align-items: center;
   -ms-flex-align: center;
-  height: 60px;
+  height: 50px;
   border-bottom: 1px solid #eeeeef;
   background-color: var(--white);
 }

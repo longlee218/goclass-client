@@ -1,5 +1,7 @@
 const assignType = {
   GET_ASSIGN_SUCCESS: 'GET_ASSIGN_SUCCESS',
+  UPDATED_SLIDE: 'UPDATED_SLIDE',
+  DUPLICATE_SLIDE: 'DUPLICATE_SLIDE',
 };
 
 export default assignType;

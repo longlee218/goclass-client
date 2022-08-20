@@ -67,7 +67,7 @@
 }
 
 ::selection {
-  background-color: var(--primary-color);
+  background-color: var(--primary);
   color: #fff;
 }
 
@@ -232,6 +232,10 @@ button.mat-raised-button:not([class*='mat-elevation-z']) {
 
 .d-flex {
   display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
 }
 
 .gap-8 {

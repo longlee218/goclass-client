@@ -3,6 +3,7 @@
   overflow: auto;
   height: calc(100vh - 60px);
   width: 100vw;
+  padding-bottom: 2rem;
 }
 
 .assign-form__container {
@@ -19,7 +20,7 @@
 }
 
 .assign-wrapper {
-  padding: 24px 6rem 0px 6rem;
+  padding: 15px 6rem 0px 6rem;
 }
 
 .bg-white {

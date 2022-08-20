@@ -6,5 +6,16 @@
 
 .excalidraw .FixedSideContainer_side_top {
   right: 15.75rem !important;
-  top: 0 !important;
+}
+
+.slide__wrapper_container {
+  background-color: #fff;
+  padding: 24px 6rem 15px 6rem;
+}
+
+button .CollabButton {
+  display: none !important;
+}
+.excalidraw .help-icon {
+  display: none !important;
 }

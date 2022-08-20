@@ -10,7 +10,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 
 import AddButton from './components/AddButton';
-import AppLocalStoreage from '../../../utils/AppLocalStorage';
+import AppLocalStorage from '../../../utils/AppLocalStorage';
 import Appbreadcrumb from '../../../components/Appbreadcrumb/Appbreadcrumb';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import GridFolder from './components/GridFolder';
@@ -75,7 +75,7 @@ const AssignmentStore = () => {
 
   useEffect(() => {
     document.title = 'Kho lưu trữ bài tập';
-    const modeStore = AppLocalStoreage(STORAGE_KEY);
+    const modeStore = AppLocalStorage(STORAGE_KEY);
     if (Object.keys(modeStore.myStore()).length === 0) {
       modeStore.set('view_mode', viewMode);
     }
@@ -192,7 +192,7 @@ const AssignmentStore = () => {
 
   const onChangeViewMode = (e) => {
     const modeValue = e.target.value;
-    const modeStore = AppLocalStoreage(STORAGE_KEY);
+    const modeStore = AppLocalStorage(STORAGE_KEY);
     modeStore.set('view_mode', modeValue);
     setViewMode(modeValue);
   };

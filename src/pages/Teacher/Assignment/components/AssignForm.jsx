@@ -139,7 +139,7 @@ const AssignForm = () => {
             <Form.Item name='desc'>
               <Input.TextArea
                 placeholder='Mô tả'
-                rows={3}
+                rows={2}
                 showCount
                 maxLength={200}
                 name='desc'

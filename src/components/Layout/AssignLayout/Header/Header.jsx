@@ -74,43 +74,41 @@ const Header = () => {
   const assignment = useSelector(assignSelector);
 
   useEffect(() => {
-    const id = params.id;
+    const id = params.assignId;
     dispatch(assignActions.findAssignment(id));
   }, [params, dispatch]);
 
   return (
-    <>
-      <AntdHeader className='app__header--assignManager'>
-        <div className='app__header--assignManager_left'>
-          <div className='app__header--assignManager_left__home'>
-            <Button
-              className='btn-backhome'
-              onClick={() => navigate(teacherRouteConfig.assignmentStores)}
-            >
-              <FontAwesomeIcon icon={faHome} />
-            </Button>
-            <div className='assign-title'>
-              <Typography.Text>{assignment?.name}</Typography.Text>
-            </div>
-            {/* <div className='saving-text'>Saving...</div> */}
-            <div className='saving-text'></div>
-          </div>
-        </div>
-        <AssignDirector />
-        <div className='app__header--assignManager_right'>
-          <Dropdown
-            placement='bottomLeft'
-            arrow
-            overlay={dropdownActionsAssignment}
-            trigger={['click']}
+    <AntdHeader className='app__header--assignManager'>
+      <div className='app__header--assignManager_left'>
+        <div className='app__header--assignManager_left__home'>
+          <Button
+            className='btn-backhome'
+            onClick={() => navigate(teacherRouteConfig.assignmentStores)}
           >
-            <Button>
-              <FontAwesomeIcon icon={faEllipsisV} />
-            </Button>
-          </Dropdown>
+            <FontAwesomeIcon icon={faHome} />
+          </Button>
+          <div className='assign-title'>
+            <Typography.Text>{assignment?.name}</Typography.Text>
+          </div>
+          {/* <div className='saving-text'>Saving...</div> */}
+          <div className='saving-text'></div>
         </div>
-      </AntdHeader>
-    </>
+      </div>
+      <AssignDirector />
+      <div className='app__header--assignManager_right'>
+        <Dropdown
+          placement='bottomLeft'
+          arrow
+          overlay={dropdownActionsAssignment}
+          trigger={['click']}
+        >
+          <Button>
+            <FontAwesomeIcon icon={faEllipsisV} />
+          </Button>
+        </Dropdown>
+      </div>
+    </AntdHeader>
   );
 };
 

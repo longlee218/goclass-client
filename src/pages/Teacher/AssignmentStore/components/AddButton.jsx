@@ -21,7 +21,10 @@ const MenuAddDropDown = () => {
       .then((assignment) => {
         dispatch(alertActions.success());
         return navigate(
-          teacherRouteConfig.assignmentWithParam.replace(':id', assignment._id)
+          teacherRouteConfig.assignmentWithParam.replace(
+            ':assignId',
+            assignment._id
+          )
         );
       })
       .catch((error) => dispatch(alertActions.error(error.message)));

@@ -40,9 +40,9 @@
   box-sizing: border-box;
 }
 
-html {
+/* html {
   font-size: 62.5%;
-}
+} */
 
 @media (min-width: 1024px) {
   html ::-webkit-scrollbar {
@@ -73,12 +73,12 @@ html {
 
 body {
   font-family: var(--font-family-sans-serif);
-  font-size: 1.6rem;
+  /* font-size: 1.6rem; */
   line-height: 1.5;
   text-rendering: optimizeSpeed;
+  overscroll-behavior: none;
+  touch-action: manipulation;
   color: var(--gray-dark);
-  /* background-color: #f7f7f7; */
-  /* background-color: var(--white-50); */
   background-color: rgb(250 250 250);
 }
 
@@ -182,14 +182,14 @@ button {
 }
 
 button.wrapp-text-bold {
-  font-size: 1.4rem !important;
+  /* font-size: 1.2rem !important; */
   font-weight: 600;
 }
 
 span .text-bold,
 p .text-bold {
   color: #333;
-  font-size: 1.4rem !important;
+  /* font-size: 1.4rem !important; */
   font-weight: 600;
 }
 
@@ -262,21 +262,21 @@ button.mat-raised-button:not([class*='mat-elevation-z']) {
 }
 
 .pt-3 {
-  padding-top: 1rem;
+  padding-top: 0.6rem;
 }
 
 .pb-3 {
-  padding-bottom: 1rem;
+  padding-bottom: 0.6rem;
 }
 
 .mt-3,
 .my-3 {
-  margin-top: 1rem;
+  margin-top: 0.6rem;
 }
 
 .mb-3,
 .my-3 {
-  margin-bottom: 1rem;
+  margin-bottom: 0.6rem;
 }
 
 .d-flex-center {

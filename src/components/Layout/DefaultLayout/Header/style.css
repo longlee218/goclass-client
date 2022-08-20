@@ -25,7 +25,7 @@
 
 .app__header_content_logo_text {
   color: var(--black);
-  font-size: 1.4rem;
+  font-size: 1rem;
   font-weight: 700;
   margin: 0 0 0 16px;
 }
@@ -74,6 +74,7 @@
   height: 100%;
   outline: none;
   padding: 0 4px;
+  font-size: 0.8rem;
 }
 
 .app__header_content_info {

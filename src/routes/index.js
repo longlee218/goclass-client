@@ -9,6 +9,7 @@ import Assignment from '../pages/Teacher/Assignment';
 import AssignmentStore from '../pages/Teacher/AssignmentStore';
 import { AuthLayout } from '../components/Layout';
 import ClassDetail from '../pages/Teacher/ClassDetail';
+import EditAssignLayout from '../components/Layout/EditAssignLayout';
 import Login from '../pages/General/Login';
 import ManagerClass from '../pages/Teacher/ManagerClass';
 import SignUp from '../pages/General/SignUp';
@@ -64,7 +65,7 @@ const teacherRoutes = [
   {
     path: teacherRouteConfig.slideWithParam,
     page: Slide,
-    layout: AssignLayout,
+    layout: EditAssignLayout,
     isPrivate: true,
     roles: ['teacher'],
   },

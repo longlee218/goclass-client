@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 
-import AppLocalStorage from '../../utils/AppLocalStorage';
 import { Excalidraw } from '@excalidraw/excalidraw';
+import slideService from '../../services/slide.service';
+import { slideSocket } from '../../services/socket.service';
+import { useCallback } from 'react';
+import useDebounce from '../../hooks/useDebounce';
 import { useEffect } from 'react';
 
 const Whiteboard = ({ id, name }) => {
-  const localStore = AppLocalStorage('slide-' + id);
+  const [socketConnected, setSocketConnected] = useState(false);
+  const [haschanged, setHaschanged] = useState(false);
   const [excalidrawAPI, setExcalidrawAPI] = useState(null);
   const [initData, setInitData] = useState({
     appState: {
@@ -15,40 +19,56 @@ const Whiteboard = ({ id, name }) => {
   });
 
   useEffect(() => {
-    localStore.set('name', name);
-  }, [name, localStore]);
+    slideSocket.on('connect', () => {
+      setSocketConnected(true);
+      slideSocket.emit('join', id);
+    });
 
-  useEffect(() => {
-    const dataInLocal = localStore.myStore();
-    if (Object.keys(dataInLocal).length !== 0) {
-      setInitData((prev) => ({
-        ...prev,
-        elements: dataInLocal['elements'],
-        appState: {
-          ...prev.appState,
-          ...dataInLocal['app_state'],
-          collaborators: [],
-        },
-        files: dataInLocal['files'],
-      }));
-    }
+    slideSocket.on('disconnect', () => {
+      setSocketConnected(false);
+    });
+
+    slideSocket.on('updated', (data) => {
+      setInitData((pre) => {
+        return { ...pre, ...data };
+      });
+    });
+
+    return () => {
+      slideSocket.off('disconnect');
+      slideSocket.off('connect');
+    };
   }, []);
 
-  const onChangeExcalidraw = (elements, state, files) => {
-    localStore.set('elements', elements);
-    localStore.set('app_state', state);
-    localStore.set('files', files);
-  };
+  useEffect(() => {
+    slideService.findById(id).then(({ elements, appState, files }) => {
+      setInitData({
+        elements,
+        appState,
+        files,
+      });
+    });
+  }, [id]);
+
+  const onChangeExcalidraw = useCallback(
+    useDebounce(function (elements, appState, files) {
+      console.log('why you running');
+      slideSocket.emit('edit', { elements, appState, files }, id);
+    }, 2000),
+    [id]
+  );
 
   return (
     <Excalidraw
       name={name}
       ref={(api) => setExcalidrawAPI(api)}
-      onChange={onChangeExcalidraw}
+      onChange={(elements, appState, files) => {
+        setHaschanged(true);
+        onChangeExcalidraw(elements, appState, files);
+      }}
       initialData={initData}
       langCode='vi-VN'
       isCollaborating={false}
-      //   onPointerUpdate={(payload) => console.log(payload)}
       onPointerDown={(activeTool, pointerDownState) =>
         console.log({ activeTool, pointerDownState })
       }

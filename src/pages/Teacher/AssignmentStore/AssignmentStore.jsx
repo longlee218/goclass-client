@@ -65,7 +65,11 @@ const AssignmentStore = () => {
           ...folder,
           isFolder: true,
         }));
-        const dataTable = [...folders, ...data.assignments];
+        const assignments = data.assignments.map((assign) => ({
+          ...assign,
+          isFolder: false,
+        }));
+        const dataTable = [...folders, ...assignments];
         setDataTable(dataTable);
         setDataTableClone(dataTable);
       })

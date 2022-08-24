@@ -25,9 +25,14 @@ const TableFolder = ({
         <ColumnName
           name={name}
           isFolder={isFolder}
-          onClick={() =>
-            navigate(teacherRouteConfig.assignmentStores + '/' + _id)
-          }
+          onClick={() => {
+            if (isFolder)
+              navigate(teacherRouteConfig.assignmentStores + '/' + _id);
+            else
+              navigate(
+                teacherRouteConfig.assignmentWithParam.replace(':assignId', _id)
+              );
+          }}
         />
       ),
       sorter: (a, b) => a.name.length - b.name.length,

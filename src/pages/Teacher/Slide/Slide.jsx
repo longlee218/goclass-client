@@ -1,20 +1,22 @@
 import './style.css';
 
-import { Col, Form, Input, Pagination, Row, Typography } from 'antd';
-import React, { useState } from 'react';
+import { Col, Form, Input, Pagination, Row } from 'antd';
+import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router';
 
-import { Excalidraw } from '@excalidraw/excalidraw';
 import FormItem from 'antd/lib/form/FormItem';
 import Whiteboard from '../../../components/Whiteboard';
 import assignActions from '../../../redux/assign/assign.action';
 import { assignSelector } from '../../../redux/assign/assign.selector';
 import slideService from '../../../services/slide.service';
+import { teacherRouteConfig } from '../../../config/route.config';
+import useDebounce from '../../../hooks/useDebounce';
 import { useEffect } from 'react';
-import { useParams } from 'react-router';
 
 const Slide = () => {
   const params = useParams();
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const [slide, setSlide] = useState(undefined);
   const assignment = useSelector(assignSelector);
@@ -33,6 +35,7 @@ const Slide = () => {
 
       form.setFieldsValue({
         name: slide.name,
+        desc: slide?.desc ?? '',
         points: slide.points,
       });
     }
@@ -43,6 +46,30 @@ const Slide = () => {
       dispatch(assignActions.findAssignment(params.assignId));
     }
   }, [assignment, params, dispatch]);
+
+  const onChangeInput = useCallback(
+    useDebounce(function (e) {
+      const slideId = params.slideId;
+      dispatch(
+        assignActions.updateSlide(slideId, {
+          [e.target.name]: e.target.value,
+        })
+      );
+    }, 1000),
+    [params]
+  );
+
+  const onChangePage = (page) => {
+    const slide = assignment.slides.find(({ order }) => order === page);
+    if (slide) {
+      let link = teacherRouteConfig.slideWithParam.replace(
+        ':assignId',
+        params.assignId
+      );
+      link = link.replace(':slideId', slide._id);
+      return navigate(link);
+    }
+  };
 
   return (
     <div className='d-flex flex-column slide__wrapper'>
@@ -67,6 +94,7 @@ const Slide = () => {
                       name='name'
                       placeholder='Tên Slide'
                       value={slide?.name}
+                      onChange={onChangeInput}
                     />
                   </FormItem>
                 </Col>
@@ -76,6 +104,7 @@ const Slide = () => {
                       type='text'
                       name='desc'
                       placeholder='Mô tả nội dung'
+                      onChange={onChangeInput}
                     />
                   </FormItem>
                 </Col>
@@ -86,6 +115,7 @@ const Slide = () => {
                       name='points'
                       suffix='điểm'
                       placeholder='Điểm'
+                      onChange={onChangeInput}
                     />
                   </FormItem>
                 </Col>
@@ -95,10 +125,12 @@ const Slide = () => {
               <FormItem noStyle>
                 <Pagination
                   size='small'
-                  defaultCurrent={slide?.order}
+                  current={slide?.order}
+                  defaultCurrent={1}
                   defaultPageSize={1}
                   showTotal={(total) => `Tổng ${total} Slides`}
                   total={assignment?.slideCounts}
+                  onChange={onChangePage}
                 />
               </FormItem>
             </Col>

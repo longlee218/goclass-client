@@ -5,6 +5,7 @@ import {
 } from '../config/route.config';
 
 import AssignLayout from '../components/Layout/AssignLayout/AssignLayout';
+import AssignSlide from '../pages/Teacher/AssignSlide';
 import Assignment from '../pages/Teacher/Assignment';
 import AssignmentStore from '../pages/Teacher/AssignmentStore';
 import { AuthLayout } from '../components/Layout';
@@ -74,6 +75,13 @@ const teacherRoutes = [
     page: ClassDetail,
     isPrivate: true,
     roles: ['teacher'],
+  },
+  {
+    path: teacherRouteConfig.slideWithParamRoster,
+    page: AssignSlide,
+    isPrivate: true,
+    roles: ['teacher'],
+    layout: AssignLayout,
   },
 ];
 

@@ -6,7 +6,7 @@ import { ToastContainer } from 'react-toastify';
 const AssignLayout = ({ children }) => {
   return (
     <div id='main-layout'>
-      <LoadingBar />
+      {/* <LoadingBar /> */}
       <ToastContainer autoClose={2000} />
       <Header />
       <div className='app__with-sidebar'>

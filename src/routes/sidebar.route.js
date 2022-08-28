@@ -12,7 +12,7 @@ import { teacherRouteConfig } from '../config/route.config';
 export const sidebarTeacherRoutes = [
   {
     path: teacherRouteConfig.dashboard,
-    title: 'Home',
+    title: 'Bảng tin',
     icon: faHome,
   },
   {

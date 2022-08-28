@@ -38,6 +38,30 @@ const assignmentService = {
       return Promise.reject(error);
     }
   },
+  delete: async (id) => {
+    try {
+      const { data } = await HttpClient({
+        url: '/assignment/' + id,
+        method: 'DELETE',
+      });
+      const { data: dataResponse } = data;
+      return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+  duplicate: async (id) => {
+    try {
+      const { data } = await HttpClient({
+        url: '/assignment/' + id + '/duplicate',
+        method: 'POST',
+      });
+      const { data: dataResponse } = data;
+      return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
 };
 
 export default assignmentService;

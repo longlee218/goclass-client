@@ -1,6 +1,6 @@
 import './style.css';
 
-import { Input, Radio, Tooltip, Typography } from 'antd';
+import { Form, Input, Radio, Tooltip, Typography } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   faFolderPlus,
@@ -210,22 +210,30 @@ const AssignmentStore = () => {
         onCancel={onCancelModalFolder}
         isLoading={isLoading}
       >
-        <Input
-          autoFocus
-          ref={inputFolder}
-          name='folder_name'
-          placeholder='VD. Thư mục Bài tập Tiếng Việt'
-          style={{
-            marginBottom: '10px',
-          }}
-          value={nameFolder}
-          onChange={(e) => setNameFolder(e.target.value)}
-        />
-        <div>
+        <Form.Item
+          {...(currentAssignFolder._id
+            ? ''
+            : {
+                help: 'Thầy cô có thể chèn dấu `,` giữa các tên để tạo nhiều Thư mục 1 lúc',
+              })}
+        >
+          <Input
+            autoFocus
+            ref={inputFolder}
+            name='folder_name'
+            placeholder='VD. Thư mục Bài tập Tiếng Việt'
+            style={{
+              marginBottom: '10px',
+            }}
+            value={nameFolder}
+            onChange={(e) => setNameFolder(e.target.value)}
+          />
+        </Form.Item>
+        {/* <div>
           <Typography.Text italic>
             Thầy cô có thể chèn dấu "," giữa các tên để tạo nhiều Thư mục 1 lúc
           </Typography.Text>
-        </div>
+        </div> */}
       </ModalAddFolder>
       <div className='assignment_wrapper'>
         {/* <Appbreadcrumb breadcrumps={breadcrumps} /> */}

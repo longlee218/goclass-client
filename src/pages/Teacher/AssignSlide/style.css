@@ -1,0 +1,15 @@
+@media not all and (max-width: 80.875em) {
+  .site-layout-content {
+    margin: 0.1rem auto;
+    width: calc(100% - 2 * 1.5rem);
+    max-width: 47.5rem;
+    position: relative;
+  }
+}
+
+.classroom-layout-content {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}

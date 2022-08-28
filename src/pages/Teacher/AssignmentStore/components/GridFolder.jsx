@@ -15,6 +15,7 @@ const FolderItem = ({ folder, onOpenModalFolder, fetchDataGrid }) => (
       arrow
       overlay={
         <MenuActionFolder
+          key={folder._id}
           onOpenModalFolder={onOpenModalFolder}
           currentFolder={folder}
           fetchData={fetchDataGrid}
@@ -33,8 +34,8 @@ const FolderItem = ({ folder, onOpenModalFolder, fetchDataGrid }) => (
         <div className='d-flex flex-1 justify-content-center'>
           <Link to={teacherRouteConfig.assignmentStores + '/' + folder._id}>
             <Typography.Text>
-              {folder.name.length > 10
-                ? folder.name.substr(0, 9) + '...'
+              {folder.name.length > 30
+                ? folder.name.substr(0, 29) + '...'
                 : folder.name}
             </Typography.Text>
           </Link>
@@ -44,7 +45,7 @@ const FolderItem = ({ folder, onOpenModalFolder, fetchDataGrid }) => (
   </Tooltip>
 );
 
-const AssignmentItem = ({ assignment }) => {
+const AssignmentItem = ({ assignment, fetchDataGrid }) => {
   const link = teacherRouteConfig.assignmentWithParam.replace(
     ':assignId',
     assignment._id
@@ -54,7 +55,13 @@ const AssignmentItem = ({ assignment }) => {
       <Dropdown
         destroyPopupOnHide
         arrow
-        overlay={<MenuActionAssign key={assignment._id} />}
+        overlay={
+          <MenuActionAssign
+            key={assignment._id}
+            currentAssign={assignment}
+            fetchData={fetchDataGrid}
+          />
+        }
         trigger={['contextMenu']}
       >
         <div className='flex-item'>
@@ -68,8 +75,8 @@ const AssignmentItem = ({ assignment }) => {
           <div className='d-flex flex-1 justify-content-center'>
             <Link to={link}>
               <Typography.Text>
-                {assignment.name.length > 10
-                  ? assignment.name.substr(0, 9) + '...'
+                {assignment.name.length > 30
+                  ? assignment.name.substr(0, 29) + '...'
                   : assignment.name}
               </Typography.Text>
             </Link>
@@ -91,7 +98,7 @@ const GridFolder = ({ dataGrid, onOpenModalFolder, fetchDataGrid }) => {
             fetchDataGrid={fetchDataGrid}
           />
         ) : (
-          <AssignmentItem assignment={item} />
+          <AssignmentItem assignment={item} fetchDataGrid={fetchDataGrid} />
         );
       })}
     </div>

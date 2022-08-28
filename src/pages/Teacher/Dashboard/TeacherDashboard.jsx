@@ -10,19 +10,6 @@ const TeacherDashboard = (props) => {
     document.title = 'Màn hình chính';
   }, []);
 
-  // useEffect(() => {
-  //   let { state } = location;
-  //   if (state.isNew) {
-  //     dispatch(alertActions.success('Wellcome to Education.'));
-  //   } else {
-  //     dispatch(
-  //       alertActions.success(
-  //         'Wellcome back ' + user.firstName + ' ' + user.lastName
-  //       )
-  //     );
-  //   }
-  // }, []);
-
   return (
     <div className='dashboard_wrapper'>
       <Row>
@@ -30,7 +17,7 @@ const TeacherDashboard = (props) => {
         <Col span={8}>
           <section className='student_asking'>
             <div className='student_asking_title'>
-              <h3>Học sinh hỏi thầy</h3>
+              {/* <h3>Học sinh hỏi thầy</h3> */}
             </div>
           </section>
         </Col>

@@ -11,7 +11,6 @@ import { useEffect } from 'react';
 const Whiteboard = ({ id, name }) => {
   const [excalidrawAPI, setExcalidrawAPI] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
   const [initData, setInitData] = useState({
     appState: {
       viewBackgroundColor: '#f7f7f7',
@@ -68,7 +67,6 @@ const Whiteboard = ({ id, name }) => {
           exportBackground: false,
         },
       }).then((svg) => {
-        console.log(svg);
         slideSocket.emit(
           'save',
           { elements, appState, files, thumbnail: svg.outerHTML },

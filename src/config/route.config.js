@@ -7,6 +7,7 @@ export const teacherRouteConfig = {
   assignmentStoresWithParam: PREFIX_TEACHER + '/store-assignments/:fatherId',
   assignmentWithParam: PREFIX_TEACHER + '/assignments/:assignId',
   slideWithParam: PREFIX_TEACHER + '/assignments/:assignId/slide/:slideId',
+  slideWithParamRoster: PREFIX_TEACHER + '/assignments/:assignId/roster',
   myClass: PREFIX_TEACHER + '/my-class',
   myClassDetail: PREFIX_TEACHER + '/my-class/:id',
 };

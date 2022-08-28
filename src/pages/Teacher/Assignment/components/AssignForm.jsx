@@ -19,11 +19,13 @@ const AssignForm = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const onChangeInput = useCallback(
     useDebounce(function (e) {
-      dispatch(
-        assignActions.updateAssignment(assignment._id, {
-          [e.target.name]: e.target.value,
-        })
-      );
+      if (form.getFieldError(e.target.name).length === 0) {
+        dispatch(
+          assignActions.updateAssignment(assignment._id, {
+            [e.target.name]: e.target.value,
+          })
+        );
+      }
     }, 1000),
     [assignment]
   );

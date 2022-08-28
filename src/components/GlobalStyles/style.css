@@ -1,5 +1,6 @@
 /* @import '~antd/dist/antd.css'; */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,300;1,400;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,400;0,600;0,700;1,400&display=swap');
 
 :root {
   --blue: #007bff;
@@ -33,7 +34,7 @@
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
   --font-family-monospace: 'Space Mono', monospace;
-  --font-family-sans-serif: 'Montserrat', Arial, Helvetica, sans-serif;
+  --font-family-sans-serif: 'Roboto Mono', monospace;
 }
 
 * {
@@ -73,9 +74,10 @@
 
 body {
   font-family: var(--font-family-sans-serif);
-  /* font-size: 1.6rem; */
   line-height: 1.5;
   text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  text-size-adjust: 100%;
   overscroll-behavior: none;
   touch-action: manipulation;
   color: var(--gray-dark);
@@ -232,6 +234,9 @@ button.mat-raised-button:not([class*='mat-elevation-z']) {
 
 .d-flex {
   display: flex;
+}
+.flex-wrap {
+  flex-wrap: wrap;
 }
 
 .flex-column {

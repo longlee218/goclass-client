@@ -2,13 +2,16 @@ import './style.css';
 
 import { Col, Form, Input, Pagination, Row } from 'antd';
 import React, { useCallback, useState } from 'react';
+import {
+  assignSelector,
+  slideSelector,
+} from '../../../redux/assign/assign.selector';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
 
 import FormItem from 'antd/lib/form/FormItem';
 import Whiteboard from '../../../components/Whiteboard';
 import assignActions from '../../../redux/assign/assign.action';
-import { assignSelector } from '../../../redux/assign/assign.selector';
 import slideService from '../../../services/slide.service';
 import { teacherRouteConfig } from '../../../config/route.config';
 import useDebounce from '../../../hooks/useDebounce';
@@ -18,34 +21,28 @@ const Slide = () => {
   const params = useParams();
   const navigate = useNavigate();
   const [form] = Form.useForm();
-  const [slide, setSlide] = useState(undefined);
   const assignment = useSelector(assignSelector);
+  const slide = useSelector(slideSelector).find(
+    ({ _id }) => _id === params.slideId
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const slideId = params.slideId;
-    slideService.findById(slideId).then((data) => {
-      setSlide(data);
-    });
-  }, [params]);
+    if (!assignment || !slide) {
+      dispatch(assignActions.findAssignment(params.assignId));
+    }
+  }, [assignment, slide, params, dispatch]);
 
   useEffect(() => {
     if (slide) {
       document.title = slide.name;
-
       form.setFieldsValue({
         name: slide.name,
         desc: slide?.desc ?? '',
         points: slide.points,
       });
     }
-  }, [slide, form]);
-
-  useEffect(() => {
-    if (!assignment) {
-      dispatch(assignActions.findAssignment(params.assignId));
-    }
-  }, [assignment, params, dispatch]);
+  }, [slide, form, assignment]);
 
   const onChangeInput = useCallback(
     useDebounce(function (e) {
@@ -85,7 +82,7 @@ const Slide = () => {
                     rules={[
                       {
                         required: true,
-                        message: 'Please enter slide name',
+                        message: 'Không được để trống tên Slide.',
                       },
                     ]}
                   >
@@ -141,7 +138,7 @@ const Slide = () => {
         className='excalidraw-wrapper'
         style={{ height: 'calc(100vh - 158px)' }}
       >
-        {slide && <Whiteboard id={slide?._id} name={slide?.name} />}
+        {slide && <Whiteboard slide={slide} />}
       </div>
     </div>
   );

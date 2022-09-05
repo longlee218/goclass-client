@@ -1,19 +1,10 @@
 import './style.css';
 
-import {
-  Button,
-  Col,
-  Drawer,
-  Form,
-  Input,
-  Radio,
-  Row,
-  Select,
-  Space,
-} from 'antd';
+import { Button, Col, Form, Input, Radio, Row, Select } from 'antd';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import DrawerBase from '../DrawerBase';
 import alertActions from '../../../redux/alert/alert.action';
 import classGroupActions from '../../../redux/class_group/class_group.action';
 import classRoomActions from '../../../redux/class_room/class_room.action';
@@ -141,22 +132,12 @@ const ClassAddedDrawer = ({ visible, setVisible }) => {
   };
 
   return (
-    <Drawer
-      className='add-class-drawer'
+    <DrawerBase
+      key='add-student-drawer'
+      className='add-student-drawer'
       title={classRoom?._id ? 'Sửa lớp' : 'Thêm mới lớp'}
-      width='30em'
-      contentWrapperStyle={{
-        maxWidth: '100vw',
-      }}
-      placement='right'
       onClose={onClose}
       visible={visible}
-      bodyStyle={{ paddingBottom: 80 }}
-      extra={
-        <Space>
-          <Button onClick={onClose}>Hủy</Button>
-        </Space>
-      }
     >
       {visible && (
         <Form
@@ -306,7 +287,7 @@ const ClassAddedDrawer = ({ visible, setVisible }) => {
           </Row>
         </Form>
       )}
-    </Drawer>
+    </DrawerBase>
   );
 };
 

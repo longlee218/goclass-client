@@ -3,7 +3,6 @@ import { useLocation, useNavigate, useParams } from 'react-router';
 import { Button } from 'antd';
 import React from 'react';
 import { teacherRouteConfig } from '../../config/route.config';
-import { useEffect } from 'react';
 
 const AssignDirector = () => {
   const navigate = useNavigate();

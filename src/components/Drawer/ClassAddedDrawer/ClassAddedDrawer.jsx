@@ -112,10 +112,6 @@ const ClassAddedDrawer = ({ visible, setVisible }) => {
         classRoom._id
       );
     } else {
-      console.log({
-        ...values,
-        ...(valueRadio !== 0 ? { classRoomGroupId: valueRadio } : {}),
-      });
       promiseAction = classRoomService.create({
         ...values,
         ...(valueRadio !== 0 ? { classRoomGroupId: valueRadio } : {}),

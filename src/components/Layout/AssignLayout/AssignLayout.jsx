@@ -1,12 +1,14 @@
 import Header from './Header/Header';
 import LoadingBar from '../../LoadingBar/LoadingBar';
 import React from 'react';
+import ScrollToTop from '../../ScrollToTop/ScrollToTop';
 import { ToastContainer } from 'react-toastify';
 
 const AssignLayout = ({ children }) => {
   return (
     <div id='main-layout'>
       {/* <LoadingBar /> */}
+      <ScrollToTop />
       <ToastContainer autoClose={2000} />
       <Header />
       <div className='app__with-sidebar'>

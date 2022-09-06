@@ -4,7 +4,6 @@ import {
   faCheck,
   faClose,
   faEllipsisV,
-  faUserGroup,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,6 +15,11 @@ const Roster = ({ item }) => {
     <Card
       title={
         <div
+          style={{
+            padding: '8px 0',
+            color: heightOfCard !== 0 ? 'var(--danger)' : '#000',
+            fontWeight: heightOfCard !== 0 ? 'bold' : 'normal',
+          }}
           onClick={() => {
             if (heightOfCard === 0) {
               setHeightOfCard(180);
@@ -24,7 +28,7 @@ const Roster = ({ item }) => {
             }
           }}
         >
-          &nbsp;&nbsp;Lớp số {item}
+          &nbsp;&nbsp;{item.name}
         </div>
       }
       size='small'

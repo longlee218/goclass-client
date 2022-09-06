@@ -6,7 +6,6 @@ import locale from 'antd/lib/date-picker/locale/vi_VN';
 import moment from 'moment';
 
 const DatePickerVN = ({ style, placeholder, name, value, onChange }) => {
-  console.log({ value });
   return (
     <DatePicker
       name={name}

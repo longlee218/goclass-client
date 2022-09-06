@@ -3,12 +3,7 @@ import classRoomType from './class_room.type';
 const initState = {
   id: '',
   filter: '',
-  classRoomGroup: [
-    // {
-    //   group: null,
-    //   classRooms: [],
-    // },
-  ],
+  classRoomGroup: [],
 };
 
 export function classRoomReducer(state = initState, action) {

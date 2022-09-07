@@ -1,15 +1,57 @@
-import { Button, Card, Switch } from 'antd';
+import { Button, Card, Dropdown, Menu, Switch, Typography } from 'antd';
 import React, { useState } from 'react';
 import {
   faCheck,
   faClose,
   faEllipsisV,
+  faPen,
+  faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import alertActions from '../../../../redux/alert/alert.action';
+import examService from '../../../../services/exam.service';
+import moment from 'moment';
+import { useDispatch } from 'react-redux';
 
-const Roster = ({ item }) => {
+const statusToText = (status) => {
+  const statusObj = {
+    ready: 'Đang chờ...',
+    online: 'Đang thi',
+    finished: 'Kết thúc',
+  };
+  return statusObj[status] ?? '';
+};
+
+const dropdownActionsRoster = (
+  <Menu>
+    <Menu.Item key='edit' icon={<FontAwesomeIcon icon={faPen} />}>
+      Sửa nhóm
+    </Menu.Item>
+    <Menu.Item
+      key='delete'
+      icon={<FontAwesomeIcon icon={faTrash} />}
+      style={{ color: 'red' }}
+    >
+      Xóa nhóm
+    </Menu.Item>
+  </Menu>
+);
+const Roster = ({ item, setTrigger }) => {
+  const dispatch = useDispatch();
   const [heightOfCard, setHeightOfCard] = useState(0);
+
+  const onFinishRoster = (e) => {
+    e.preventDefault();
+    dispatch(alertActions.loading());
+    examService
+      .updateRosterGroup(item._id, { status: 'finished' })
+      .then(() => {
+        setTrigger((prev) => !prev);
+        dispatch(alertActions.success());
+      })
+      .catch((error) => dispatch(alertActions.error(error.message)));
+  };
 
   return (
     <Card
@@ -28,15 +70,30 @@ const Roster = ({ item }) => {
             }
           }}
         >
-          &nbsp;&nbsp;{item.name}
+          {item.name}
+          <Typography.Text
+            code
+            {...(item?.status === 'finished' && { type: 'success' })}
+            style={{ marginLeft: 10 }}
+          >
+            {statusToText(item?.status)}
+          </Typography.Text>
         </div>
       }
       size='small'
       hoverable
       extra={
-        <Button shape='round'>
-          <FontAwesomeIcon icon={faEllipsisV} size='lg' />
-        </Button>
+        <Dropdown
+          placement='bottomLeft'
+          arrow
+          overlay={dropdownActionsRoster}
+          trigger={['click']}
+        >
+          <Button shape='round'>
+            <FontAwesomeIcon icon={faEllipsisV} size='lg' />
+          </Button>
+        </Dropdown>
+        // <>{item?.createdAt ? moment(item.createdAt).format('DD/MM/YYYY')}</>
       }
       bodyStyle={{ padding: 0 }}
     >
@@ -61,7 +118,7 @@ const Roster = ({ item }) => {
             <p>Có 5 học sinh đã nộp</p>
             <p>Có 2 học sinh xin trợ giúp</p>
           </div>
-          <div className='d-flex gap-10 justify-content-between flex-wrap'>
+          <div className='d-flex gap-8 justify-content-between flex-wrap'>
             <div>
               <label>Xem kết quả </label>
               <Switch
@@ -75,7 +132,7 @@ const Roster = ({ item }) => {
               <Switch
                 checkedChildren={<FontAwesomeIcon icon={faCheck} />}
                 unCheckedChildren={<FontAwesomeIcon icon={faClose} />}
-                defaultChecked
+                defaultChecked={item?.isBlock}
               />
             </div>
             <div>
@@ -83,33 +140,31 @@ const Roster = ({ item }) => {
               <Switch
                 checkedChildren={<FontAwesomeIcon icon={faCheck} />}
                 unCheckedChildren={<FontAwesomeIcon icon={faClose} />}
-                defaultChecked
+                defaultChecked={item?.isHide}
               />
             </div>
             <div>
-              <label>Cho giúp đỡ </label>
+              <label>Trộn đề</label>
               <Switch
                 checkedChildren={<FontAwesomeIcon icon={faCheck} />}
                 unCheckedChildren={<FontAwesomeIcon icon={faClose} />}
-                defaultChecked
+                defaultChecked={item?.isSuffer}
               />
             </div>
             <div>
-              <label>Cho phép hỏi </label>
+              <label>Trợ giúp</label>
               <Switch
                 checkedChildren={<FontAwesomeIcon icon={faCheck} />}
                 unCheckedChildren={<FontAwesomeIcon icon={faClose} />}
-                defaultChecked
+                defaultChecked={item?.isCanHelp}
               />
             </div>
           </div>
-
           <div className='d-flex gap-8'>
-            {/* <Button shape='round'>Sửa</Button> */}
             <Button shape='round'>Theo dõi</Button>
-            {/* <Button shape='round' danger>
-              Xóa
-            </Button> */}
+            <Button shape='round' danger onClick={onFinishRoster}>
+              Kết thúc
+            </Button>
           </div>
         </div>
       </div>

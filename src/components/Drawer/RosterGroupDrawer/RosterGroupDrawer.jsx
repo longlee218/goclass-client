@@ -1,20 +1,21 @@
 import { Button, Checkbox, Col, Form, Input, Radio, Row, Select } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
-import DatePickerVN from '../../DatePickerVN';
 import DrawerBase from '../DrawerBase';
 import RangeDatePickerVN from '../../RangeDatePickerVN';
 import React from 'react';
 import alertActions from '../../../redux/alert/alert.action';
+import classRoomActions from '../../../redux/class_room/class_room.action';
 import { classRoomsOnlySelector } from '../../../redux/class_room/class_room.selector';
 import examService from '../../../services/exam.service';
 import { removeVietnameseTones } from '../../../helpers/string.helper';
 import studentService from '../../../services/student.service';
+import { useEffect } from 'react';
 import { useState } from 'react';
 
 const { Option } = Select;
 
-const RosterGroupDrawer = ({ visible, setVisible, assignment }) => {
+const RosterGroupDrawer = ({ visible, setVisible, assignment, setTrigger }) => {
   const dispatch = useDispatch();
   const [students, setStudents] = useState([]);
   const classRooms = useSelector(classRoomsOnlySelector);
@@ -62,14 +63,21 @@ const RosterGroupDrawer = ({ visible, setVisible, assignment }) => {
     setIsLoading(true);
     dispatch(alertActions.loading());
     examService
-      .create(assignment.roster, values)
+      .createRosterGroup(assignment.roster, { ...values, isFull })
       .then((data) => {
         dispatch(alertActions.success());
         onClose();
+        setTrigger((prev) => !prev);
       })
       .catch((error) => dispatch(alertActions.error(error.message)))
       .finally(() => setIsLoading(false));
   };
+
+  useEffect(() => {
+    if (classRooms.length === 0) {
+      dispatch(classRoomActions.get());
+    }
+  }, [classRooms, dispatch]);
 
   return (
     <DrawerBase

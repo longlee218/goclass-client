@@ -12,7 +12,6 @@ import { assignSelector } from '../../../redux/assign/assign.selector';
 import classRoomActions from '../../../redux/class_room/class_room.action';
 import examService from '../../../services/exam.service';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
-import { useCallback } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
@@ -22,7 +21,7 @@ const AssignSlide = () => {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [rosterGroups, setRosterGroup] = useState([]);
-
+  const [trigger, setTrigger] = useState(false);
   const onOpenDrawer = () => {
     setIsOpenDrawer(true);
   };
@@ -37,17 +36,17 @@ const AssignSlide = () => {
     if (assignment._id) {
       setIsLoading(true);
       examService
-        .get(assignment.roster)
+        .getRosterGroup(assignment.roster)
         .then((data) => {
           setRosterGroup(data);
         })
         .finally(() => setIsLoading(false));
     }
-  }, [assignment._id, assignment.roster]);
+  }, [assignment._id, assignment.roster, trigger]);
 
-  const RosterGroupsLayout = ({ groups }) => {
+  const RosterGroupsLayout = ({ groups, setTrigger }) => {
     if (groups.length === 0) {
-      return 'Không có dữ liệu';
+      return <div className='classroom-layout'>Không có dữ liệu</div>;
     }
     return groups.map((rosterGroup) => (
       <div className='classroom-layout'>
@@ -56,7 +55,7 @@ const AssignSlide = () => {
         </div>
         <div className='classroom-layout-content'>
           {rosterGroup.items.map((item) => (
-            <Roster item={item} />
+            <Roster item={item} setTrigger={setTrigger} />
           ))}
         </div>
       </div>
@@ -88,7 +87,7 @@ const AssignSlide = () => {
           {isLoading ? (
             'Đang tải...'
           ) : (
-            <RosterGroupsLayout groups={rosterGroups} />
+            <RosterGroupsLayout groups={rosterGroups} setTrigger={setTrigger} />
           )}
         </div>
       </div>
@@ -96,6 +95,8 @@ const AssignSlide = () => {
         <RosterGroupDrawer
           visible={isOpenDrawer}
           setVisible={setIsOpenDrawer}
+          assignment={assignment}
+          setTrigger={setTrigger}
         />
       )}
     </Content>

@@ -6,8 +6,7 @@ import {
   faHome,
   faTrashArrowUp,
 } from '@fortawesome/free-solid-svg-icons';
-
-import { teacherRouteConfig } from '../config/route.config';
+import { studentRouteConfig, teacherRouteConfig } from '../config/route.config';
 
 export const sidebarTeacherRoutes = [
   {
@@ -44,17 +43,17 @@ export const sidebarTeacherRoutes = [
 
 export const sidebarStudentRoutes = [
   {
-    path: teacherRouteConfig.dashboard,
+    path: studentRouteConfig.dashboard,
     title: 'Home',
     icon: faHome,
   },
+  // {
+  //   path: '#',
+  //   title: 'Bài tập',
+  //   icon: faBookOpen,
+  // },
   {
-    path: '#',
-    title: 'Bài tập',
-    icon: faBookOpen,
-  },
-  {
-    path: '#',
+    path: studentRouteConfig.assignments,
     title: 'Đề thi',
     icon: faGraduationCap,
   },

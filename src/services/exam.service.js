@@ -1,7 +1,7 @@
 import HttpClient from '../utils/HttpClient';
 
 const examService = {
-  create: async (rosterId, payload) => {
+  createRosterGroup: async (rosterId, payload) => {
     try {
       const { data } = await HttpClient({
         url: '/exam/roster/' + rosterId + '/roster-group',
@@ -14,11 +14,24 @@ const examService = {
       return Promise.reject(error);
     }
   },
-  get: async (rosterId) => {
+  getRosterGroup: async (rosterId) => {
     try {
       const { data } = await HttpClient({
         url: '/exam/roster/' + rosterId + '/roster-group',
         method: 'GET',
+      });
+      const { data: dataResponse } = data;
+      return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+  updateRosterGroup: async (id, payload) => {
+    try {
+      const { data } = await HttpClient({
+        url: '/exam/roster-group/' + id,
+        method: 'PATCH',
+        data: payload,
       });
       const { data: dataResponse } = data;
       return dataResponse;

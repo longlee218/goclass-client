@@ -15,6 +15,7 @@ import Login from '../pages/General/Login';
 import ManagerClass from '../pages/Teacher/ManagerClass';
 import SignUp from '../pages/General/SignUp';
 import Slide from '../pages/Teacher/Slide';
+import StudentAssignment from '../pages/Student/Assignment/StudentAssignment';
 import StudentDashboard from '../pages/Student/Dashboard';
 import TeacherDashboard from '../pages/Teacher/Dashboard';
 
@@ -89,6 +90,12 @@ const studentRoutes = [
   {
     path: studentRouteConfig.dashboard,
     page: StudentDashboard,
+    isPrivate: true,
+    roles: ['teacher', 'student'],
+  },
+  {
+    path: studentRouteConfig.assignments,
+    page: StudentAssignment,
     isPrivate: true,
     roles: ['teacher', 'student'],
   },

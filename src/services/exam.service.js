@@ -39,6 +39,21 @@ const examService = {
       return Promise.reject(error);
     }
   },
+  getToDoExam: async () => {
+    try {
+      const { data } = await HttpClient({
+        url: '/exam/analyze/',
+        method: 'GET',
+        params: {
+          type: 'todo',
+        },
+      });
+      const { data: dataResponse } = data;
+      return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
 };
 
 export default examService;

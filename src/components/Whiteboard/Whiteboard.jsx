@@ -86,10 +86,11 @@ const Whiteboard = ({ slide }) => {
           onChange={onSaveExcalidraw}
           initialData={initData}
           langCode='vi-VN'
-          isCollaborating={false}
+          isCollaborating={true}
           onCollabButtonClick={() =>
-            window.alert('You clicked on collab button')
+            window.alert('Le hoang Long are watch you')
           }
+          autoFocus={true}
         />
       ) : (
         <Typography.Text>Đang tải...</Typography.Text>

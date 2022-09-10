@@ -84,7 +84,7 @@ const AssignForm = () => {
     <div className='assign-form__container'>
       <Form form={form} layout='vertical' name='editor-form-assign'>
         <Row gutter={[6, 12]} style={{ justifyContent: 'space-between' }}>
-          <Col span={16}>
+          <Col span={14}>
             <Form.Item
               name='name'
               rules={[
@@ -102,7 +102,7 @@ const AssignForm = () => {
               />
             </Form.Item>
           </Col>
-          <Col span={2}>
+          <Col span={3}>
             <Form.Item name='subjects'>
               <SelectListSubject
                 name='subject'
@@ -113,7 +113,7 @@ const AssignForm = () => {
               />
             </Form.Item>
           </Col>
-          <Col span={2}>
+          <Col span={3}>
             <Form.Item name='grades'>
               <SelectListGrade
                 name='grades'

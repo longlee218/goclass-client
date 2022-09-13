@@ -7,12 +7,14 @@ import {
 import AssignLayout from '../components/Layout/AssignLayout/AssignLayout';
 import AssignSlide from '../pages/Teacher/AssignSlide';
 import Assignment from '../pages/Teacher/Assignment';
+import AssignmentLibrary from '../pages/Teacher/AssignmentLibrary';
 import AssignmentStore from '../pages/Teacher/AssignmentStore';
 import { AuthLayout } from '../components/Layout';
 import ClassDetail from '../pages/Teacher/ClassDetail';
 import EditAssignLayout from '../components/Layout/EditAssignLayout';
 import Login from '../pages/General/Login';
 import ManagerClass from '../pages/Teacher/ManagerClass';
+import ShortLayout from '../components/Layout/ShortLayout/ShortLayout';
 import SignUp from '../pages/General/SignUp';
 import Slide from '../pages/Teacher/Slide';
 import StudentAssignment from '../pages/Student/Assignment/StudentAssignment';
@@ -68,6 +70,13 @@ const teacherRoutes = [
     path: teacherRouteConfig.slideWithParam,
     page: Slide,
     layout: EditAssignLayout,
+    isPrivate: true,
+    roles: ['teacher'],
+  },
+  {
+    path: teacherRouteConfig.assignmentLibrary,
+    page: AssignmentLibrary,
+    layout: ShortLayout,
     isPrivate: true,
     roles: ['teacher'],
   },

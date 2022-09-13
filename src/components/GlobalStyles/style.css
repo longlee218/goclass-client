@@ -34,7 +34,7 @@
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
   --font-family-monospace: 'Space Mono', monospace;
-  --font-family-sans-serif: 'Roboto Mono', monospace;
+  --font-family-sans-serif: 'Montserrat', sans-serif;
 }
 
 * {
@@ -82,6 +82,7 @@ body {
   touch-action: manipulation;
   color: var(--gray-dark);
   background-color: rgb(250 250 250);
+  font-weight: 500;
 }
 
 b,

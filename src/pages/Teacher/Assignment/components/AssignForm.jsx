@@ -84,9 +84,10 @@ const AssignForm = () => {
     <div className='assign-form__container'>
       <Form form={form} layout='vertical' name='editor-form-assign'>
         <Row gutter={[6, 12]} style={{ justifyContent: 'space-between' }}>
-          <Col span={14}>
+          <Col span={12}>
             <Form.Item
               name='name'
+              label='Tiêu đề'
               rules={[
                 {
                   required: true,
@@ -103,7 +104,7 @@ const AssignForm = () => {
             </Form.Item>
           </Col>
           <Col span={3}>
-            <Form.Item name='subjects'>
+            <Form.Item name='subjects' label='Chủ đề'>
               <SelectListSubject
                 name='subject'
                 placeholder='Chủ đề'
@@ -114,7 +115,7 @@ const AssignForm = () => {
             </Form.Item>
           </Col>
           <Col span={3}>
-            <Form.Item name='grades'>
+            <Form.Item name='grades' label='Cấp độ'>
               <SelectListGrade
                 name='grades'
                 placeholder='Khối'
@@ -124,8 +125,8 @@ const AssignForm = () => {
               />
             </Form.Item>
           </Col>
-          <Col span={4}>
-            <Form.Item name='access'>
+          <Col span={6}>
+            <Form.Item name='access' label='Truy cập'>
               <SelectedAccess
                 name='access'
                 placeholder='Quyền truy cập'
@@ -138,12 +139,12 @@ const AssignForm = () => {
         </Row>
         <Row>
           <Col span={24}>
-            <Form.Item name='desc'>
+            <Form.Item name='desc' label='Mô tả'>
               <Input.TextArea
                 placeholder='Mô tả'
                 rows={2}
                 showCount
-                maxLength={200}
+                maxLength={400}
                 name='desc'
                 onChange={onChangeInput}
               />

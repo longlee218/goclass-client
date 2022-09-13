@@ -43,7 +43,7 @@ const Header = () => {
         </div>
       </div>
       <div className='assign-title'>
-        <Typography.Title level={5} type='secondary'>
+        <Typography.Title level={5} style={{ fontWeight: 600 }}>
           CHỈNH SỬA:&nbsp;&nbsp;{assignment?.name?.toUpperCase()}
         </Typography.Title>
       </div>

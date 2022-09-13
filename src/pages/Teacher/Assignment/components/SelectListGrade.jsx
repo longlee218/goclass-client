@@ -32,6 +32,7 @@ const SelectListGrade = ({ name, placeholder, value, disabled, onChange }) => {
       value={value}
       onChange={onChange}
       allowClear
+      style={{ width: '100%' }}
     >
       {LiST_GRADES.map((grade, i) => (
         <Option key={i} value={grade}>

@@ -4,6 +4,7 @@ import {
   faGlobe,
   faGraduationCap,
   faHome,
+  faStore,
   faTrashArrowUp,
 } from '@fortawesome/free-solid-svg-icons';
 import { studentRouteConfig, teacherRouteConfig } from '../config/route.config';
@@ -33,6 +34,11 @@ export const sidebarTeacherRoutes = [
     path: '#',
     title: 'Website',
     icon: faGlobe,
+  },
+  {
+    path: teacherRouteConfig.assignmentLibrary,
+    title: 'Thư viện',
+    icon: faStore,
   },
   {
     path: '#',

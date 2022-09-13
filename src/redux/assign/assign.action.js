@@ -22,11 +22,11 @@ const assignActions = {
   },
   updateAssignment: function (id, payload) {
     return async (dispatch) => {
-      dispatch(alertAction.loading());
+      // dispatch(alertAction.loading());
       assignmentService
         .updateAssign(id, payload)
         .then((assignment) => {
-          dispatch(alertAction.success());
+          // dispatch(alertAction.success());
           dispatch(this.getAssignmentSuccess(assignment));
         })
         .catch((error) => dispatch(alertAction.error(error.message)));

@@ -144,6 +144,7 @@ const ClassAddedDrawer = ({ visible, setVisible }) => {
             name: classRoom?.name ?? '',
             session: classRoom?.session ?? '',
             desc: classRoom?.desc ?? '',
+            color: classRoom?.color ?? LIST_COLOR_RGB[1],
           }}
         >
           <Row gutter={16} style={{ marginRight: 0 }}>
@@ -238,8 +239,9 @@ const ClassAddedDrawer = ({ visible, setVisible }) => {
               <Form.Item name='color' label='Màu sắc'>
                 <Select
                   name='color'
-                  defaultValue={LIST_COLOR_RGB[1]}
+                  // defaultValue={LIST_COLOR_RGB[1]}
                   style={{ width: 'auto' }}
+                  // value={classRoom?.color}
                 >
                   {LIST_COLOR_RGB.map((colorCode, i) => (
                     <Option key={i} value={colorCode}>

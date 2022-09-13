@@ -8,9 +8,18 @@ import {
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
+import { Popover } from 'antd';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useLocation } from 'react-router';
 import { useState } from 'react';
+
+const content = (
+  <div>
+    <Link to='#'>Tạo đề</Link>
+    <br></br>
+    <Link to='#'>Tạo lớp</Link>
+  </div>
+);
 
 const SideBar = () => {
   const location = useLocation();
@@ -28,9 +37,16 @@ const SideBar = () => {
   return (
     <div className='sidbar_wrapper'>
       <div>
-        <div className='sidebar__fastaction_button' aria-expanded='false'>
-          <FontAwesomeIcon icon={faPlus} fontSize={19} />
-        </div>
+        <Popover
+          placement='topRight'
+          title='Tạo đề'
+          content={content}
+          trigger='click'
+        >
+          <div className='sidebar__fastaction_button' aria-expanded='false'>
+            <FontAwesomeIcon icon={faPlus} fontSize={19} />
+          </div>
+        </Popover>
       </div>
       <ul className='sidebar__wrapper_list'>
         {sidebarRoutes.map((route, i) => (

@@ -4,7 +4,9 @@ import moment from 'moment';
 
 const ColumnCreatedAt = ({ createdAt }) => {
   return (
-    <Typography>{moment(createdAt).format('DD/MM/YYYY, HH:mm')}</Typography>
+    <Typography.Text type='secondary'>
+      {moment(createdAt).format('DD/MM/YYYY, HH:mm')}
+    </Typography.Text>
   );
 };
 

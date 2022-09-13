@@ -37,6 +37,7 @@ const SelectListSubject = ({
       value={value}
       onChange={onChange}
       allowClear
+      style={{ width: '100%' }}
     >
       {LiST_SUBJECT.map((subject, i) => (
         <Option key={i} value={subject}>

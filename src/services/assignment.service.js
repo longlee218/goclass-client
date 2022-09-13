@@ -13,6 +13,18 @@ const assignmentService = {
       return Promise.reject(error);
     }
   },
+  getAssignShared: async (query = {}) => {
+    try {
+      const { data } = await HttpClient({
+        url: '/assignments',
+        method: 'GET',
+      });
+      const { data: dataResponse } = data;
+      return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
   updateAssign: async (id, payload) => {
     try {
       const { data } = await HttpClient({

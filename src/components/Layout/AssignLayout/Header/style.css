@@ -13,6 +13,9 @@
   height: 50px;
   border-bottom: 1px solid #eeeeef;
   background-color: var(--white);
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 
 .app__header--assignManager_left {
@@ -64,7 +67,7 @@
 .assign-title span {
   font-size: 0.9rem;
   color: #6d6e70;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .app__header--assignManager_left__home {

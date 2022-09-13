@@ -17,3 +17,15 @@
   flex-direction: column;
   gap: 15px;
 }
+
+.assign-slide__wrapper__actions {
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  margin-left: 0.25rem;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+  column-gap: 15px;
+  row-gap: 10px;
+  flex-wrap: wrap;
+}

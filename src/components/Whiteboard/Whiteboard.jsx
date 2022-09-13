@@ -86,10 +86,6 @@ const Whiteboard = ({ slide }) => {
           onChange={onSaveExcalidraw}
           initialData={initData}
           langCode='vi-VN'
-          isCollaborating={true}
-          onCollabButtonClick={() =>
-            window.alert('Le hoang Long are watch you')
-          }
           autoFocus={true}
         />
       ) : (

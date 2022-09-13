@@ -14,6 +14,19 @@ const examService = {
       return Promise.reject(error);
     }
   },
+  updateRosterGroup: async (id, payload) => {
+    try {
+      const { data } = await HttpClient({
+        url: '/exam/roster-group/' + id,
+        method: 'PATCH',
+        data: payload,
+      });
+      const { data: dataResponse } = data;
+      return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
   getRosterGroup: async (rosterId) => {
     try {
       const { data } = await HttpClient({
@@ -32,6 +45,18 @@ const examService = {
         url: '/exam/roster-group/' + id,
         method: 'PATCH',
         data: payload,
+      });
+      const { data: dataResponse } = data;
+      return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+  deleteRosterGroup: async (id) => {
+    try {
+      const { data } = await HttpClient({
+        url: '/exam/roster-group/' + id,
+        method: 'DELETE',
       });
       const { data: dataResponse } = data;
       return dataResponse;

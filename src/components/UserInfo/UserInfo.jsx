@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Link } from 'react-router-dom';
 import React from 'react';
+import { Typography } from 'antd';
 import authAction from '../../redux/auth/auth.action';
 
 const UserInfo = ({ refModal }) => {
@@ -28,9 +29,13 @@ const UserInfo = ({ refModal }) => {
         </div>
         <hr />
         <div className='action-link'>
-          <Link to='#'>Trang cá nhân</Link>
-          <Link to='#' style={{ color: 'red' }} onClick={onCLickLogout}>
-            Đăng xuất
+          <Link to='#'>
+            <Typography.Text>Trang cá nhân</Typography.Text>
+          </Link>
+          <Link to='#' onClick={onCLickLogout}>
+            <Typography.Text style={{ color: 'red' }}>
+              Đăng xuất
+            </Typography.Text>
           </Link>
         </div>
       </div>

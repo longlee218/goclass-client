@@ -1,4 +1,15 @@
-import { Button, Card, Dropdown, Menu, Switch, Typography } from 'antd';
+import {
+  Button,
+  Card,
+  Col,
+  Collapse,
+  Dropdown,
+  Menu,
+  Modal,
+  Row,
+  Switch,
+  Typography,
+} from 'antd';
 import React, { useState } from 'react';
 import {
   faCheck,
@@ -11,35 +22,85 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import alertActions from '../../../../redux/alert/alert.action';
 import examService from '../../../../services/exam.service';
-import moment from 'moment';
 import { useDispatch } from 'react-redux';
 
+const { Panel } = Collapse;
 const statusToText = (status) => {
   const statusObj = {
-    ready: 'Đang chờ...',
+    ready: 'Sẵn sàng...',
     online: 'Đang thi',
     finished: 'Kết thúc',
   };
   return statusObj[status] ?? '';
 };
 
-const dropdownActionsRoster = (
-  <Menu>
-    <Menu.Item key='edit' icon={<FontAwesomeIcon icon={faPen} />}>
-      Sửa nhóm
-    </Menu.Item>
-    <Menu.Item
-      key='delete'
-      icon={<FontAwesomeIcon icon={faTrash} />}
-      style={{ color: 'red' }}
-    >
-      Xóa nhóm
-    </Menu.Item>
-  </Menu>
-);
-const Roster = ({ item, setTrigger }) => {
+const DropdownActionsRoster = ({
+  item,
+  setTrigger,
+  onOpenDrawer,
+  setRosterGroup,
+}) => {
   const dispatch = useDispatch();
-  const [heightOfCard, setHeightOfCard] = useState(0);
+
+  const onUpdateRosterGroup = () => {
+    setRosterGroup(item);
+    onOpenDrawer();
+  };
+
+  const onDeleteRosterGroup = () => {
+    Modal.confirm({
+      title: 'Xác nhận',
+      content:
+        item.status === 'online' ? (
+          <>
+            Nhóm <b>{item.name}</b> đang Online, việc xóa có thể ảnh hưởng tới
+            quá trình làm bài của học sinh. Bạn có chắc chắn muốn xóa ?
+          </>
+        ) : (
+          <>
+            Bạn có chắc muốn xóa nhóm <b>{item.name}</b> ?
+          </>
+        ),
+      okText: 'Tiếp tục',
+      cancelText: 'Hủy',
+      okButtonProps: {
+        danger: true,
+      },
+      onOk: () => {
+        dispatch(alertActions.loading());
+        examService
+          .deleteRosterGroup(item._id)
+          .then(() => {
+            setTrigger((prev) => !prev);
+            dispatch(alertActions.success());
+          })
+          .catch((error) => dispatch(alertActions.error(error.message)));
+      },
+    });
+  };
+  return (
+    <Menu>
+      <Menu.Item
+        key='edit'
+        icon={<FontAwesomeIcon icon={faPen} />}
+        onClick={onUpdateRosterGroup}
+      >
+        Chi tiết
+      </Menu.Item>
+      <Menu.Item
+        key='delete'
+        icon={<FontAwesomeIcon icon={faTrash} />}
+        style={{ color: 'red' }}
+        onClick={onDeleteRosterGroup}
+      >
+        Xóa nhóm
+      </Menu.Item>
+    </Menu>
+  );
+};
+
+const Roster = ({ item, setTrigger, onOpenDrawer, setRosterGroup }) => {
+  const dispatch = useDispatch();
 
   const onFinishRoster = (e) => {
     e.preventDefault();
@@ -53,122 +114,108 @@ const Roster = ({ item, setTrigger }) => {
       .catch((error) => dispatch(alertActions.error(error.message)));
   };
 
+  const onChangeSwitch = (e) => {
+    console.log(e);
+  };
+
   return (
-    <Card
-      title={
-        <div
-          style={{
-            padding: '8px 0',
-            color: heightOfCard !== 0 ? 'var(--danger)' : '#000',
-            fontWeight: heightOfCard !== 0 ? 'bold' : 'normal',
-          }}
-          onClick={() => {
-            if (heightOfCard === 0) {
-              setHeightOfCard(180);
-            } else {
-              setHeightOfCard(0);
+    <Collapse accordion>
+      <Panel
+        header={
+          <div>
+            {item.name}
+            <Typography.Text
+              code
+              {...(item?.status === 'finished' && { type: 'success' })}
+              style={{ marginLeft: 10 }}
+            >
+              {statusToText(item?.status)}
+            </Typography.Text>
+          </div>
+        }
+        extra={
+          <Dropdown
+            placement='bottomLeft'
+            arrow
+            overlay={
+              <DropdownActionsRoster
+                item={item}
+                setTrigger={setTrigger}
+                onOpenDrawer={onOpenDrawer}
+                setRosterGroup={setRosterGroup}
+              />
             }
-          }}
-        >
-          {item.name}
-          <Typography.Text
-            code
-            {...(item?.status === 'finished' && { type: 'success' })}
-            style={{ marginLeft: 10 }}
+            trigger={['click']}
           >
-            {statusToText(item?.status)}
-          </Typography.Text>
-        </div>
-      }
-      size='small'
-      hoverable
-      extra={
-        <Dropdown
-          placement='bottomLeft'
-          arrow
-          overlay={dropdownActionsRoster}
-          trigger={['click']}
-        >
-          <Button shape='round'>
-            <FontAwesomeIcon icon={faEllipsisV} size='lg' />
-          </Button>
-        </Dropdown>
-        // <>{item?.createdAt ? moment(item.createdAt).format('DD/MM/YYYY')}</>
-      }
-      bodyStyle={{ padding: 0 }}
-    >
-      <div
-        style={{
-          transition: 'height .3s cubic-bezier(0.4,0,0.2,1)',
-          height: heightOfCard,
-          maxHeight: 200,
-        }}
-      >
-        <div
-          style={{
-            padding: 12,
-            display: heightOfCard ? 'flex' : 'none',
-            flexDirection: 'column',
-            height: '100%',
-            justifyContent: 'space-between',
-          }}
-        >
-          <div className='d-flex gap-15'>
-            <p>Có 12 học sinh đang làm</p>
-            <p>Có 5 học sinh đã nộp</p>
-            <p>Có 2 học sinh xin trợ giúp</p>
-          </div>
-          <div className='d-flex gap-8 justify-content-between flex-wrap'>
-            <div>
-              <label>Xem kết quả </label>
-              <Switch
-                checkedChildren={<FontAwesomeIcon icon={faCheck} />}
-                unCheckedChildren={<FontAwesomeIcon icon={faClose} />}
-                defaultChecked
-              />
-            </div>
-            <div>
-              <label>Ẩn </label>
-              <Switch
-                checkedChildren={<FontAwesomeIcon icon={faCheck} />}
-                unCheckedChildren={<FontAwesomeIcon icon={faClose} />}
-                defaultChecked={item?.isBlock}
-              />
-            </div>
-            <div>
-              <label>Chỉ xem </label>
-              <Switch
-                checkedChildren={<FontAwesomeIcon icon={faCheck} />}
-                unCheckedChildren={<FontAwesomeIcon icon={faClose} />}
-                defaultChecked={item?.isHide}
-              />
-            </div>
-            <div>
-              <label>Trộn đề</label>
-              <Switch
-                checkedChildren={<FontAwesomeIcon icon={faCheck} />}
-                unCheckedChildren={<FontAwesomeIcon icon={faClose} />}
-                defaultChecked={item?.isSuffer}
-              />
-            </div>
-            <div>
-              <label>Trợ giúp</label>
-              <Switch
-                checkedChildren={<FontAwesomeIcon icon={faCheck} />}
-                unCheckedChildren={<FontAwesomeIcon icon={faClose} />}
-                defaultChecked={item?.isCanHelp}
-              />
-            </div>
-          </div>
-          <div className='d-flex gap-8'>
-            <Button shape='round'>Theo dõi</Button>
-            <Button shape='round' danger onClick={onFinishRoster}>
-              Kết thúc
+            <Button shape='round' onClick={(e) => e.stopPropagation()}>
+              <FontAwesomeIcon icon={faEllipsisV} size='lg' />
             </Button>
-          </div>
-        </div>
-      </div>
-    </Card>
+          </Dropdown>
+        }
+      >
+        {item.status !== 'finished' ? (
+          <>
+            <Row gutter={[16, 24]}>
+              <Col xs={12} sm={8} md={6} lg={6} xl={6}>
+                <label>Xem kết quả&nbsp;</label>
+                <Switch
+                  checkedChildren={<FontAwesomeIcon icon={faCheck} />}
+                  unCheckedChildren={<FontAwesomeIcon icon={faClose} />}
+                  defaultChecked={item?.iShowResult}
+                  name='isShowResult'
+                  onChange={onChangeSwitch}
+                />
+              </Col>
+              <Col xs={12} sm={8} md={6} lg={6} xl={6}>
+                <label>Ẩn bài&nbsp;</label>
+                <Switch
+                  checkedChildren={<FontAwesomeIcon icon={faCheck} />}
+                  unCheckedChildren={<FontAwesomeIcon icon={faClose} />}
+                  defaultChecked={item?.isHide}
+                  name='isHide'
+                  onChange={onChangeSwitch}
+                />
+              </Col>
+              <Col xs={12} sm={8} md={6} lg={6} xl={6}>
+                <label>Chỉ xem&nbsp;</label>
+                <Switch
+                  checkedChildren={<FontAwesomeIcon icon={faCheck} />}
+                  unCheckedChildren={<FontAwesomeIcon icon={faClose} />}
+                  defaultChecked={item?.isBlock}
+                  name='isBlock'
+                  onChange={onChangeSwitch}
+                />
+              </Col>
+              <Col xs={12} sm={8} md={6} lg={6} xl={6}>
+                <label>Trợ giúp&nbsp;</label>
+                <Switch
+                  checkedChildren={<FontAwesomeIcon icon={faCheck} />}
+                  unCheckedChildren={<FontAwesomeIcon icon={faClose} />}
+                  defaultChecked={item?.isCanHelp}
+                  name='isCanHelp'
+                  onChange={onChangeSwitch}
+                />
+              </Col>
+            </Row>
+            <div className='d-flex gap-8' style={{ marginTop: 40 }}>
+              <Button shape='round'>Theo dõi</Button>
+              {item.status !== 'finished' && (
+                <Button shape='round' danger onClick={onFinishRoster}>
+                  Kết thúc
+                </Button>
+              )}
+            </div>
+          </>
+        ) : (
+          <>
+            <Typography.Paragraph>Nhóm đã kết thúc</Typography.Paragraph>
+            <div className='d-flex gap-8' style={{ marginTop: 40 }}>
+              <Button shape='round'>Xem lại</Button>
+            </div>
+          </>
+        )}
+      </Panel>
+    </Collapse>
   );
 };
 

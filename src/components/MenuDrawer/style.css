@@ -81,7 +81,7 @@
 .ant-drawer-body {
   display: flex;
   flex-direction: column;
-  font-size: 1.6rem !important;
+  font-size: 1.2rem !important;
   max-height: 100%;
   overflow-y: auto !important;
   padding: 16px 0 0 28px !important;

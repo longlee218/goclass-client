@@ -1,9 +1,7 @@
 import { Button, Form, Input, Modal, Popover } from 'antd';
 
 import React from 'react';
-import alertActions from '../../redux/alert/alert.action';
 import classGroupActions from '../../redux/class_group/class_group.action';
-import classGroupService from '../../services/classGroup.service';
 import classRoomActions from '../../redux/class_room/class_room.action';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
@@ -14,15 +12,10 @@ const ContentClassGroup = (classGroup, setVisible, formEdit) => {
 
   const onSubmitForm = (values) => {
     setIsLoading(true);
-    dispatch(alertActions.loading());
-    classGroupService
-      .update(classGroup._id, values)
+    dispatch(classGroupActions.update(classGroup._id, values))
       .then(() => {
-        dispatch(alertActions.success());
-        dispatch(classRoomActions.get());
         setVisible(false);
       })
-      .catch((error) => dispatch(alertActions.error(error.message)))
       .finally(() => setIsLoading(false));
   };
 

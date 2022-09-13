@@ -31,7 +31,7 @@
 .userinfo-modal__tippy a {
   color: #666;
   display: block;
-  font-size: 1.5rem;
+  font-size: 1rem;
   padding: 10px 0;
 }
 
@@ -44,7 +44,7 @@
 }
 .fullname-user {
   color: var(--dark);
-  font-size: 1.6rem;
+  font-size: 1rem;
   font-weight: 600;
   white-space: nowrap;
   width: 110px;

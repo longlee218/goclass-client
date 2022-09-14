@@ -27,6 +27,7 @@
   --danger: #f73481;
   --light: #f8f9fa;
   --dark: #343a40;
+  --bold-gray: #6d6e70;
   --secondary: rgba(0, 0, 0, 0.45);
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
@@ -225,6 +226,9 @@ p .text-bold {
   color: var(--primary) !important;
 }
 
+.text-bold-gray {
+  color: var(--bold-gray) !important;
+}
 .text-danger :hover {
   color: var(--danger);
 }
@@ -269,6 +273,10 @@ button.mat-raised-button:not([class*='mat-elevation-z']) {
 
 .align-center {
   align-items: center;
+}
+
+.align-end {
+  align-items: flex-end;
 }
 
 .pt-3 {

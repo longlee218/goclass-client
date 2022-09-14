@@ -8,6 +8,7 @@ import AssignLayout from '../components/Layout/AssignLayout/AssignLayout';
 import AssignSlide from '../pages/Teacher/AssignSlide';
 import Assignment from '../pages/Teacher/Assignment';
 import AssignmentLibrary from '../pages/Teacher/AssignmentLibrary';
+import AssignmentLibraryDetail from '../pages/Teacher/AssignmentLibraryDetail';
 import AssignmentStore from '../pages/Teacher/AssignmentStore';
 import { AuthLayout } from '../components/Layout';
 import ClassDetail from '../pages/Teacher/ClassDetail';
@@ -76,6 +77,13 @@ const teacherRoutes = [
   {
     path: teacherRouteConfig.assignmentLibrary,
     page: AssignmentLibrary,
+    layout: ShortLayout,
+    isPrivate: true,
+    roles: ['teacher'],
+  },
+  {
+    path: teacherRouteConfig.assignmentLibraryDetail,
+    page: AssignmentLibraryDetail,
     layout: ShortLayout,
     isPrivate: true,
     roles: ['teacher'],

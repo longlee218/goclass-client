@@ -1,0 +1,75 @@
+.assignment-container {
+  overflow: scroll;
+  min-height: 0;
+  flex-direction: column;
+  box-sizing: border-box;
+  display: flex;
+  flex: 1;
+}
+.assignment-meta {
+  padding: 1em 5em;
+  box-shadow: 0 0.125rem 0.25rem 0 rgb(0 0 0 / 10%);
+  z-index: 5;
+  background-color: #fff;
+}
+
+.name-container-title {
+  margin: 8px 0;
+}
+
+.assign-name {
+  margin-bottom: 16px;
+}
+
+.description-container-title {
+  margin: 16px 0 8px;
+  margin-bottom: 0;
+  color: var(--bold-gray);
+}
+
+.description-container-content {
+  white-space: pre-wrap;
+  width: 75%;
+}
+
+.assign-tags-layout {
+  flex-direction: row;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  align-content: center;
+  max-width: 100%;
+  justify-content: flex-start;
+}
+.subjects {
+  margin-right: 24px;
+}
+
+.section-header {
+  display: flex;
+  -webkit-box-flex-flow: row wrap;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  -webkit-box-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  padding: 2em 4.5em 0;
+}
+
+.section-slides {
+  margin-top: 1em;
+  padding: 0 4.5em 2em;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex-flow: row wrap;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  -webkit-box-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 10px 20px;
+}

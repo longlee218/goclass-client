@@ -29,7 +29,9 @@ const MenuAddDropDown = () => {
       })
       .catch((error) => dispatch(alertActions.error(error.message)));
   };
-  const onCreateFromLib = () => {};
+  const onCreateFromLib = () => {
+    return navigate(teacherRouteConfig.assignmentLibrary);
+  };
   return (
     <Menu
       items={[

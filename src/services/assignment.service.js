@@ -18,6 +18,7 @@ const assignmentService = {
       const { data } = await HttpClient({
         url: '/assignments',
         method: 'GET',
+        params: query,
       });
       const { data: dataResponse } = data;
       return dataResponse;
@@ -42,6 +43,18 @@ const assignmentService = {
     try {
       const { data } = await HttpClient({
         url: '/assignment/' + id,
+        method: 'GET',
+      });
+      const { data: dataResponse } = data;
+      return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+  findByIdShared: async (id) => {
+    try {
+      const { data } = await HttpClient({
+        url: '/assignment-shared/' + id,
         method: 'GET',
       });
       const { data: dataResponse } = data;

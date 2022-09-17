@@ -89,6 +89,31 @@ const classRoomService = {
       return Promise.reject(error);
     }
   },
+  getAlertInClass: async (id) => {
+    try {
+      const { data } = await HttpClient({
+        url: '/class-room-alert/' + id,
+        method: 'GET',
+      });
+      const { data: dataResponse } = data;
+      return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+  createAlertInClass: async (id, content) => {
+    try {
+      const { data } = await HttpClient({
+        url: '/class-room-alert/' + id,
+        method: 'POST',
+        data: { content },
+      });
+      const { data: dataResponse } = data;
+      return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
 };
 
 export default classRoomService;

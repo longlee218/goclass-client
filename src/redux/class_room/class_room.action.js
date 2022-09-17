@@ -57,6 +57,27 @@ const classRoomActions = {
       }
     };
   },
+  createAlert: function (id, content) {
+    return async (dispatch) => {
+      const data = await classRoomService.createAlertInClass(id, content);
+      return data;
+    };
+  },
+  getAlert: function (id) {
+    const success = (payload) => ({
+      type: classRoomType.GET_ALERT_CLASS,
+      payload,
+    });
+    return async (dispatch) => {
+      try {
+        const notify = await classRoomService.getAlertInClass(id);
+        dispatch(success(notify));
+        return notify;
+      } catch (error) {
+        return error;
+      }
+    };
+  },
   filter: (text) => ({
     type: classRoomType.FILTER_CLASS,
     payload: text,

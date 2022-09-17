@@ -7,6 +7,7 @@ import { classRoomReducer } from './class_room/class_room.reducer';
 import { combineReducers } from 'redux';
 import configReducer from './config/config.reducer';
 import loadingReducer from './loading/loading.reducer';
+import { notifyReducer } from './notify/notify.reducer';
 import studentReducer from './student/student.reducer';
 
 const allReducers = combineReducers({
@@ -19,6 +20,7 @@ const allReducers = combineReducers({
   assignFolder: assignFolderReducer,
   assignment: assignReducer,
   config: configReducer,
+  notify: notifyReducer,
 });
 
 const rootReducer = (state, action) => {

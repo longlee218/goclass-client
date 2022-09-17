@@ -1,0 +1,8 @@
+const notifyType = {
+  GET_NOTIFY: 'GET_NOTIFY',
+  UPDATE_NOTIFY: 'UPDATE_NOTIFY',
+  CREATE_NOTIFY: 'CREATE_NOTIFY',
+  DELETE_NOTIFY: 'DELETE_NOTIFY',
+};
+
+export default notifyType;

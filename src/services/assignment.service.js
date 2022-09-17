@@ -87,6 +87,18 @@ const assignmentService = {
       return Promise.reject(error);
     }
   },
+  getAllLibrary: async () => {
+    try {
+      const { data } = await HttpClient({
+        url: '/assignment-lib',
+        method: 'GET',
+      });
+      const { data: dataResponse } = data;
+      return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
 };
 
 export default assignmentService;

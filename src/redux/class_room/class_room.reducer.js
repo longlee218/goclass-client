@@ -4,6 +4,7 @@ const initState = {
   id: '',
   filter: '',
   classRoomGroup: [],
+  alert: {},
 };
 
 export function classRoomReducer(state = initState, action) {
@@ -52,6 +53,16 @@ export function classRoomReducer(state = initState, action) {
         );
       });
       return { ...state, classRoomGroup };
+    case classRoomType.GET_ALERT_CLASS:
+      // means this class dont have any alert
+      if (payload.length === 0) {
+        return state;
+      }
+      const firstAlert = payload[0];
+      return {
+        ...state,
+        alert: { ...state.alert, [firstAlert.classRoomId]: payload },
+      };
     default:
       return state;
   }

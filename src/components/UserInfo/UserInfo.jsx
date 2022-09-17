@@ -2,6 +2,7 @@ import './style.css';
 
 import { useDispatch, useSelector } from 'react-redux';
 
+import AvatarOwner from '../AvatarOwner/AvatarOwner';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { Typography } from 'antd';
@@ -18,11 +19,12 @@ const UserInfo = ({ refModal }) => {
     <div className='userinfo-modal' ref={refModal}>
       <div className='userinfo-modal__tippy'>
         <div className='d-flex-center'>
-          <img
+          {/* <img
             src='https://graph.facebook.com/1615573495302871/picture?width=400&amp;height=400'
             alt='Long Le'
             className='user-avatar'
-          />
+          /> */}
+          <AvatarOwner fullname={user?.fullname} src={user?.avatarUrl} />
           <div className='user-info' style={{ marginLeft: '12px' }}>
             <div className='fullname-user'>{user.fullname}</div>
           </div>

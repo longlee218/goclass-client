@@ -8,7 +8,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 
-const ClassCardGroup = ({ classData, setShowDrawer }) => {
+const ClassCardGroup = ({
+  classData,
+  setShowAddDrawer,
+  setShowSettingDrawer,
+}) => {
   return (
     <div className='manager-class_wrapper__class-group'>
       <div className='' style={{ marginTop: '2rem' }}>
@@ -51,7 +55,8 @@ const ClassCardGroup = ({ classData, setShowDrawer }) => {
                     >
                       <ClassCard
                         classRoom={classRoom}
-                        setShowDrawer={setShowDrawer}
+                        setShowAddDrawer={setShowAddDrawer}
+                        setShowSettingDrawer={setShowSettingDrawer}
                       />
                     </Col>
                   ))

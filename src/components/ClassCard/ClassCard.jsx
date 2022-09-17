@@ -4,6 +4,7 @@ import { Button, Card, Dropdown, Menu, Modal, Typography } from 'antd';
 import {
   faCopy,
   faEllipsis,
+  faGear,
   faPen,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
@@ -18,11 +19,22 @@ import { teacherRouteConfig } from '../../config/route.config';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const ActionMenu = (idClassRoom, setShowDrawer, dispatch) => {
+const ActionMenu = (
+  idClassRoom,
+  setShowAddDrawer,
+  setShowSettingDrawer,
+  dispatch
+) => {
   const onEditClassRoom = (e) => {
     e.domEvent.stopPropagation();
     dispatch(classRoomActions.find(idClassRoom));
-    setShowDrawer(true);
+    setShowAddDrawer(true);
+  };
+
+  const onSettingClassRoom = (e) => {
+    e.domEvent.stopPropagation();
+    dispatch(classRoomActions.find(idClassRoom));
+    setShowSettingDrawer(true);
   };
 
   const onDuplicateClassRoom = (e) => {
@@ -70,6 +82,13 @@ const ActionMenu = (idClassRoom, setShowDrawer, dispatch) => {
         Nhân bản
       </Menu.Item>
       <Menu.Item
+        key='setting'
+        icon={<FontAwesomeIcon icon={faGear} />}
+        onClick={onSettingClassRoom}
+      >
+        Cài đặt
+      </Menu.Item>
+      <Menu.Item
         key='delete'
         icon={<FontAwesomeIcon icon={faTrash} />}
         style={{ color: 'red' }}
@@ -81,7 +100,7 @@ const ActionMenu = (idClassRoom, setShowDrawer, dispatch) => {
   );
 };
 
-const ClassCard = ({ classRoom, setShowDrawer }) => {
+const ClassCard = ({ classRoom, setShowAddDrawer, setShowSettingDrawer }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { _id, name, countStudents, session, color } = classRoom;
@@ -110,7 +129,12 @@ const ClassCard = ({ classRoom, setShowDrawer }) => {
         <Dropdown
           destroyPopupOnHide
           arrow
-          overlay={ActionMenu(_id, setShowDrawer, dispatch)}
+          overlay={ActionMenu(
+            _id,
+            setShowAddDrawer,
+            setShowSettingDrawer,
+            dispatch
+          )}
           trigger={['click']}
           children={
             <div

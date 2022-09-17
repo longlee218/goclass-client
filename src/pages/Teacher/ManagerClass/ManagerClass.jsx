@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
 import ClassCardGroup from '../../../components/ClassCardGroup';
+import ClassSettingDrawer from '../../../components/Drawer/ClassSettingDrawer/ClassSettingDrawer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import classRoomActions from '../../../redux/class_room/class_room.action';
@@ -21,8 +22,11 @@ const { Search } = Input;
 const ManagerClass = () => {
   const dispatch = useDispatch();
   const classRooms = useSelector(classRoomsSelector);
+
   const [showAddDrawer, setShowAddDrawer] = useState(false);
   const [showNewSsDrawer, setShowNewSsDrawer] = useState(false);
+  const [showSettingDrawer, setShowSettingDrawer] = useState(false);
+
   const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
@@ -36,6 +40,7 @@ const ManagerClass = () => {
 
   const onClickAddClass = () => setShowAddDrawer(true);
   const onClickNewSessionClass = () => setShowNewSsDrawer(true);
+  const onClickSettingClass = () => setShowSettingDrawer(true);
 
   const onChangeSearchInput = (e) => {
     setSearchText(e.target.value);
@@ -79,15 +84,25 @@ const ManagerClass = () => {
           <ClassCardGroup
             key='wrapper-class-group'
             classData={classRooms}
-            setShowDrawer={setShowAddDrawer}
+            setShowAddDrawer={setShowAddDrawer}
+            setShowSettingDrawer={setShowSettingDrawer}
           />
         </div>
       </div>
-      <ClassAddedDrawer visible={showAddDrawer} setVisible={setShowAddDrawer} />
-      <ClassNewSessionDrawer
-        visible={showNewSsDrawer}
-        setVisible={setShowNewSsDrawer}
-      />
+      <div className='drawer'>
+        <ClassAddedDrawer
+          visible={showAddDrawer}
+          setVisible={setShowAddDrawer}
+        />
+        <ClassNewSessionDrawer
+          visible={showNewSsDrawer}
+          setVisible={setShowNewSsDrawer}
+        />
+        <ClassSettingDrawer
+          visible={showSettingDrawer}
+          setVisible={setShowSettingDrawer}
+        />
+      </div>
     </>
   );
 };

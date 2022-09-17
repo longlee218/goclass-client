@@ -12,7 +12,7 @@ import { useNavigate, useParams } from 'react-router';
 import FormItem from 'antd/lib/form/FormItem';
 import Whiteboard from '../../../components/Whiteboard';
 import assignActions from '../../../redux/assign/assign.action';
-import slideService from '../../../services/slide.service';
+import assignmentService from '../../../services/assignment.service';
 import { teacherRouteConfig } from '../../../config/route.config';
 import useDebounce from '../../../hooks/useDebounce';
 import { useEffect } from 'react';
@@ -25,7 +25,9 @@ const Slide = () => {
   const slide = useSelector(slideSelector).find(
     ({ _id }) => _id === params.slideId
   );
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const [libraryItems, setLibraryItems] = useState([]);
 
   useEffect(() => {
     if (!assignment || !slide) {
@@ -43,6 +45,16 @@ const Slide = () => {
       });
     }
   }, [slide, form, assignment]);
+
+  useEffect(() => {
+    assignmentService
+      .getAllLibrary()
+      .then((data) => {
+        const lib = data.map(({ elements }) => [...elements]);
+        setLibraryItems(lib);
+      })
+      .catch((error) => dispatch(error.message));
+  }, [dispatch]);
 
   const onChangeInput = useCallback(
     useDebounce(function (e) {
@@ -138,7 +150,9 @@ const Slide = () => {
         className='excalidraw-wrapper'
         style={{ height: 'calc(100vh - 158px)' }}
       >
-        {slide && <Whiteboard slide={slide} />}
+        {slide && (
+          <Whiteboard slide={slide} user={user} libraryItems={libraryItems} />
+        )}
       </div>
     </div>
   );

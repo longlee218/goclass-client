@@ -147,8 +147,17 @@ button {
 .flex-1 {
   flex: 1 1;
 }
+
 .flex-2 {
   flex: 2;
+}
+
+.flex-1-1-0 {
+  flex: 1 1 0%;
+}
+
+.flex-2-1-0 {
+  flex: 2 1 0%;
 }
 
 .active {
@@ -240,6 +249,7 @@ button.mat-raised-button:not([class*='mat-elevation-z']) {
 .d-flex {
   display: flex;
 }
+
 .flex-wrap {
   flex-wrap: wrap;
 }
@@ -287,6 +297,10 @@ button.mat-raised-button:not([class*='mat-elevation-z']) {
   padding-bottom: 0.6rem;
 }
 
+.pl-10 {
+  padding-left: 10px;
+}
+
 .mt-3,
 .my-3 {
   margin-top: 0.6rem;
@@ -314,4 +328,73 @@ button.mat-raised-button:not([class*='mat-elevation-z']) {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.notify__warpper {
+  background: var(--white);
+  color: #1d2129;
+  margin: 0;
+  overflow: hidden;
+  padding-left: 0;
+  will-change: opacity, transform;
+  width: 400px;
+  list-style-type: none;
+}
+
+.notify__warpper > header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 8px;
+  padding-bottom: 16px;
+}
+
+.notify__content {
+  max-height: 68vh;
+  overflow-y: auto;
+}
+
+.notify__content__link {
+  align-items: flex-start;
+  background-color: var(--white);
+  border-radius: 10px;
+  cursor: default;
+  display: flex;
+  flex-direction: row;
+  padding: 12px 20px 8px 12px;
+  transition: background-color 0.3s;
+}
+
+.notify__content__link:hover {
+  background-color: rgba(22, 24, 35, 0.05);
+}
+
+.notify__image {
+  flex-shrink: 0;
+  height: 50px;
+  overflow: hidden;
+  width: 50px;
+}
+
+.notify__message {
+  flex: 1 1;
+  line-height: 18px;
+  padding: 0 10px 0 16px;
+  word-break: break-word;
+  color: var(--bold-gray);
+  font-size: 15px;
+  line-height: 18px;
+}
+
+.name {
+  font-weight: 600;
+  color: var(--dark);
+  font-size: medium;
+}
+
+.notify__createdAt {
+  color: var(--primary);
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 6px;
 }

@@ -9,11 +9,15 @@ export function classGroupReducer(state = initState, action) {
     case classGroupType.CREATE_CLASS_GROUP:
       return [...state, payload];
     case classGroupType.UPDATE_CLASS_GROUP:
+      console.log({
+        state,
+        payload,
+      });
       return state.map((s) => {
-        if (s._id === action._id) {
+        if (s._id === payload._id) {
           return {
             ...s,
-            ...action,
+            ...payload,
           };
         }
         return s;

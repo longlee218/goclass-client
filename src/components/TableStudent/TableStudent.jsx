@@ -204,13 +204,19 @@ const TableStudent = ({
           tooltipText = 'Đã có tài khoản';
         }
         return (
-          <Tooltip title={tooltipText} placement='right'>
-            <Typography.Text type={color} strong>
+          <Typography.Text
+            type={color}
+            strong
+            copyable={{
+              text: docs.email,
+            }}
+          >
+            <Tooltip title={tooltipText} placement='right'>
               {docs.email}
               &nbsp; &nbsp;
-              <FontAwesomeIcon icon={icon} />
-            </Typography.Text>
-          </Tooltip>
+            </Tooltip>
+            {/* <FontAwesomeIcon icon={icon} /> */}
+          </Typography.Text>
         );
       },
       sorter: true,
@@ -262,7 +268,7 @@ const TableStudent = ({
   return (
     <Table
       bordered
-      title={() => <Typography.Text>Danh sách học sinh</Typography.Text>}
+      // title={() => <Typography.Text>Danh sách học sinh</Typography.Text>}
       columns={columns}
       dataSource={paginateStudents.students}
       pagination={{

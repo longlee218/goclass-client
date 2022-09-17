@@ -6,3 +6,4 @@ const socketOptions = {
 };
 export const appSocket = io(endpointBack, socketOptions);
 export const slideSocket = io(endpointBack + '/slide', socketOptions);
+export const notifySocket = io(endpointBack + '/notify', socketOptions);

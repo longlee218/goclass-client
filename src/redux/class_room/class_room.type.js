@@ -7,5 +7,6 @@ const classRoomType = {
   UPDATE_CLASS: 'UPDATE_CLASS',
   DELETE_CLASS: 'DELETE_CLASS',
   DUPLICATE_CLASS: 'DUPLICATE_CLASS',
+  GET_ALERT_CLASS: 'GET_ALERT_CLASS',
 };
 export default classRoomType;

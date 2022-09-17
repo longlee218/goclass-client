@@ -1,25 +1,27 @@
 import './style.css';
 
-import { Button, Modal, Space, Typography } from 'antd';
+import { Button, Modal, Space, Tabs, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { StudentAddedDrawer } from '../../../components/Drawer';
+import TabClassNotify from './components/TabClassNotify';
 import TableStudent from '../../../components/TableStudent';
 import alertActions from '../../../redux/alert/alert.action';
-import classRoomActions from '../../../redux/class_room/class_room.action';
 import classRoomService from '../../../services/classRoom.service';
 import studentActions from '../../../redux/student/student.action';
 import { studentSelector } from '../../../redux/student/student.selector';
 import { useAppContext } from '../../../hooks/useAppContext';
 import { useParams } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
 
 const ClassDetail = () => {
   const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
   const params = useParams();
   const [classRoom, setClassRoom] = useState(null);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(6);
   const [loading, setLoading] = useState(true);
   const paginateStudents = useSelector(studentSelector);
   const [studentSelect, setStudentSelect] = useState(undefined);
@@ -96,6 +98,12 @@ const ClassDetail = () => {
       .then(() => setTriggerClass(!triggerClass));
   };
 
+  const onChangeTabs = (e) => {
+    // setSearchParams({
+    //   tab: e,
+    // });
+  };
+
   return (
     <>
       <div className='class-detail_wrapper'>
@@ -115,7 +123,7 @@ const ClassDetail = () => {
                 </Typography.Text>
               </Typography.Text>
             </Space>
-            <div className='d-flex gap-10'>
+            {/* <div className='d-flex gap-10'>
               <Button
                 type='primary'
                 danger
@@ -135,42 +143,81 @@ const ClassDetail = () => {
                 />
                 Google Meet
               </Button>
-            </div>
+            </div> */}
           </div>
-          <Typography.Paragraph
+          {/* <Typography.Paragraph
             editable={{
               tooltip: 'Sửa mô tả lớp học',
               onChange: onChangeDesc,
             }}
           >
             {classRoom?.desc}
-          </Typography.Paragraph>
+          </Typography.Paragraph> */}
         </Space>
       </div>
-
-      <TableStudent
-        paginateStudents={paginateStudents}
-        classInfo={classRoom}
-        setVisibleDrawer={setIsShowAddedDrawer}
-        setPage={setPage}
-        page={page}
-        limit={limit}
-        setLimit={setLimit}
-        onEditStudent={onEditStudent}
-        onRemoveStudent={onRemoveStudent}
-        loading={loading}
-        setLoading={setLoading}
-      />
-      {classRoom && (
-        <StudentAddedDrawer
-          visible={isShowAddedDrawer}
-          setVisible={setIsShowAddedDrawer}
-          classId={classRoom._id}
-          studentInfo={studentSelect}
-          setStudentInfo={setStudentSelect}
-          setClassRoom={setClassRoom}
-        />
-      )}
+      <Tabs
+        defaultActiveKey={searchParams.get('tab') ?? 'noti'}
+        onChange={onChangeTabs}
+      >
+        <Tabs.TabPane tab='Thông báo' key='noti'>
+          <TabClassNotify classRoom={classRoom} />
+        </Tabs.TabPane>
+        <Tabs.TabPane tab='Học sinh' key='students'>
+          <div
+            className='d-flex gap-10 justify-flex-end '
+            style={{ marginBottom: '1rem' }}
+          >
+            <Button
+              type='primary'
+              danger
+              shape='round'
+              onClick={() => setIsShowAddedDrawer(true)}
+            >
+              Thêm học sinh
+            </Button>
+            <Button
+              shape='round'
+              disabled={(classRoom?.countStudents || 0) === 0}
+            >
+              <img
+                src='https://www.gstatic.com/apps/signup/resources/Meet_Product_Icon.svg'
+                alt='google-meet'
+                className='google-meet'
+              />
+              Google Meet
+            </Button>
+          </div>
+          <TableStudent
+            paginateStudents={paginateStudents}
+            classInfo={classRoom}
+            setVisibleDrawer={setIsShowAddedDrawer}
+            setPage={setPage}
+            page={page}
+            limit={limit}
+            setLimit={setLimit}
+            onEditStudent={onEditStudent}
+            onRemoveStudent={onRemoveStudent}
+            loading={loading}
+            setLoading={setLoading}
+          />
+          {classRoom && (
+            <StudentAddedDrawer
+              visible={isShowAddedDrawer}
+              setVisible={setIsShowAddedDrawer}
+              classId={classRoom._id}
+              studentInfo={studentSelect}
+              setStudentInfo={setStudentSelect}
+              setClassRoom={setClassRoom}
+            />
+          )}
+        </Tabs.TabPane>
+        <Tabs.TabPane tab='Tài liệu' key='documents'>
+          Tài liệu
+        </Tabs.TabPane>
+        <Tabs.TabPane tab='Cài đặt' key='setting'>
+          Cài đặt
+        </Tabs.TabPane>
+      </Tabs>
     </>
   );
 };

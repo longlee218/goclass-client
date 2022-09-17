@@ -5,24 +5,21 @@ import {
   sidebarStudentRoutes,
   sidebarTeacherRoutes,
 } from '../../../../routes/sidebar.route';
+import {
+  studentRouteConfig,
+  teacherRouteConfig,
+} from '../../../../config/route.config';
+import { useLocation, useNavigate } from 'react-router';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
-import { Popover } from 'antd';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { useLocation } from 'react-router';
+import { Tooltip } from 'antd';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
-
-const content = (
-  <div>
-    <Link to='#'>Tạo đề</Link>
-    <br></br>
-    <Link to='#'>Tạo lớp</Link>
-  </div>
-);
 
 const SideBar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { pathname } = location;
   const [sidebarRoutes, setSidebarRoutes] = useState([]);
 
@@ -36,18 +33,23 @@ const SideBar = () => {
 
   return (
     <div className='sidbar_wrapper'>
-      <div>
-        <Popover
-          placement='topRight'
-          title='Tạo đề'
-          content={content}
-          trigger='click'
-        >
-          <div className='sidebar__fastaction_button' aria-expanded='false'>
-            <FontAwesomeIcon icon={faPlus} fontSize={19} />
-          </div>
-        </Popover>
-      </div>
+      {location.pathname !== teacherRouteConfig.dashboard &&
+      location.pathname !== studentRouteConfig.dashboard ? (
+        <div>
+          <Tooltip title='Quay lại' placement='right'>
+            <div
+              className='sidebar__fastaction_button'
+              aria-expanded='false'
+              onClick={() => navigate(-1)}
+            >
+              <FontAwesomeIcon icon={faArrowLeft} fontSize={19} />
+            </div>
+          </Tooltip>
+        </div>
+      ) : (
+        <div style={{ height: 50 }}></div>
+      )}
+
       <ul className='sidebar__wrapper_list'>
         {sidebarRoutes.map((route, i) => (
           <li key={`li-sidebar-${i}`} className='sidebar__wrapper_item'>

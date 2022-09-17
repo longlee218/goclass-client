@@ -1,5 +1,5 @@
 import { Excalidraw, exportToSvg } from '@excalidraw/excalidraw';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import { Typography } from 'antd';
 import { slideSocket } from '../../services/socket.service';
@@ -7,9 +7,22 @@ import { useCallback } from 'react';
 import useDebounce from '../../hooks/useDebounce';
 import { useEffect } from 'react';
 
-const Whiteboard = ({ slide }) => {
+const resolvablePromise = () => {
+  let resolve;
+  let reject;
+  const promise = new Promise((_resolve, _reject) => {
+    resolve = _resolve;
+    reject = _reject;
+  });
+  promise.resolve = resolve;
+  promise.reject = reject;
+  return promise;
+};
+
+const Whiteboard = ({ slide, user, libraryItems }) => {
   const [excalidrawAPI, setExcalidrawAPI] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSave, setIsSave] = useState(false);
   const [initData, setInitData] = useState({
     appState: {
       viewBackgroundColor: '#f7f7f7',
@@ -18,6 +31,12 @@ const Whiteboard = ({ slide }) => {
     },
     collaborators: [],
   });
+
+  const initialLibraryStatePromiseRef = useRef({ promise: null });
+
+  if (!initialLibraryStatePromiseRef.current.promise) {
+    initialLibraryStatePromiseRef.current.promise = resolvablePromise();
+  }
 
   useEffect(() => {
     slideSocket.on('connect', () => {
@@ -35,7 +54,7 @@ const Whiteboard = ({ slide }) => {
       slideSocket.off('disconnect');
       slideSocket.off('connect');
     };
-  }, []);
+  }, [slide._id]);
 
   useEffect(() => {
     console.log('running...');
@@ -49,32 +68,57 @@ const Whiteboard = ({ slide }) => {
           isLoading: true,
         },
         files: slide?.files || [],
+        libraryItems: libraryItems || [],
       });
       setIsLoading(false);
-    }, 100);
-    return () => clearTimeout(timeoutId);
+    }, 300);
+    return () => {
+      clearTimeout(timeoutId);
+      setIsSave(false);
+    };
+  }, [slide._id, slide?.elements, slide?.appState, slide?.files]);
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      setIsSave(true);
+    }, 3000);
+    return () => {
+      clearTimeout(id);
+    };
   }, [slide._id]);
 
   const onSaveExcalidraw = useCallback(
     useDebounce(function (elements, appState, files) {
-      exportToSvg({
-        elements,
-        appState: {
-          ...initData.appState,
-          width: 300,
-          height: 100,
-          exportPadding: 10,
-          exportBackground: false,
-        },
-      }).then((svg) => {
-        slideSocket.emit(
-          'save',
-          { elements, appState, files, thumbnail: svg.outerHTML },
-          slide._id
-        );
-      });
-    }, 3000),
-    [slide._id]
+      if (isSave) {
+        console.log('save elements');
+        exportToSvg({
+          elements,
+          appState: {
+            ...initData.appState,
+            width: 300,
+            height: 100,
+            exportPadding: 10,
+            exportBackground: false,
+          },
+        }).then((svg) => {
+          slideSocket.emit(
+            'save',
+            { elements, appState, files, thumbnail: svg.outerHTML },
+            slide._id
+          );
+        });
+      }
+    }, 1000),
+    [slide._id, isSave]
+  );
+
+  const onSaveLibrary = useCallback(
+    (libElements, a) => {
+      if (isSave) {
+        // slideSocket.emit('save-lib', libElements, user._id);
+      }
+    },
+    [user._id, isSave]
   );
 
   return (
@@ -87,6 +131,10 @@ const Whiteboard = ({ slide }) => {
           initialData={initData}
           langCode='vi-VN'
           autoFocus={true}
+          isCollaborating={false}
+          UIOptions={{ canvasActions: { loadScene: isLoading } }}
+          onLibraryChange={onSaveLibrary}
+          libraryReturnUrl={window.location.href}
         />
       ) : (
         <Typography.Text>Đang tải...</Typography.Text>

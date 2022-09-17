@@ -1,41 +1,10 @@
-import { Avatar, Collapse, Typography } from 'antd';
+import { Collapse, Typography } from 'antd';
 
 import Assign from './Assign';
+import AvatarOwner from '../../../../components/AvatarOwner/AvatarOwner';
 import React from 'react';
 
 const { Panel } = Collapse;
-
-const AvatarOwner = ({ src, fullname }) => {
-  if (!src) {
-    const shortName = fullname
-      .split(' ')
-      .slice(-2)
-      .map((str) => str[0])
-      .join('');
-    return (
-      <Avatar
-        style={{
-          backgroundColor: '#7265e6',
-          verticalAlign: 'middle',
-        }}
-        size='default'
-        gap={2}
-      >
-        {shortName}
-      </Avatar>
-    );
-  }
-  return (
-    <Avatar
-      style={{
-        verticalAlign: 'middle',
-      }}
-      size='default'
-      gap={2}
-      src={src}
-    />
-  );
-};
 
 const AssignGroups = ({ groups }) => {
   return (

@@ -92,12 +92,12 @@
 }
 
 .app__header_content_avatar {
-  border-radius: 50%;
+  /* border-radius: 50%; */
   cursor: pointer;
-  height: 28px;
+  /* height: 28px; */
   margin-left: 12px;
-  object-fit: cover;
-  width: 28px;
+  /* object-fit: cover; */
+  /* width: 28px; */
 }
 
 .app__header_content_button {

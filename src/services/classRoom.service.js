@@ -101,15 +101,51 @@ const classRoomService = {
       return Promise.reject(error);
     }
   },
-  createAlertInClass: async (id, content) => {
+  createAlertInClass: async (id, formData) => {
     try {
       const { data } = await HttpClient({
         url: '/class-room-alert/' + id,
         method: 'POST',
-        data: { content },
+        headers: { 'Content-Type': 'multipart/form-data' },
+        data: formData,
       });
       const { data: dataResponse } = data;
       return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+  updateAlertInClass: async (id, formData) => {
+    try {
+      const { data } = await HttpClient({
+        url: '/class-room-alert/detail/' + id,
+        method: 'PATCH',
+        headers: { 'Content-Type': 'multipart/form-data' },
+        data: formData,
+      });
+      const { data: dataResponse } = data;
+      return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+  deleteAlertInClass: async (id) => {
+    try {
+      return await HttpClient({
+        url: '/class-room-alert/detail/' + id,
+        method: 'DELETE',
+      });
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+  removeFileAlertInClass: async (id, body) => {
+    try {
+      return await HttpClient({
+        url: '/class-room-alert/detail/' + id + '/files',
+        method: 'DELETE',
+        data: body,
+      });
     } catch (error) {
       return Promise.reject(error);
     }

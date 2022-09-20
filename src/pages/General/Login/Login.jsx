@@ -44,6 +44,11 @@ const Login = () => {
     }
   }, [values]);
 
+  const onLoginWithGoogle = () => {
+    window.location.href =
+      process.env.REACT_APP_BACKEND_URL + '/api/v1/auth/google';
+  };
+
   return (
     <Layout className='section-auth'>
       <Layout.Content className='container-fuild login'>
@@ -91,6 +96,7 @@ const Login = () => {
                         name='login-with-google'
                         block
                         shape='round'
+                        onClick={onLoginWithGoogle}
                       >
                         <span className='google-signin-container'>
                           <img

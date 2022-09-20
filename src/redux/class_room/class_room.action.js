@@ -57,12 +57,46 @@ const classRoomActions = {
       }
     };
   },
-  createAlert: function (id, content) {
+  createAlert: function (id, formData) {
     return async (dispatch) => {
-      const data = await classRoomService.createAlertInClass(id, content);
-      return data;
+      dispatch(alertActions.loading());
+      try {
+        const data = await classRoomService.createAlertInClass(id, formData);
+        dispatch(alertActions.success());
+        return data;
+      } catch (error) {
+        dispatch(alertActions.error(error.message));
+        return error;
+      }
     };
   },
+  updateAlert: function (id, formData) {
+    return async (dispatch) => {
+      dispatch(alertActions.loading());
+      try {
+        const data = await classRoomService.updateAlertInClass(id, formData);
+        dispatch(alertActions.success());
+        return data;
+      } catch (error) {
+        dispatch(alertActions.error(error.message));
+        return error;
+      }
+    };
+  },
+  deleteAlert: function (id) {
+    return async (dispatch) => {
+      dispatch(alertActions.loading());
+      try {
+        const data = await classRoomService.deleteAlertInClass(id);
+        dispatch(alertActions.success());
+        return data;
+      } catch (error) {
+        dispatch(alertActions.error(error.message));
+        return error;
+      }
+    };
+  },
+
   getAlert: function (id) {
     const success = (payload) => ({
       type: classRoomType.GET_ALERT_CLASS,

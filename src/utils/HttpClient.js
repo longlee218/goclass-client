@@ -3,7 +3,7 @@ import authService from '../services/auth.service';
 import axios from 'axios';
 
 const HttpClient = axios.create({
-  timeout: 2000,
+  timeout: 5000,
   timeoutErrorMessage: 'Không thể kết nối tới máy chủ. Vui lòng thử lại sau.',
   baseURL: process.env.REACT_APP_BACKEND_URL + '/api/v1',
   withCredentials: true,

@@ -1,7 +1,9 @@
 import './style.css';
 
-import { Drawer } from 'antd';
+import { Drawer, Typography } from 'antd';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 import drawerRoutes from '../../routes/drawer.route';
 import { useLocation } from 'react-router';
 
@@ -36,8 +38,8 @@ const MenuDrawer = ({ visibleDrawer, setVisibleDrawer }) => {
               {groupRoutes.map((route, j) => {
                 return (
                   <li key={`li-${j}`} className='drawer_mobile_list_item'>
-                    <a
-                      href={route.path}
+                    <Link
+                      to={route.path}
                       className={
                         pathname === route.path && 'drawer_mobile_item_active'
                       }
@@ -45,8 +47,8 @@ const MenuDrawer = ({ visibleDrawer, setVisibleDrawer }) => {
                       <em>
                         <FontAwesomeIcon icon={route.icon} fontSize={19} />
                       </em>
-                      <span>{route.title}</span>
-                    </a>
+                      <Typography.Text>{route.title}</Typography.Text>
+                    </Link>
                   </li>
                 );
               })}

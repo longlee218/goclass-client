@@ -48,11 +48,11 @@ const drawerRoutes = [
       title: 'Website',
       icon: faGlobe,
     },
-    {
-      path: '#',
-      title: 'Thùng rác',
-      icon: faTrashArrowUp,
-    },
+    // {
+    //   path: '#',
+    //   title: 'Thùng rác',
+    //   icon: faTrashArrowUp,
+    // },
   ],
   [
     {

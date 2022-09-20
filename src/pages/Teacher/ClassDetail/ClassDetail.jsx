@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { StudentAddedDrawer } from '../../../components/Drawer';
 import TabClassNotify from './components/TabClassNotify';
+import TabDocument from './components/TabDocument';
+import TabSetting from './components/TabSetting';
 import TableStudent from '../../../components/TableStudent';
 import alertActions from '../../../redux/alert/alert.action';
 import classRoomService from '../../../services/classRoom.service';
@@ -211,11 +213,11 @@ const ClassDetail = () => {
             />
           )}
         </Tabs.TabPane>
-        <Tabs.TabPane tab='Tài liệu' key='documents'>
-          Tài liệu
-        </Tabs.TabPane>
+        {/* <Tabs.TabPane tab='Tài liệu' key='documents'>
+          <TabDocument />
+        </Tabs.TabPane> */}
         <Tabs.TabPane tab='Cài đặt' key='setting'>
-          Cài đặt
+          <TabSetting />
         </Tabs.TabPane>
       </Tabs>
     </>

@@ -1,4 +1,14 @@
-import { Button, Checkbox, Col, Form, Input, Radio, Row, Select } from 'antd';
+import {
+  Button,
+  Checkbox,
+  Col,
+  Form,
+  Input,
+  Radio,
+  Row,
+  Select,
+  Typography,
+} from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
 import DrawerBase from '../DrawerBase';
@@ -151,6 +161,15 @@ const RosterGroupDrawer = ({
             >
               <Row gutter={16} style={{ marginRight: 0 }}>
                 <Col span={24}>
+                  {isDisable && (
+                    <Typography.Text
+                      italic
+                      style={{ fontSize: 13, marginTop: 8 }}
+                      type='secondary'
+                    >
+                      Nhóm này đã kết thúc, thầy/cô không thể chỉnh sửa được.
+                    </Typography.Text>
+                  )}
                   <Form.Item
                     name='classRoom'
                     label='Lớp'
@@ -270,16 +289,17 @@ const RosterGroupDrawer = ({
               <Row gutter={16} style={{ marginRight: 0 }}>
                 <Col span={24}>
                   <Form.Item>
-                    <Button
-                      type='primary'
-                      className='btn-success'
-                      shape='round'
-                      htmlType='submit'
-                      loading={isLoading}
-                      disabled={isDisable}
-                    >
-                      Lưu
-                    </Button>
+                    {!isDisable && (
+                      <Button
+                        type='primary'
+                        className='btn-success'
+                        shape='round'
+                        htmlType='submit'
+                        loading={isLoading}
+                      >
+                        Lưu
+                      </Button>
+                    )}
                   </Form.Item>
                 </Col>
               </Row>

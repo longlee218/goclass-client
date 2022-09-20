@@ -9,7 +9,7 @@ const DrawerBase = ({ title, key, className, onClose, visible, children }) => {
       key={key}
       className={className || ''}
       title={title}
-      width='36em'
+      width='38em'
       contentWrapperStyle={{
         maxWidth: '100vw',
       }}

@@ -49,6 +49,11 @@ const SignUpStudent = ({ setIsShowSelectRole, setIsShowStudent }) => {
     setValues(null);
   };
 
+  const onLoginWithGoogle = () => {
+    window.location.href =
+      process.env.REACT_APP_BACKEND_URL + '/api/v1/auth/google';
+  };
+
   return (
     <Card id='signUp-card-teacher' className='signUp__card--teacher'>
       <div className='d-flex justify-content-center pt-3 pb-3'>
@@ -175,6 +180,7 @@ const SignUpStudent = ({ setIsShowSelectRole, setIsShowStudent }) => {
               name='login-with-google'
               block
               shape='round'
+              onClick={onLoginWithGoogle}
             >
               <span className='google-signin-container'>
                 <img

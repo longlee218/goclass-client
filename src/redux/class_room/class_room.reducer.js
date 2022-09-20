@@ -56,7 +56,10 @@ export function classRoomReducer(state = initState, action) {
     case classRoomType.GET_ALERT_CLASS:
       // means this class dont have any alert
       if (payload.length === 0) {
-        return state;
+        return {
+          ...state,
+          alert: {},
+        };
       }
       const firstAlert = payload[0];
       return {

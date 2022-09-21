@@ -19,6 +19,7 @@ import ShortLayout from '../components/Layout/ShortLayout/ShortLayout';
 import SignUp from '../pages/General/SignUp';
 import Slide from '../pages/Teacher/Slide';
 import StudentAssignment from '../pages/Student/Assignment/StudentAssignment';
+import StudentClassRoom from '../pages/Student/ClassRoom';
 import StudentDashboard from '../pages/Student/Dashboard';
 import TeacherDashboard from '../pages/Teacher/Dashboard';
 
@@ -107,6 +108,12 @@ const studentRoutes = [
   {
     path: studentRouteConfig.dashboard,
     page: StudentDashboard,
+    isPrivate: true,
+    roles: ['teacher', 'student'],
+  },
+  {
+    path: studentRouteConfig.myClass,
+    page: StudentClassRoom,
     isPrivate: true,
     roles: ['teacher', 'student'],
   },

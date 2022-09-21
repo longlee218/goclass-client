@@ -1,6 +1,7 @@
 import './style.css';
 
 import { Button, Card, Dropdown, Menu, Modal, Typography } from 'antd';
+import React, { useState } from 'react';
 import {
   faCopy,
   faEllipsis,
@@ -8,15 +9,19 @@ import {
   faPen,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
+import {
+  studentRouteConfig,
+  teacherRouteConfig,
+} from '../../config/route.config';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
-import React from 'react';
 import alertActions from '../../redux/alert/alert.action';
 import classRoomActions from '../../redux/class_room/class_room.action';
 import classRoomService from '../../services/classRoom.service';
-import { teacherRouteConfig } from '../../config/route.config';
-import { useDispatch } from 'react-redux';
+import { useAppContext } from '../../hooks/useAppContext';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const ActionMenu = (
@@ -25,6 +30,7 @@ const ActionMenu = (
   setShowSettingDrawer,
   dispatch
 ) => {
+  const { screenRole } = useAppContext();
   const onEditClassRoom = (e) => {
     e.domEvent.stopPropagation();
     dispatch(classRoomActions.find(idClassRoom));
@@ -65,45 +71,74 @@ const ActionMenu = (
     });
   };
 
-  return (
-    <Menu mode='horizontal'>
-      <Menu.Item
-        key='edit'
-        icon={<FontAwesomeIcon icon={faPen} />}
-        onClick={onEditClassRoom}
-      >
-        Sửa lớp
-      </Menu.Item>
-      <Menu.Item
-        key='duplicate'
-        icon={<FontAwesomeIcon icon={faCopy} />}
-        onClick={onDuplicateClassRoom}
-      >
-        Nhân bản
-      </Menu.Item>
-      <Menu.Item
-        key='setting'
-        icon={<FontAwesomeIcon icon={faGear} />}
-        onClick={onSettingClassRoom}
-      >
-        Cài đặt
-      </Menu.Item>
-      <Menu.Item
-        key='delete'
-        icon={<FontAwesomeIcon icon={faTrash} />}
-        style={{ color: 'red' }}
-        onClick={onDeleteClassRoomCofirm}
-      >
-        Xóa
-      </Menu.Item>
-    </Menu>
-  );
+  if (screenRole === 'teacher') {
+    return (
+      <Menu mode='horizontal'>
+        <Menu.Item
+          key='edit'
+          icon={<FontAwesomeIcon icon={faPen} />}
+          onClick={onEditClassRoom}
+        >
+          Sửa lớp
+        </Menu.Item>
+        <Menu.Item
+          key='duplicate'
+          icon={<FontAwesomeIcon icon={faCopy} />}
+          onClick={onDuplicateClassRoom}
+        >
+          Nhân bản
+        </Menu.Item>
+        <Menu.Item
+          key='setting'
+          icon={<FontAwesomeIcon icon={faGear} />}
+          onClick={onSettingClassRoom}
+        >
+          Cài đặt
+        </Menu.Item>
+        <Menu.Item
+          key='delete'
+          icon={<FontAwesomeIcon icon={faTrash} />}
+          style={{ color: 'red' }}
+          onClick={onDeleteClassRoomCofirm}
+        >
+          Xóa
+        </Menu.Item>
+      </Menu>
+    );
+  }
+
+  if (screenRole === 'student') {
+    return (
+      <Menu mode='horizontal'>
+        <Menu.Item
+          key='leave'
+          icon={<FontAwesomeIcon icon={faTrash} />}
+          style={{ color: 'red' }}
+          onClick={onDeleteClassRoomCofirm}
+        >
+          Rời khỏi lớp
+        </Menu.Item>
+      </Menu>
+    );
+  }
 };
 
 const ClassCard = ({ classRoom, setShowAddDrawer, setShowSettingDrawer }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { screenRole } = useAppContext();
+  const [navigateLink, setNavigateLink] = useState('');
   const { _id, name, countStudents, session, color } = classRoom;
+
+  useEffect(() => {
+    if (screenRole === 'teacher') {
+      setNavigateLink(teacherRouteConfig.myClass + '/' + _id);
+    }
+    if (screenRole === 'student') {
+      setNavigateLink(studentRouteConfig.myClass + '/' + _id);
+    }
+  }, [screenRole, _id]);
+
   return (
     <Card
       hoverable
@@ -123,7 +158,7 @@ const ClassCard = ({ classRoom, setShowAddDrawer, setShowSettingDrawer }) => {
       }
       onClick={(e) => {
         e.preventDefault();
-        navigate(teacherRouteConfig.myClass + '/' + _id);
+        navigate(navigateLink);
       }}
       extra={
         <Dropdown

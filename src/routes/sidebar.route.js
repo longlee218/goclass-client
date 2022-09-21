@@ -59,6 +59,11 @@ export const sidebarStudentRoutes = [
   //   icon: faBookOpen,
   // },
   {
+    path: studentRouteConfig.myClass,
+    title: 'Lớp',
+    icon: faBookAtlas,
+  },
+  {
     path: studentRouteConfig.assignments,
     title: 'Đề thi',
     icon: faGraduationCap,

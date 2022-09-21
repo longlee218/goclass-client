@@ -53,7 +53,6 @@ const ManagerClass = () => {
           <div className='manager-class_warapper__search'>
             <Search
               placeholder='Tìm kiếm'
-              onSearch={() => {}}
               style={{ width: 300 }}
               onChange={onChangeSearchInput}
               value={searchText}

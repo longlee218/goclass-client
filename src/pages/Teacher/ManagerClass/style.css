@@ -14,8 +14,3 @@
   display: flex;
   column-gap: 8px;
 }
-
-.divider {
-  border-bottom: 1px solid #cbcbcb;
-  margin: 16px 0.25rem 26px 0.25rem;
-}

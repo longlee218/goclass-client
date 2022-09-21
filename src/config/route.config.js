@@ -16,6 +16,7 @@ export const teacherRouteConfig = {
 
 export const studentRouteConfig = {
   dashboard: PREFIX_STUDENT + '/dashboard',
+  myClass: PREFIX_STUDENT + '/my-class',
   assignments: PREFIX_STUDENT + '/assignments',
 };
 

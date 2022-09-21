@@ -1,13 +1,24 @@
 import { Form, Switch, Typography } from 'antd';
 
 import React from 'react';
+import classRoomActions from '../../../../redux/class_room/class_room.action';
+import { useDispatch } from 'react-redux';
 
-const TabSetting = () => {
-  const onFinish = () => {};
+const TabSetting = ({ classRoom }) => {
+  const dispatch = useDispatch();
+  const onChange = (name, value) => {
+    dispatch(
+      classRoomActions.updateClass(classRoom._id, {
+        [name]: value,
+        classRoomGroupId: classRoom.classRoomGroupId,
+      })
+    );
+  };
+
   return (
     <div>
-      <div style={{ marginBottom: '3.1rem' }}></div>
-      <Form layout='vertical' requiredMark={false} onFinish={onFinish}>
+      <div style={{ marginBottom: '2rem' }}></div>
+      <Form layout='vertical' requiredMark={false}>
         <div className='d-flex flex-column'>
           <div className='d-flex flex-row align-center'>
             <div className='d-flex flex-column flex-2-1-0'>
@@ -18,7 +29,11 @@ const TabSetting = () => {
             </div>
             <div className='d-flex flex-column flex-1-1-0'>
               <div style={{ marginLeft: 'auto', marginRight: 10 }}>
-                <Switch defaultChecked onChange={() => {}} />
+                <Switch
+                  defaultChecked={classRoom.isCanJoin}
+                  onChange={(value) => onChange('isCanJoin', value)}
+                  name='isCanJoin'
+                />
               </div>
             </div>
           </div>
@@ -33,7 +48,11 @@ const TabSetting = () => {
             </div>
             <div className='d-flex flex-column flex-1-1-0'>
               <div style={{ marginLeft: 'auto', marginRight: 10 }}>
-                <Switch defaultChecked onChange={() => {}} />
+                <Switch
+                  defaultChecked={classRoom.isCanLeave}
+                  onChange={(value) => onChange('isCanLeave', value)}
+                  name='isCanLeave'
+                />
               </div>
             </div>
           </div>
@@ -48,7 +67,11 @@ const TabSetting = () => {
             </div>
             <div className='d-flex flex-column flex-1-1-0'>
               <div style={{ marginLeft: 'auto', marginRight: 10 }}>
-                <Switch defaultChecked onChange={() => {}} />
+                <Switch
+                  defaultChecked={classRoom.isSendNotify}
+                  onChange={(value) => onChange('isSendNotify', value)}
+                  name='isSendNotify'
+                />
               </div>
             </div>
           </div>
@@ -63,53 +86,32 @@ const TabSetting = () => {
             </div>
             <div className='d-flex flex-column flex-1-1-0'>
               <div style={{ marginLeft: 'auto', marginRight: 10 }}>
-                <Switch defaultChecked onChange={() => {}} />
+                <Switch
+                  defaultChecked={classRoom.isSendMail}
+                  onChange={(value) => onChange('isSendMail', value)}
+                  name='isSendMail'
+                />
               </div>
             </div>
           </div>
           <div style={{ marginBottom: 10 }}></div>
-
-          {/* <div className='d-flex flex-row align-center'>
+          <div className='d-flex flex-row align-center'>
             <div className='d-flex flex-column flex-2-1-0'>
-              <Typography.Title level={5}>Tài liệu</Typography.Title>
+              <Typography.Title level={5}>Đăng tin</Typography.Title>
               <Typography.Paragraph>
-                Cho phép xem, upload các tài liệu cần thiết trong lớp của bạn
+                Cho phép các thành viên đăng tin
               </Typography.Paragraph>
             </div>
             <div className='d-flex flex-column flex-1-1-0'>
               <div style={{ marginLeft: 'auto', marginRight: 10 }}>
-                <Switch defaultChecked onChange={() => {}} />
+                <Switch
+                  defaultChecked={classRoom.isCanMakeAlert}
+                  onChange={(value) => onChange('isCanMakeAlert', value)}
+                  name='isCanMakeAlert'
+                />
               </div>
             </div>
           </div>
-          <div style={{ marginBottom: 6 }}></div> */}
-
-          {/* <div className='d-flex flex-row align-center pl-10'>
-            <div className='d-flex flex-column flex-2-1-0'>
-              <Typography.Title level={5}>Xem</Typography.Title>
-              <Typography.Paragraph>Cho phép xem tài liệu</Typography.Paragraph>
-            </div>
-            <div className='d-flex flex-column flex-1-1-0'>
-              <div style={{ marginLeft: 'auto', marginRight: 10 }}>
-                <Switch defaultChecked onChange={() => {}} />
-              </div>
-            </div>
-          </div>
-          <div style={{ marginBottom: 6 }}></div>
-
-          <div className='d-flex flex-row align-center pl-10'>
-            <div className='d-flex flex-column flex-2-1-0'>
-              <Typography.Title level={5}>Upload</Typography.Title>
-              <Typography.Paragraph>
-                Cho phép upload tài liệu
-              </Typography.Paragraph>
-            </div>
-            <div className='d-flex flex-column flex-1-1-0'>
-              <div style={{ marginLeft: 'auto', marginRight: 10 }}>
-                <Switch defaultChecked onChange={() => {}} />
-              </div>
-            </div>
-          </div> */}
         </div>
       </Form>
     </div>

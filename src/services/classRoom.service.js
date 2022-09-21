@@ -41,7 +41,7 @@ const classRoomService = {
     try {
       const { data } = await HttpClient({
         url: '/class-room/' + id,
-        method: 'PUT',
+        method: 'PATCH',
         data: payload,
       });
       const { data: dataResponse } = data;
@@ -54,6 +54,43 @@ const classRoomService = {
     try {
       const { data } = await HttpClient({
         url: '/class-room',
+        method: 'GET',
+      });
+      const { data: dataResponse } = data;
+      return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+  query: async (query) => {
+    try {
+      const { data } = await HttpClient({
+        url: '/class-room-query',
+        method: 'GET',
+        params: query,
+      });
+      const { data: dataResponse } = data;
+      return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+  joinClass: async (classId) => {
+    try {
+      const { data } = await HttpClient({
+        url: '/class-room-join/' + classId,
+        method: 'POST',
+      });
+      const { data: dataResponse } = data;
+      return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+  belong: async () => {
+    try {
+      const { data } = await HttpClient({
+        url: '/class-room-belong',
         method: 'GET',
       });
       const { data: dataResponse } = data;

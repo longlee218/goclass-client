@@ -104,14 +104,16 @@ const NotifyDrawer = ({ classRoom, visible, setVisible, alert, setAlert }) => {
       dispatch(classRoomActions.createAlert(classRoom._id, formData))
         .then(() => {
           dispatch(classRoomActions.getAlert(classRoom._id));
-          notifySocket.emit(
-            'notify-class',
-            classRoom._id, // id classroom
-            classRoom.name, // name of class room
-            user._id, // id of user create
-            user.fullname, // name of user create
-            (window.location.pathname + '?tab=noti').replace('/teacher', '')
-          );
+          if (classRoom.isSendNotify) {
+            notifySocket.emit(
+              'notify-class',
+              classRoom._id, // id classroom
+              classRoom.name, // name of class room
+              user._id, // id of user create
+              user.fullname, // name of user create
+              (window.location.pathname + '?tab=noti').replace('/teacher', '')
+            );
+          }
           onClose();
         })
         .finally(() => setIsLoading(false));

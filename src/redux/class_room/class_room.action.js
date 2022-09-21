@@ -132,6 +132,21 @@ const classRoomActions = {
     type: classRoomType.UPDATE_CLASS,
     payload: payload,
   }),
+  updateClass: function (id, payload) {
+    const self = this;
+    return async (dispatch) => {
+      dispatch(alertActions.loading());
+      try {
+        const data = await classRoomService.update(payload, id);
+        dispatch(alertActions.success());
+        dispatch(self.update(data));
+        return data;
+      } catch (error) {
+        dispatch(alertActions.error(error.message));
+        return error;
+      }
+    };
+  },
 };
 
 export default classRoomActions;

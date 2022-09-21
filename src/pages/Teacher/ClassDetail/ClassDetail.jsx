@@ -161,7 +161,7 @@ const ClassDetail = () => {
         defaultActiveKey={searchParams.get('tab') ?? 'noti'}
         onChange={onChangeTabs}
       >
-        <Tabs.TabPane tab='Thông báo' key='noti'>
+        <Tabs.TabPane tab='Tin tức' key='noti'>
           <TabClassNotify classRoom={classRoom} />
         </Tabs.TabPane>
         <Tabs.TabPane tab='Học sinh' key='students'>
@@ -217,7 +217,7 @@ const ClassDetail = () => {
           <TabDocument />
         </Tabs.TabPane> */}
         <Tabs.TabPane tab='Cài đặt' key='setting'>
-          <TabSetting />
+          <TabSetting classRoom={classRoom} />
         </Tabs.TabPane>
       </Tabs>
     </>

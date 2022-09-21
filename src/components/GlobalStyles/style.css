@@ -399,3 +399,8 @@ button.mat-raised-button:not([class*='mat-elevation-z']) {
   font-weight: 500;
   margin-top: 6px;
 }
+
+.divider {
+  border-bottom: 1px solid #cbcbcb;
+  margin: 16px 0.25rem 20px 0.25rem;
+}

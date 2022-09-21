@@ -7,7 +7,6 @@ import {
   Modal,
   Row,
   Space,
-  Tooltip,
   Typography,
 } from 'antd';
 import {
@@ -244,26 +243,16 @@ const TabClassNotify = ({ classRoom }) => {
         }}
       >
         <Col xs={24} sm={24} md={18} lg={14}>
-          {notifies.map((notify) => (
-            <NotifyCard
-              notify={notify}
-              setIsOpenDrawer={setIsOpenDrawer}
-              setCurrentAlert={setCurrentAlert}
-            />
-          ))}
+          {notifies.length === 0
+            ? 'Không có dữ liệu'
+            : notifies.map((notify) => (
+                <NotifyCard
+                  notify={notify}
+                  setIsOpenDrawer={setIsOpenDrawer}
+                  setCurrentAlert={setCurrentAlert}
+                />
+              ))}
         </Col>
-        {/* <Col span={8}> */}
-        {/* <Timeline>
-            <Timeline.Item>Create a services site 2015-09-01</Timeline.Item>
-            <Timeline.Item>
-              Solve initial network problems 2015-09-01
-            </Timeline.Item>
-            <Timeline.Item>Technical testing 2015-09-01</Timeline.Item>
-            <Timeline.Item>
-              Network problems being solved 2015-09-01
-            </Timeline.Item>
-          </Timeline> */}
-        {/* </Col> */}
       </Row>
       {classRoom && (
         <NotifyDrawer

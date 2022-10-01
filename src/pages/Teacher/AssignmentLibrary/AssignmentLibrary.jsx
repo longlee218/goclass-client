@@ -135,7 +135,7 @@ const AssignmentLibrary = () => {
             {assignShareds.map(
               ({ _id, name, desc, subjects, grades, downloads, slides }) => (
                 <AssignPreview
-                  thumbnail={slides[0].thumbnail}
+                  thumbnail={slides[0]?.thumbnail}
                   key={_id}
                   assignId={_id}
                   name={name}

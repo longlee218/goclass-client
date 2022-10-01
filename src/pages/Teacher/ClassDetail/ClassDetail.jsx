@@ -28,7 +28,7 @@ const ClassDetail = () => {
   const paginateStudents = useSelector(studentSelector);
   const [studentSelect, setStudentSelect] = useState(undefined);
   const [triggerClass, setTriggerClass] = useState(false);
-  const { setTitleHeader } = useAppContext();
+  const { setTitleHeader, screenRole } = useAppContext();
   const [isShowAddedDrawer, setIsShowAddedDrawer] = useState(false);
 
   useEffect(() => {
@@ -216,9 +216,11 @@ const ClassDetail = () => {
         {/* <Tabs.TabPane tab='Tài liệu' key='documents'>
           <TabDocument />
         </Tabs.TabPane> */}
-        <Tabs.TabPane tab='Cài đặt' key='setting'>
-          <TabSetting classRoom={classRoom} />
-        </Tabs.TabPane>
+        {screenRole === 'teacher' && (
+          <Tabs.TabPane tab='Cài đặt' key='setting'>
+            <TabSetting classRoom={classRoom} />
+          </Tabs.TabPane>
+        )}
       </Tabs>
     </>
   );

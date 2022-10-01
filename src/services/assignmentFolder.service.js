@@ -1,4 +1,5 @@
 import HttpClient from '../utils/HttpClient';
+import { checkIfDuplicateExists } from '../helpers/array.helper';
 
 const assignmentFolderService = {
   getFolderAndAssignment: async (parentId) => {
@@ -28,7 +29,14 @@ const assignmentFolderService = {
       return Promise.reject(error);
     }
   },
-  createFolder: async (nameFolder, parentId) => {
+  createFolder: async (nameFolder, parentId, sameLevelFolder) => {
+    const listName = nameFolder.split(',');
+    const checkingArray = [...listName, ...sameLevelFolder.map((e) => e.name)];
+    if (checkIfDuplicateExists(checkingArray)) {
+      return Promise.reject(
+        new Error('Tên thư mục đã tồn tại. Vui lòng chọn tên khác')
+      );
+    }
     try {
       const { data } = await HttpClient({
         url: '/assign/category/' + (parentId || ''),
@@ -43,7 +51,19 @@ const assignmentFolderService = {
       return Promise.reject(error);
     }
   },
-  editFolder: async (id, nameFolder) => {
+
+  editFolder: async (id, nameFolder, sameLevelFolder) => {
+    const checkingArray = sameLevelFolder.map((item) => {
+      if (item._id === id) {
+        return nameFolder;
+      }
+      return item.name;
+    });
+    if (checkIfDuplicateExists(checkingArray)) {
+      return Promise.reject(
+        new Error('Tên thư mục đã tồn tại. Vui lòng chọn tên khác')
+      );
+    }
     try {
       const { data } = await HttpClient({
         url: '/assign-category/' + id,

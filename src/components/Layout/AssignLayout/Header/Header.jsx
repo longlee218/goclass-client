@@ -16,56 +16,40 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import assignActions from '../../../../redux/assign/assign.action';
 import { assignSelector } from '../../../../redux/assign/assign.selector';
+import authAction from '../../../../redux/auth/auth.action';
 import { teacherRouteConfig } from '../../../../config/route.config';
 import { useEffect } from 'react';
 
 const { Header: AntdHeader } = Layout;
 
-const dropdownActionsAssignment = (
-  <Menu
-    items={[
-      {
-        key: 'share',
-        label: (
-          <div className='menu-item-action'>
-            <i>
-              <FontAwesomeIcon icon={faShare} />
-            </i>
-            <Typography.Text strong type='secondary'>
-              Chia sẻ bài tập
-            </Typography.Text>
-          </div>
-        ),
-      },
-      {
-        key: 'duplicate',
-        label: (
-          <div className='menu-item-action'>
-            <i>
-              <FontAwesomeIcon icon={faCopy} />
-            </i>
-            <Typography.Text strong type='secondary'>
-              Nhân đôi
-            </Typography.Text>
-          </div>
-        ),
-      },
-      {
-        key: 'delete',
-        label: (
-          <div className='menu-item-action'>
-            <i>
-              <FontAwesomeIcon icon={faTrash} color='red' />
-            </i>
-            <Typography.Text strong type='danger'>
-              Xóa
-            </Typography.Text>
-          </div>
-        ),
-      },
-    ]}
-  />
-);
+const DropdownActionsAssignment = ({ onClickLogout }) => {
+  return (
+    <Menu
+      items={[
+        {
+          key: 'share',
+          label: (
+            <div className='menu-item-action'>
+              <Typography.Text strong type='secondary'>
+                Thông tin cá nhân
+              </Typography.Text>
+            </div>
+          ),
+        },
+        {
+          key: 'delete',
+          label: (
+            <div className='menu-item-action' onClick={onClickLogout}>
+              <Typography.Text strong type='danger'>
+                Đăng xuất
+              </Typography.Text>
+            </div>
+          ),
+        },
+      ]}
+    />
+  );
+};
 
 const Header = () => {
   const navigate = useNavigate();
@@ -77,6 +61,11 @@ const Header = () => {
     const id = params.assignId;
     dispatch(assignActions.findAssignment(id));
   }, [params, dispatch]);
+
+  const onClickLogout = (e) => {
+    e.preventDefault();
+    dispatch(authAction.logout());
+  };
 
   return (
     <AntdHeader className='app__header--assignManager'>
@@ -100,7 +89,7 @@ const Header = () => {
         <Dropdown
           placement='bottomLeft'
           arrow
-          overlay={dropdownActionsAssignment}
+          overlay={<DropdownActionsAssignment onClickLogout={onClickLogout} />}
           trigger={['click']}
         >
           <Button>

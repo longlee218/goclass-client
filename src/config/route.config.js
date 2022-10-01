@@ -7,9 +7,10 @@ export const teacherRouteConfig = {
   assignmentStoresWithParam: PREFIX_TEACHER + '/store-assignments/:fatherId',
   assignmentLibrary: PREFIX_TEACHER + '/lib-assignments',
   assignmentLibraryDetail: PREFIX_TEACHER + '/lib-assignments/:id',
-  assignmentWithParam: PREFIX_TEACHER + '/assignments/:assignId',
   slideWithParam: PREFIX_TEACHER + '/assignments/:assignId/slide/:slideId',
+  assignmentWithParam: PREFIX_TEACHER + '/assignments/:assignId',
   slideWithParamRoster: PREFIX_TEACHER + '/assignments/:assignId/roster',
+  slideWithParamWatch: PREFIX_TEACHER + '/assignments/:assignId/watch',
   myClass: PREFIX_TEACHER + '/my-class',
   myClassDetail: PREFIX_TEACHER + '/my-class/:id',
 };
@@ -18,6 +19,7 @@ export const studentRouteConfig = {
   dashboard: PREFIX_STUDENT + '/dashboard',
   myClass: PREFIX_STUDENT + '/my-class',
   assignments: PREFIX_STUDENT + '/assignments',
+  myClassDetail: PREFIX_STUDENT + '/my-class/:id',
 };
 
 export const publicRouteConfig = {

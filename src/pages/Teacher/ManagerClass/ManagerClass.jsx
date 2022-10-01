@@ -16,6 +16,7 @@ import classRoomActions from '../../../redux/class_room/class_room.action';
 import { classRoomsSelector } from '../../../redux/class_room/class_room.selector';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import studentActions from '../../../redux/student/student.action';
+import { useSearchParams } from 'react-router-dom';
 
 const { Search } = Input;
 
@@ -28,6 +29,7 @@ const ManagerClass = () => {
   const [showSettingDrawer, setShowSettingDrawer] = useState(false);
 
   const [searchText, setSearchText] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     document.title = 'Danh sách lớp học';
@@ -36,7 +38,15 @@ const ManagerClass = () => {
   useEffect(() => {
     dispatch(classRoomActions.get());
     dispatch(studentActions.reset());
-  }, []);
+  }, [dispatch]);
+
+  useEffect(() => {
+    const q = searchParams.get('q');
+    setSearchText(q);
+    if (q) {
+      dispatch(classRoomActions.filter(q));
+    }
+  }, [dispatch, searchParams]);
 
   const onClickAddClass = () => setShowAddDrawer(true);
   const onClickNewSessionClass = () => setShowNewSsDrawer(true);
@@ -44,6 +54,9 @@ const ManagerClass = () => {
 
   const onChangeSearchInput = (e) => {
     setSearchText(e.target.value);
+    setSearchParams({
+      q: e.target.value,
+    });
     dispatch(classRoomActions.filter(e.target.value));
   };
   return (

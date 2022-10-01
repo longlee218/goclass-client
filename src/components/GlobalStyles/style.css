@@ -28,6 +28,7 @@
   --light: #f8f9fa;
   --dark: #343a40;
   --bold-gray: #6d6e70;
+  --bold-extra-gray: #b8babc;
   --secondary: rgba(0, 0, 0, 0.45);
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
@@ -242,6 +243,9 @@ p .text-bold {
 .text-danger :hover {
   color: var(--danger);
 }
+.text-extra-gray {
+  color: var(--bold-extra-gray) !important;
+}
 
 button.mat-raised-button:not([class*='mat-elevation-z']) {
   box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
@@ -318,6 +322,9 @@ button.mat-raised-button:not([class*='mat-elevation-z']) {
 }
 .w-100 {
   width: 100%;
+}
+.m-0 {
+  margin: 0;
 }
 
 @keyframes Tippy-modal--fadein {

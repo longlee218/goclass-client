@@ -58,7 +58,7 @@ const TableFolder = ({
       render: (_, record) => (
         <ColumnAction
           onOpenModalFolder={onOpenModalFolder}
-          currentFolder={record}
+          currentRecord={record}
           fetchDataTable={fetchDataTable}
         />
       ),

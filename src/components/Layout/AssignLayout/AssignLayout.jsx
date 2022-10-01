@@ -1,5 +1,4 @@
 import Header from './Header/Header';
-import LoadingBar from '../../LoadingBar/LoadingBar';
 import React from 'react';
 import ScrollToTop from '../../ScrollToTop/ScrollToTop';
 import { ToastContainer } from 'react-toastify';

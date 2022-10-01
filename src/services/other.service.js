@@ -17,6 +17,20 @@ const otherService = {
       return Promise.reject(error);
     }
   },
+  searchAllPage: async (q) => {
+    try {
+      const { data } = await HttpClient({
+        url: '/searching',
+        method: 'GET',
+        params: {
+          q,
+        },
+      });
+      return data;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
   searchEmail: async (search, page = 1, limit = 10) => {
     try {
       const { data } = await HttpClient({

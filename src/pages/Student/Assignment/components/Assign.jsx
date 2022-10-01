@@ -1,4 +1,4 @@
-import { Card, Space, Typography } from 'antd';
+import { Button, Card, Space, Typography } from 'antd';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
@@ -13,7 +13,7 @@ const Assign = ({ _id, name, isFinish, desc, groupName }) => {
     );
   };
   return (
-    <Card size='small' hoverable key={_id} onClick={onClickHandle}>
+    <Card size='small' hoverable key={_id}>
       <Space>
         <div className='block-body-status'>
           <FontAwesomeIcon
@@ -27,6 +27,14 @@ const Assign = ({ _id, name, isFinish, desc, groupName }) => {
             {name} - {groupName}
           </Typography.Title>
           <Typography.Paragraph>{desc}</Typography.Paragraph>
+          <div className='d-flex gap-10' style={{ marginTop: 20 }}>
+            <Button type='primary' size='small' shape='round'>
+              Làm bài
+            </Button>
+            <Button type='primary' danger size='small' shape='round'>
+              Từ chối làm
+            </Button>
+          </div>
         </div>
       </Space>
     </Card>

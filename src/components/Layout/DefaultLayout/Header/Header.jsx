@@ -6,6 +6,7 @@ import {
   faBars,
   faBell,
   faMagnifyingGlass,
+  faSearch,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   studentRouteConfig,
@@ -20,6 +21,7 @@ import UserInfo from '../../../UserInfo';
 import moment from 'moment';
 import notifyService from '../../../../services/notify.service';
 import { notifySocket } from '../../../../services/socket.service';
+import otherService from '../../../../services/other.service';
 import { useAppContext } from '../../../../hooks/useAppContext';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router';
@@ -30,31 +32,142 @@ moment.locale('vi');
 const { Header: AntdHeader } = Layout;
 
 const CenterHeader = ({ pathname, titleHeader }) => {
-  const inputSearch = (
-    <div className='search-wrapper' aria-expanded='false'>
-      <div className='search-icon'></div>
-      <input
-        type='text'
-        spellCheck='false'
-        placeholder='Tìm kiếm lớp học, bài tập, học sinh,...'
-        className='search-input'
-      />
-    </div>
-  );
+  const InputSearch = () => {
+    const [search, setSearch] = useState('');
+    const [results, setResults] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [trigger, setTrigger] = useState(false);
+    const ref = useRef(null);
+    const { screenRole } = useAppContext();
+
+    useEffect(() => {
+      const id = setTimeout(() => {
+        otherService.searchAllPage(search.trim()).then(({ data }) => {
+          setResults(data);
+        });
+      }, [800]);
+      return () => clearTimeout(id);
+    }, [trigger]);
+
+    useEffect(() => {
+      function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          setOpen(false);
+        }
+      }
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }, [ref]);
+
+    const onChangeInput = (e) => {
+      setSearch(e.target.value);
+      const value = e.target.value.trim();
+      if (value.length > 3) {
+        setOpen(true);
+        setTrigger(!trigger);
+      } else {
+        setResults([]);
+      }
+    };
+    return (
+      <div>
+        <div className='search-wrapper' aria-expanded='false'>
+          <div className='search-icon'></div>
+          <input
+            type='text'
+            spellCheck='false'
+            placeholder='Tìm kiếm lớp học, bài tập, học sinh,...'
+            className='search-input'
+            onChange={onChangeInput}
+            onClick={() => {
+              if (!open) {
+                setOpen(results.length !== 0);
+              }
+            }}
+          />
+        </div>
+        {open && (
+          <div className='tippy-input' ref={ref}>
+            <div className='tippy-wrapper'>
+              <div className='search-result'>
+                <div className='search-header'>
+                  <FontAwesomeIcon icon={faSearch} className='text-bold-gray' />
+                  <Typography.Paragraph
+                    className='text-bold-gray'
+                    style={{ marginBottom: 0, marginLeft: 10 }}
+                  >
+                    Kết quả tìm kiếm cho '{search}'
+                  </Typography.Paragraph>
+                </div>
+                {results
+                  .reduce((prev, result) => {
+                    const heading = result.heading;
+                    const items = result.items;
+                    prev.push(
+                      <div className='search-heading'>
+                        <Typography.Text strong>{heading}</Typography.Text>
+                      </div>
+                    );
+                    items.forEach((item) => {
+                      prev.push(
+                        <Link
+                          className='search-item'
+                          to={'/' + screenRole + item.link}
+                        >
+                          <div className='d-flex align-center'>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: item.decorator,
+                              }}
+                            />
+                            <span
+                              {...(item.extra
+                                ? {
+                                    style: {
+                                      maxWidth: 256,
+                                    },
+                                  }
+                                : {})}
+                            >
+                              {item.content}
+                            </span>
+                          </div>
+                          {item.extra && <i>{item.extra}</i>}
+                        </Link>
+                      );
+                    });
+                    return prev;
+                  }, [])
+                  .map((item) => item)}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  // const InputSearchCenter = () => {
+  //   if (
+  //     new RegExp(teacherRouteConfig.dashboard).test(pathname) ||
+  //     new RegExp(teacherRouteConfig.myClass).test(pathname) ||
+  //     new RegExp(teacherRouteConfig.assignmentStores).test(pathname) ||
+  //     new RegExp(studentRouteConfig.dashboard).test(pathname)
+  //   ) {
+  //     return <InputSearch />;
+  //   }
+  //   return (
+  //     <Typography.Title style={{ fontWeight: 600 }} level={4}>
+  //       {titleHeader}
+  //     </Typography.Title>
+  //   );
+  // };
 
   return (
     <div className='app__header_content_search app__navbar_action flex-1'>
-      {[
-        teacherRouteConfig.dashboard,
-        teacherRouteConfig.myClass,
-        studentRouteConfig.dashboard,
-      ].includes(pathname) ? (
-        inputSearch
-      ) : (
-        <Typography.Title style={{ fontWeight: 600 }} level={4}>
-          {titleHeader}
-        </Typography.Title>
-      )}
+      <InputSearch />
     </div>
   );
 };

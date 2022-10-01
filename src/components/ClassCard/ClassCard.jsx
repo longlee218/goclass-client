@@ -25,7 +25,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const ActionMenu = (
-  idClassRoom,
+  classRoom,
   setShowAddDrawer,
   setShowSettingDrawer,
   dispatch
@@ -33,19 +33,19 @@ const ActionMenu = (
   const { screenRole } = useAppContext();
   const onEditClassRoom = (e) => {
     e.domEvent.stopPropagation();
-    dispatch(classRoomActions.find(idClassRoom));
+    dispatch(classRoomActions.find(classRoom._id));
     setShowAddDrawer(true);
   };
 
   const onSettingClassRoom = (e) => {
     e.domEvent.stopPropagation();
-    dispatch(classRoomActions.find(idClassRoom));
+    dispatch(classRoomActions.find(classRoom._id));
     setShowSettingDrawer(true);
   };
 
   const onDuplicateClassRoom = (e) => {
     e.domEvent.stopPropagation();
-    dispatch(classRoomActions.duplicate(idClassRoom));
+    dispatch(classRoomActions.duplicate(classRoom._id));
   };
 
   const onDeleteClassRoomCofirm = (e) => {
@@ -61,9 +61,9 @@ const ActionMenu = (
       onOk: () => {
         dispatch(alertActions.loading());
         classRoomService
-          .delete(idClassRoom)
+          .delete(classRoom._id)
           .then(() => {
-            dispatch(classRoomActions.delete(idClassRoom));
+            dispatch(classRoomActions.delete(classRoom._id));
             dispatch(alertActions.success('Xóa thành công!'));
           })
           .catch((error) => dispatch(alertActions.error(error.message)));
@@ -110,14 +110,16 @@ const ActionMenu = (
   if (screenRole === 'student') {
     return (
       <Menu mode='horizontal'>
-        <Menu.Item
-          key='leave'
-          icon={<FontAwesomeIcon icon={faTrash} />}
-          style={{ color: 'red' }}
-          onClick={onDeleteClassRoomCofirm}
-        >
-          Rời khỏi lớp
-        </Menu.Item>
+        {classRoom.isCanLeave && (
+          <Menu.Item
+            key='leave'
+            icon={<FontAwesomeIcon icon={faTrash} />}
+            style={{ color: 'red' }}
+            onClick={onDeleteClassRoomCofirm}
+          >
+            Rời khỏi lớp
+          </Menu.Item>
+        )}
       </Menu>
     );
   }
@@ -160,30 +162,34 @@ const ClassCard = ({ classRoom, setShowAddDrawer, setShowSettingDrawer }) => {
         e.preventDefault();
         navigate(navigateLink);
       }}
-      extra={
-        <Dropdown
-          destroyPopupOnHide
-          arrow
-          overlay={ActionMenu(
-            _id,
-            setShowAddDrawer,
-            setShowSettingDrawer,
-            dispatch
-          )}
-          trigger={['click']}
-          children={
-            <div
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-            >
-              <Button type='text'>
-                <FontAwesomeIcon icon={faEllipsis} size='lg' />
-              </Button>
-            </div>
+      {...(classRoom.isCanMakeAlert
+        ? {
+            extra: (
+              <Dropdown
+                destroyPopupOnHide
+                arrow
+                overlay={ActionMenu(
+                  classRoom,
+                  setShowAddDrawer,
+                  setShowSettingDrawer,
+                  dispatch
+                )}
+                trigger={['click']}
+                children={
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <Button type='text'>
+                      <FontAwesomeIcon icon={faEllipsis} size='lg' />
+                    </Button>
+                  </div>
+                }
+              />
+            ),
           }
-        />
-      }
+        : {})}
     >
       <div className='d-flex justify-content-between'>
         <Typography.Text strong>Sĩ số: {countStudents}</Typography.Text>

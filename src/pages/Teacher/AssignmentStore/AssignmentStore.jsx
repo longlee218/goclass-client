@@ -1,6 +1,6 @@
 import './style.css';
 
-import { Form, Input, Radio, Tooltip, Typography } from 'antd';
+import { Form, Input, Radio, Tooltip } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   faFolderPlus,
@@ -28,6 +28,7 @@ import { teacherRouteConfig } from '../../../config/route.config';
 import { useAppContext } from '../../../hooks/useAppContext';
 import { useCallback } from 'react';
 import { useParams } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
 
 const { Search } = Input;
 
@@ -48,12 +49,15 @@ const AssignmentStore = () => {
 
   const inputFolder = useRef(null);
   const [nameFolder, setNameFolder] = useState('');
+
   const [dataTable, setDataTable] = useState([]);
   const [dataTableClone, setDataTableClone] = useState([]);
+
   const [trigger, setTrigger] = useState(false);
   const [breadcrumps, setBreadcrumps] = useState([]);
-  const [searchText, setSearchText] = useState('');
   const [viewMode, setViewMode] = useState(MODE_TABLE);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchText, setSearchText] = useState(searchParams.get('q'));
 
   const currentAssignFolder = useSelector(assignFolderSelector);
 
@@ -70,12 +74,23 @@ const AssignmentStore = () => {
           isFolder: false,
         }));
         const dataTable = [...folders, ...assignments];
+
         setDataTable(dataTable);
-        setDataTableClone(dataTable);
+        if (searchParams.get('q')) {
+          const filterVN = searchParams.get('q');
+          setDataTableClone(() => {
+            return dataTable.filter(({ name }) => {
+              const nameVN = removeVietnameseTones(name).toLowerCase();
+              return nameVN.includes(filterVN);
+            });
+          });
+        } else {
+          setDataTableClone(dataTable);
+        }
       })
       .catch((error) => dispatch(error.message))
       .finally(() => setIsLoadingTable(false));
-  }, [dispatch, params.fatherId]);
+  }, [dispatch, params.fatherId, searchParams]);
 
   useEffect(() => {
     document.title = 'Kho lưu trữ bài tập';
@@ -135,7 +150,6 @@ const AssignmentStore = () => {
   useEffect(() => {
     setIsLoadingTable(true);
     fetchAssignAndFolder();
-    return () => setSearchText('');
   }, [fetchAssignAndFolder, trigger]);
 
   const onOpenModalFolder = () => {
@@ -145,6 +159,7 @@ const AssignmentStore = () => {
   const onSearch = (e) => {
     const filterVN = e.target.value.toLowerCase();
     setSearchText(e.target.value);
+    setSearchParams({ q: e.target.value });
     setDataTableClone(() => {
       return dataTable.filter(({ name }) => {
         const nameVN = removeVietnameseTones(name).toLowerCase();
@@ -166,9 +181,18 @@ const AssignmentStore = () => {
   const submitChangeFolder = useCallback(() => {
     dispatch(alertActions.loading());
     setIsLoading(true);
+    const onlyFolder = dataTable.filter((e) => e.isFolder);
     const promiseService = currentAssignFolder._id
-      ? assignmentFolderService.editFolder(currentAssignFolder._id, nameFolder)
-      : assignmentFolderService.createFolder(nameFolder, params.fatherId);
+      ? assignmentFolderService.editFolder(
+          currentAssignFolder._id,
+          nameFolder,
+          onlyFolder
+        )
+      : assignmentFolderService.createFolder(
+          nameFolder,
+          params.fatherId,
+          onlyFolder
+        );
     promiseService
       .then(() => {
         dispatch(alertActions.success());
@@ -177,10 +201,13 @@ const AssignmentStore = () => {
         setNameFolder('');
         dispatch(assignFolderActions.reset());
       })
-      .catch((error) => dispatch(alertActions.error(error.message)))
+      .catch((error) => {
+        dispatch(alertActions.error(error.message));
+      })
       .finally(() => setIsLoading(false));
   }, [
     currentAssignFolder._id,
+    dataTable,
     dispatch,
     nameFolder,
     params.fatherId,
@@ -236,7 +263,6 @@ const AssignmentStore = () => {
         </div> */}
       </ModalAddFolder>
       <div className='assignment_wrapper'>
-        {/* <Appbreadcrumb breadcrumps={breadcrumps} /> */}
         <div className='assignment_wrapper__actions'>
           <div className='flex-1'>
             <Appbreadcrumb breadcrumps={breadcrumps} />

@@ -22,6 +22,7 @@ import StudentAssignment from '../pages/Student/Assignment/StudentAssignment';
 import StudentClassRoom from '../pages/Student/ClassRoom';
 import StudentDashboard from '../pages/Student/Dashboard';
 import TeacherDashboard from '../pages/Teacher/Dashboard';
+import ViewWork from '../pages/Teacher/ViewWork';
 
 const publicRoutes = [
   { path: publicRouteConfig.login, page: Login, layout: AuthLayout },
@@ -102,6 +103,13 @@ const teacherRoutes = [
     roles: ['teacher'],
     layout: AssignLayout,
   },
+  {
+    path: teacherRouteConfig.slideWithParamWatch,
+    page: ViewWork,
+    isPrivate: true,
+    roles: ['teacher'],
+    layout: AssignLayout,
+  },
 ];
 
 const studentRoutes = [
@@ -120,6 +128,12 @@ const studentRoutes = [
   {
     path: studentRouteConfig.assignments,
     page: StudentAssignment,
+    isPrivate: true,
+    roles: ['teacher', 'student'],
+  },
+  {
+    path: studentRouteConfig.myClassDetail,
+    page: ClassDetail,
     isPrivate: true,
     roles: ['teacher', 'student'],
   },

@@ -6,10 +6,10 @@ import MenuActionAssign from './MenuActionAssign';
 import MenuActionFolder from './MenuActionFolder';
 import React from 'react';
 
-const ColumnAction = ({ onOpenModalFolder, currentFolder, fetchDataTable }) => {
+const ColumnAction = ({ onOpenModalFolder, currentRecord, fetchDataTable }) => {
   return (
     <Space size='middle'>
-      {currentFolder.isFolder ? (
+      {currentRecord.isFolder ? (
         <>
           <div className='empty-div' style={{ width: 46 }}></div>
           <Dropdown
@@ -18,7 +18,7 @@ const ColumnAction = ({ onOpenModalFolder, currentFolder, fetchDataTable }) => {
             overlay={
               <MenuActionFolder
                 onOpenModalFolder={onOpenModalFolder}
-                currentFolder={currentFolder}
+                currentFolder={currentRecord}
                 fetchData={fetchDataTable}
               />
             }
@@ -55,7 +55,12 @@ const ColumnAction = ({ onOpenModalFolder, currentFolder, fetchDataTable }) => {
           <Dropdown
             destroyPopupOnHide
             arrow
-            overlay={<MenuActionAssign onOpenModalFolder={onOpenModalFolder} />}
+            overlay={
+              <MenuActionAssign
+                currentFolder={currentRecord}
+                fetchData={fetchDataTable}
+              />
+            }
             trigger={['click']}
             children={
               <div

@@ -20,6 +20,7 @@
   min-width: 230px;
   max-width: 260px;
   padding: 8px 24px !important;
+  line-height: 1.5;
 }
 
 .userinfo-modal__tippy hr {
@@ -31,7 +32,7 @@
 .userinfo-modal__tippy a {
   color: #666;
   display: block;
-  font-size: 1rem;
+  font-size: 0.9rem;
   padding: 10px 0;
 }
 

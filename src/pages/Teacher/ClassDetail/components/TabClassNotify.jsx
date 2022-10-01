@@ -23,6 +23,7 @@ import NotifyDrawer from '../../../../components/Drawer/NotifyDrawer/NotifyDrawe
 import React from 'react';
 import classRoomActions from '../../../../redux/class_room/class_room.action';
 import moment from 'moment';
+import { useAppContext } from '../../../../hooks/useAppContext';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
@@ -212,11 +213,11 @@ const TabClassNotify = ({ classRoom }) => {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   const onOpenDrawer = () => setIsOpenDrawer(true);
   const [currentAlert, setCurrentAlert] = useState(null);
+  const { screenRole } = useAppContext();
 
   const notifies = useSelector(
     (state) => state.classRoom.alert[classRoom?._id] ?? []
   );
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -231,9 +232,11 @@ const TabClassNotify = ({ classRoom }) => {
         className='d-flex gap-10 justify-flex-end '
         style={{ marginBottom: '1rem' }}
       >
-        <Button type='primary' danger shape='round' onClick={onOpenDrawer}>
-          Thông báo
-        </Button>
+        {(screenRole === 'teacher' || classRoom?.isCanMakeAlert) && (
+          <Button type='primary' danger shape='round' onClick={onOpenDrawer}>
+            Thông báo
+          </Button>
+        )}
       </div>
       <Row
         gutter={[32, 8]}

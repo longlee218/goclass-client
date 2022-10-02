@@ -39,12 +39,15 @@ const examService = {
       return Promise.reject(error);
     }
   },
-  updateRosterGroup: async (id, payload) => {
+  joinAssignment: async (assignmentId, rosterGroupId) => {
     try {
       const { data } = await HttpClient({
-        url: '/exam/roster-group/' + id,
-        method: 'PATCH',
-        data: payload,
+        url: '/exam/join/',
+        method: 'POST',
+        data: {
+          assignmentId,
+          rosterGroupId,
+        },
       });
       const { data: dataResponse } = data;
       return dataResponse;
@@ -71,6 +74,21 @@ const examService = {
         method: 'GET',
         params: {
           type: 'todo',
+        },
+      });
+      const { data: dataResponse } = data;
+      return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+  getFinishExam: async () => {
+    try {
+      const { data } = await HttpClient({
+        url: '/exam/analyze/',
+        method: 'GET',
+        params: {
+          type: 'finish',
         },
       });
       const { data: dataResponse } = data;

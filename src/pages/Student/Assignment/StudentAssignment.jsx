@@ -23,19 +23,44 @@ function todoGroupReducer(state, action) {
   }
 }
 
+function finishGroupReducer(state, action) {
+  const { type, payload } = action;
+  switch (type) {
+    case 'reset':
+      return payload;
+    default:
+      break;
+  }
+}
+
 const StudentAssignment = () => {
   const dispatch = useDispatch();
-  const [loadTodoGroup, setLoadTodoGroup] = useState(false);
+  const [loadGroup, setLoadGroup] = useState(false);
   const [todoGroups, dispatchTodoGroup] = useReducer(todoGroupReducer, []);
+  const [finishGroups, dispatchFinishGroup] = useReducer(
+    finishGroupReducer,
+    []
+  );
 
   useEffect(() => {
-    setLoadTodoGroup(true);
+    setLoadGroup(true);
     examService
       .getToDoExam()
       .then((data) => {
         dispatchTodoGroup({ type: 'reset', payload: data });
       })
-      .finally(() => setLoadTodoGroup(false))
+      .finally(() => setLoadGroup(false))
+      .catch((error) => dispatch(alertActions.error(error.message)));
+  }, [dispatch]);
+
+  useEffect(() => {
+    setLoadGroup(true);
+    examService
+      .getFinishExam()
+      .then((data) => {
+        dispatchFinishGroup({ type: 'reset', payload: data });
+      })
+      .finally(() => setLoadGroup(false))
       .catch((error) => dispatch(alertActions.error(error.message)));
   }, [dispatch]);
 
@@ -47,10 +72,18 @@ const StudentAssignment = () => {
         </div>
         <div className='roster-groups'></div>
         <div className='roster-group todo-group'>
-          {loadTodoGroup && 'Đang tải...'}
-          {!loadTodoGroup && todoGroups.length === 0 && 'Không có dữ liệu'}
-          {!loadTodoGroup && todoGroups.length !== 0 && (
-            <AssignGroups groups={todoGroups} />
+          <h3 className='text-bold-gray'>Cần làm</h3>
+          {loadGroup && 'Đang tải...'}
+          {!loadGroup && todoGroups.length === 0 && 'Không có dữ liệu'}
+          {!loadGroup && todoGroups.length !== 0 && (
+            <AssignGroups groups={todoGroups} isFinish={false} />
+          )}
+        </div>
+        <div className='roster-group finish-group'>
+          <h3 className='text-bold-gray'>Hoàn thành</h3>
+          {!loadGroup && finishGroups.length === 0 && 'Không có dữ liệu'}
+          {!loadGroup && finishGroups.length !== 0 && (
+            <AssignGroups groups={finishGroups} isFinish={true} />
           )}
         </div>
       </div>

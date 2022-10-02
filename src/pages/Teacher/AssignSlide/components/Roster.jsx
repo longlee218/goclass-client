@@ -157,7 +157,7 @@ const Roster = ({ item, setTrigger, onOpenDrawer, setRosterGroup }) => {
           <>
             <Row gutter={[16, 24]}>
               <Col xs={12} sm={8} md={6} lg={6} xl={6}>
-                <label>Xem kết quả&nbsp;</label>
+                <label>Xem điểm&nbsp;</label>
                 <Switch
                   checkedChildren={<FontAwesomeIcon icon={faCheck} />}
                   unCheckedChildren={<FontAwesomeIcon icon={faClose} />}

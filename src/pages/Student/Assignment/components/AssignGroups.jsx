@@ -6,7 +6,7 @@ import React from 'react';
 
 const { Panel } = Collapse;
 
-const AssignGroups = ({ groups }) => {
+const AssignGroups = ({ groups, isFinish }) => {
   return (
     <Collapse className='callapse-roster' defaultActiveKey={['1']}>
       {groups.map(({ owner, classRoom, rosterGroups }, index) => (
@@ -33,13 +33,14 @@ const AssignGroups = ({ groups }) => {
             </Typography.Text>
           }
         >
-          {rosterGroups.map(({ name, isFull, assignment }) => (
+          {rosterGroups.map(({ _id, name, isFull, assignment }) => (
             <div style={{ marginBottom: 16 }}>
               <Assign
                 _id={assignment._id}
-                isFinish={false}
+                isFinish={isFinish}
                 name={assignment.name}
                 key={assignment._id}
+                rosterGroupId={_id}
                 desc={assignment.desc}
                 groupName={isFull ? 'Cả lớp' : `Nhóm ${name}`}
               />

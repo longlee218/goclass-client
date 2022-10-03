@@ -99,6 +99,18 @@ const assignmentService = {
       return Promise.reject(error);
     }
   },
+  downloadAssignment: async (id) => {
+    try {
+      const { data } = await HttpClient({
+        url: '/assignment-download/' + id,
+        method: 'POST',
+      });
+      const { data: dataResponse } = data;
+      return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
 };
 
 export default assignmentService;

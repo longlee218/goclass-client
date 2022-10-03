@@ -154,11 +154,8 @@ const AssignSlide = ({ slide, openModal, setSlideCurrent }) => {
       <div
         onClick={onClickCard}
         dangerouslySetInnerHTML={{
-          __html: `
-            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140" width="250" height="152">
-              ${slide?.thumbnail}
-            </svg>
-        `,
+          __html:
+            slide?.thumbnail ?? '<div style="width:248px;height:152px"></div>',
         }}
       />
     </Card>

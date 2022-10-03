@@ -84,7 +84,7 @@ const ViewWork = () => {
                 className='horizontall-scroll-content row'
                 ref={refSlideButton}
               >
-                {Array.from(Array(100).keys()).map((i) => (
+                {Array.from(Array(5).keys()).map((i) => (
                   <div className='slide-cell'>
                     <Button>#Slide {i + 1}</Button>
                   </div>
@@ -110,7 +110,7 @@ const ViewWork = () => {
                     </Typography.Text>
                   </div>
                   <div className='d-flex flex-slide'>
-                    {Array.from(Array(100).keys()).map((i) => (
+                    {Array.from(Array(5).keys()).map((i) => (
                       <div className='slide-cell'></div>
                     ))}
                   </div>
@@ -125,7 +125,7 @@ const ViewWork = () => {
                     </Typography.Text>
                   </div>
                   <div className='d-flex flex-slide'>
-                    {Array.from(Array(100).keys()).map((i) => (
+                    {Array.from(Array(5).keys()).map((i) => (
                       <div className='slide-cell'></div>
                     ))}
                   </div>
@@ -140,7 +140,7 @@ const ViewWork = () => {
                     </Typography.Text>
                   </div>
                   <div className='d-flex flex-slide'>
-                    {Array.from(Array(100).keys()).map((i) => (
+                    {Array.from(Array(5).keys()).map((i) => (
                       <div className='slide-cell'></div>
                     ))}
                   </div>
@@ -155,7 +155,7 @@ const ViewWork = () => {
                     </Typography.Text>
                   </div>
                   <div className='d-flex flex-slide'>
-                    {Array.from(Array(100).keys()).map((i) => (
+                    {Array.from(Array(5).keys()).map((i) => (
                       <div className='slide-cell'></div>
                     ))}
                   </div>

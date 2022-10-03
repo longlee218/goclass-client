@@ -27,7 +27,7 @@ const assignActions = {
         .updateAssign(id, payload)
         .then((assignment) => {
           // dispatch(alertAction.success());
-          dispatch(this.getAssignmentSuccess(assignment));
+          // dispatch(this.getAssignmentSuccess(assignment));
         })
         .catch((error) => dispatch(alertAction.error(error.message)));
     };

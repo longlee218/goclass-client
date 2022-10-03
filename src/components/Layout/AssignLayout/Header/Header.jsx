@@ -1,51 +1,47 @@
 import './style.css';
 
 import { Button, Dropdown, Layout, Menu, Typography } from 'antd';
-import {
-  faCopy,
-  faEllipsisV,
-  faHome,
-  faShare,
-  faTrash,
-} from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisV, faHome } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
 
 import AssignDirector from '../../../AssignmentDirector';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import alertActions from '../../../../redux/alert/alert.action';
 import assignActions from '../../../../redux/assign/assign.action';
 import { assignSelector } from '../../../../redux/assign/assign.selector';
+import assignmentService from '../../../../services/assignment.service';
 import authAction from '../../../../redux/auth/auth.action';
 import { teacherRouteConfig } from '../../../../config/route.config';
 import { useEffect } from 'react';
 
 const { Header: AntdHeader } = Layout;
 
-const DropdownActionsAssignment = ({ onClickLogout }) => {
+const DropdownActionsAssignment = ({ onClickLogout, onClickDelete }) => {
   return (
     <Menu
       items={[
         {
-          key: 'share',
-          label: (
-            <div className='menu-item-action'>
-              <Typography.Text strong type='secondary'>
-                Thông tin cá nhân
-              </Typography.Text>
-            </div>
-          ),
-        },
-        {
           key: 'delete',
           label: (
-            <div className='menu-item-action' onClick={onClickLogout}>
+            <div className='menu-item-action' onClick={onClickDelete}>
               <Typography.Text strong type='danger'>
-                Đăng xuất
+                Xóa bài tập
               </Typography.Text>
             </div>
           ),
         },
+        // {
+        //   key: 'logout',
+        //   label: (
+        //     <div className='menu-item-action' onClick={onClickLogout}>
+        //       <Typography.Text strong type='danger'>
+        //         Đăng xuất
+        //       </Typography.Text>
+        //     </div>
+        //   ),
+        // },
       ]}
     />
   );
@@ -65,6 +61,23 @@ const Header = () => {
   const onClickLogout = (e) => {
     e.preventDefault();
     dispatch(authAction.logout());
+  };
+
+  const onDeleteAssignment = () => {
+    dispatch(alertActions.loading());
+    assignmentService
+      .delete(assignment._id)
+      .then(() => {
+        dispatch(alertActions.success());
+        const parentId = assignment.parentId ?? '';
+        navigate(
+          teacherRouteConfig.assignmentStoresWithParam.replace(
+            ':fatherId',
+            parentId
+          )
+        );
+      })
+      .catch((error) => dispatch(alertActions.error(error.message)));
   };
 
   return (
@@ -89,7 +102,12 @@ const Header = () => {
         <Dropdown
           placement='bottomLeft'
           arrow
-          overlay={<DropdownActionsAssignment onClickLogout={onClickLogout} />}
+          overlay={
+            <DropdownActionsAssignment
+              onClickLogout={onClickLogout}
+              onClickDelete={onDeleteAssignment}
+            />
+          }
           trigger={['click']}
         >
           <Button>

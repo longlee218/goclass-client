@@ -37,7 +37,6 @@
 }
 
 .app__header--assignManager_left__home > button {
-  margin-left: 10px;
   display: flex;
   flex-flow: nowrap;
   justify-content: center;

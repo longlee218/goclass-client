@@ -110,6 +110,7 @@ const AssignSlide = () => {
   }, [dispatch, assignment]);
 
   useEffect(() => {
+    console.log({ assignment });
     if (assignment._id) {
       setIsLoading(true);
       examService
@@ -151,24 +152,6 @@ const AssignSlide = () => {
 
   return (
     <Content style={{ padding: '10px 38px' }}>
-      {/* <div className='assign-slide__wrapper__actions'>
-        <div className='flex-1'>
-          <Search placeholder='Tìm kiếm' style={{ maxWidth: 200 }} />
-        </div>
-        <div className='flex-1'></div>
-        <div className='d-flex gap-15 justify-flex-end flex-1'>
-          <Button shape='round' type='primary' danger onClick={onOpenDrawer}>
-            Tạo
-          </Button>
-          <Button shape='round' className='wrapp-text-bold'>
-            <FontAwesomeIcon icon={faCalendar} />
-            &nbsp; Lịch ktra
-          </Button>
-        </div>
-      </div>
-      <div className='table'>
-        <Table columns={columns} dataSource={data} />;
-      </div> */}
       <div className='site-layout-content'>
         <div
           className='d-flex justify-content-between'
@@ -183,14 +166,14 @@ const AssignSlide = () => {
           >
             Tạo
           </Button>
-          <Button shape='round' className='wrapp-text-bold'>
+          {/* <Button shape='round' className='wrapp-text-bold'>
             <FontAwesomeIcon icon={faCalendar} />
             &nbsp; Lịch ktra
-          </Button>
+          </Button> */}
         </div>
         <div className='layout'>
           {isLoading ? (
-            'Đang tải...'
+            <div className='classroom-layout'>Đang tải...</div>
           ) : (
             <RosterGroupsLayout
               groups={rosterGroups}

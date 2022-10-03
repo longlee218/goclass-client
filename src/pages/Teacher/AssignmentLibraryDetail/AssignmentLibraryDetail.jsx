@@ -2,15 +2,16 @@ import './style.css';
 
 import { Button, Card, Divider, Typography } from 'antd';
 import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
 
 import alertActions from '../../../redux/alert/alert.action';
 import assignmentService from '../../../services/assignment.service';
 import configActions from '../../../redux/config/config.actions';
+import { teacherRouteConfig } from '../../../config/route.config';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { useParams } from 'react-router';
 
-const SlideBox = ({ link, thumbnail, order }) => {
+const SlideBox = ({ thumbnail, name }) => {
   return (
     <Card
       hoverable
@@ -23,15 +24,13 @@ const SlideBox = ({ link, thumbnail, order }) => {
         height: 'calc(125px + (0.8rem * 2))',
         padding: 0,
       }}
-      actions={[<Typography.Text strong>{order}</Typography.Text>]}
+      actions={[
+        <Typography.Text className='text-bold-gray'>{name}</Typography.Text>,
+      ]}
     >
       <div
         dangerouslySetInnerHTML={{
-          __html: `
-            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140" width="250" height="152">
-            ${thumbnail}
-            </svg>
-        `,
+          __html: thumbnail ?? '<div style="width:248px;height:152px"></div>',
         }}
       />
     </Card>
@@ -41,8 +40,10 @@ const SlideBox = ({ link, thumbnail, order }) => {
 const AssignmentLibraryDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [assignShared, setAssignShared] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingDownload, setIsLoadingDownload] = useState(false);
 
   useEffect(() => {
     document.title = 'Education';
@@ -60,6 +61,20 @@ const AssignmentLibraryDetail = () => {
       .finally(() => setIsLoading(false));
   }, [dispatch, id]);
 
+  const onDownloadAssignment = () => {
+    setIsLoading(true);
+    assignmentService
+      .downloadAssignment(assignShared._id)
+      .then((data) => {
+        dispatch(alertActions.success('Tải thành công: ' + data.name));
+        navigate(
+          teacherRouteConfig.assignmentWithParam.replace(':assignId', data._id)
+        );
+      })
+      .catch((error) => dispatch(error.message))
+      .finally(() => setIsLoading(false));
+  };
+
   return (
     <div className='assignment-container'>
       <div className='assignment-meta bg-white'>
@@ -68,7 +83,14 @@ const AssignmentLibraryDetail = () => {
             <Typography.Text className='text-bold-gray' strong>
               Tên bài tập
             </Typography.Text>
-            <Button type='primary' danger shape='round' size='large'>
+            <Button
+              type='primary'
+              danger
+              shape='round'
+              size='large'
+              onClick={onDownloadAssignment}
+              loading={isLoadingDownload}
+            >
               Sử dụng
             </Button>
           </div>
@@ -113,13 +135,19 @@ const AssignmentLibraryDetail = () => {
           </Typography.Title>
         </div>
         <div className='section-slides'>
-          {isLoading && 'Đang tải..'}
-          {!assignShared ? (
+          {isLoading ? (
+            'Đang tải..'
+          ) : !assignShared ? (
             'Không có dữ liệu'
           ) : (
             <>
               {assignShared.slides.map((slide) => (
-                <SlideBox thumbnail={slide.thumbnail} order={slide.order} />
+                <SlideBox
+                  thumbnail={slide.thumbnail}
+                  order={slide.order}
+                  points={slide.points}
+                  name={slide.name}
+                />
               ))}
             </>
           )}

@@ -95,12 +95,15 @@ const Whiteboard = ({ slide, user, libraryItems }) => {
           elements,
           appState: {
             ...initData.appState,
-            width: 300,
-            height: 100,
-            exportPadding: 10,
-            exportBackground: false,
+            // width: 300,
+            // height: 100,
+            // exportPadding: 10,
+            exportBackground: true,
           },
         }).then((svg) => {
+          svg.setAttribute('viewBox', '0 0 500 304');
+          svg.setAttribute('width', '248');
+          svg.setAttribute('height', '152');
           slideSocket.emit(
             'save',
             { elements, appState, files, thumbnail: svg.outerHTML },

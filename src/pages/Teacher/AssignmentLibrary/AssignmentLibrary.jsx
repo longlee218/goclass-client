@@ -133,7 +133,16 @@ const AssignmentLibrary = () => {
         <div className='repeat-container__scroll'>
           <div className='flex-list'>
             {assignShareds.map(
-              ({ _id, name, desc, subjects, grades, downloads, slides }) => (
+              ({
+                _id,
+                name,
+                desc,
+                subjects,
+                grades,
+                downloads,
+                slides,
+                createdAt,
+              }) => (
                 <AssignPreview
                   thumbnail={slides[0]?.thumbnail}
                   key={_id}
@@ -142,6 +151,7 @@ const AssignmentLibrary = () => {
                   description={desc}
                   grades={grades}
                   subjects={subjects}
+                  createdAt={createdAt}
                   countDownload={downloads}
                 />
               )

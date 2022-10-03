@@ -9,19 +9,24 @@ import {
   Select,
   Typography,
 } from 'antd';
+import {
+  studentRouteConfig,
+  teacherRouteConfig,
+} from '../../../config/route.config';
 import { useDispatch, useSelector } from 'react-redux';
 
 import DrawerBase from '../DrawerBase';
-import RangeDatePickerVN from '../../RangeDatePickerVN';
 import React from 'react';
 import alertActions from '../../../redux/alert/alert.action';
 import classRoomActions from '../../../redux/class_room/class_room.action';
 import { classRoomsOnlySelector } from '../../../redux/class_room/class_room.selector';
 import examService from '../../../services/exam.service';
+import { notifySocket } from '../../../services/socket.service';
 import { removeVietnameseTones } from '../../../helpers/string.helper';
 import studentService from '../../../services/student.service';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { userSelector } from '../../../redux/auth/auth.selector';
 
 const { Option } = Select;
 
@@ -34,6 +39,7 @@ const RosterGroupDrawer = ({
   setRosterGroup,
 }) => {
   const dispatch = useDispatch();
+  const user = useSelector(userSelector);
   const [students, setStudents] = useState([]);
   const classRooms = useSelector(classRoomsOnlySelector);
   const [form] = Form.useForm();
@@ -123,10 +129,18 @@ const RosterGroupDrawer = ({
     } else {
       examService
         .createRosterGroup(rosterId, { ...values, isFull })
-        .then(() => {
+        .then((data) => {
           dispatch(alertActions.success());
           onClose();
           setTrigger((prev) => !prev);
+          notifySocket.emit(
+            'notify-roster',
+            data._id, // id rosterGroup
+            data.name, // name of class room
+            user._id, // id of user create
+            user.fullname, // name of user create
+            '/assignments'
+          );
         })
         .catch((error) => dispatch(alertActions.error(error.message)))
         .finally(() => setIsLoading(false));

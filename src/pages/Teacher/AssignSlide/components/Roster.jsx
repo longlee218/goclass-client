@@ -23,6 +23,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import alertActions from '../../../../redux/alert/alert.action';
 import examService from '../../../../services/exam.service';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 const { Panel } = Collapse;
 const statusToText = (status) => {
@@ -99,9 +100,15 @@ const DropdownActionsRoster = ({
   );
 };
 
-const Roster = ({ item, setTrigger, onOpenDrawer, setRosterGroup }) => {
+const Roster = ({
+  item,
+  setTrigger,
+  onOpenDrawer,
+  setRosterGroup,
+  assignmentId,
+}) => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const onFinishRoster = (e) => {
     e.preventDefault();
     dispatch(alertActions.loading());
@@ -198,7 +205,16 @@ const Roster = ({ item, setTrigger, onOpenDrawer, setRosterGroup }) => {
               </Col>
             </Row>
             <div className='d-flex gap-8' style={{ marginTop: 40 }}>
-              <Button shape='round'>Theo dõi</Button>
+              <Button
+                shape='round'
+                onClick={() => {
+                  navigate(
+                    `/teacher/assignments/${assignmentId}/watch/${item._id}`
+                  );
+                }}
+              >
+                Theo dõi
+              </Button>
               {item.status !== 'finished' && (
                 <Button shape='round' danger onClick={onFinishRoster}>
                   Kết thúc

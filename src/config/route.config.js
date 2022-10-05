@@ -11,6 +11,8 @@ export const teacherRouteConfig = {
   assignmentWithParam: PREFIX_TEACHER + '/assignments/:assignId',
   slideWithParamRoster: PREFIX_TEACHER + '/assignments/:assignId/roster',
   slideWithParamWatch: PREFIX_TEACHER + '/assignments/:assignId/watch',
+  slideWithParamWatchDetail:
+    PREFIX_TEACHER + '/assignments/:assignId/watch/:rosterGroupId',
   myClass: PREFIX_TEACHER + '/my-class',
   myClassDetail: PREFIX_TEACHER + '/my-class/:id',
 };

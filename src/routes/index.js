@@ -110,6 +110,13 @@ const teacherRoutes = [
     roles: ['teacher'],
     layout: AssignLayout,
   },
+  {
+    path: teacherRouteConfig.slideWithParamWatchDetail,
+    page: ViewWork,
+    isPrivate: true,
+    roles: ['teacher'],
+    layout: AssignLayout,
+  },
 ];
 
 const studentRoutes = [

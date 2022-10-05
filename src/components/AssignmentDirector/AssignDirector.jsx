@@ -3,8 +3,10 @@ import { useLocation, useNavigate, useParams } from 'react-router';
 import { Button } from 'antd';
 import React from 'react';
 import { teacherRouteConfig } from '../../config/route.config';
+import { useRosterContext } from '../../hooks/useRosterContext';
 
 const AssignDirector = () => {
+  const { rosterGroupIdFirst } = useRosterContext();
   const navigate = useNavigate();
   const params = useParams();
   const location = useLocation();
@@ -31,7 +33,7 @@ const AssignDirector = () => {
       ':assignId',
       params.assignId
     );
-    return navigate(link + '/watch');
+    return navigate(link + '/watch/' + rosterGroupIdFirst);
   };
 
   return (
@@ -55,7 +57,7 @@ const AssignDirector = () => {
       </Button>
       <Button
         onClick={onClickViewWork}
-        {...(/^\/teacher\/assignments\/[A-Za-z0-9]+\/watch$/.test(pathname)
+        {...(/^\/teacher\/assignments\/[A-Za-z0-9]+\/watch\/.+$/.test(pathname)
           ? { type: 'primary' }
           : {})}
       >

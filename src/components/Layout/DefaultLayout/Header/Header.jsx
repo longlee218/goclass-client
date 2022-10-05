@@ -234,11 +234,18 @@ const Header = () => {
   }, [refModal, refUserAvatar]);
 
   useEffect(() => {
-    notifySocket.emit('join', user._id);
-    notifySocket.on('notify', (data) => {
-      setNewNotify((prev) => prev + 1);
-      setNotifies((prev) => [data, ...prev]);
+    notifySocket.on('connect', () => {
+      notifySocket.emit('join', user._id);
+      notifySocket.on('notify', (data) => {
+        setNewNotify((prev) => prev + 1);
+        setNotifies((prev) => [data, ...prev]);
+      });
     });
+    notifySocket.on('disconnect', () => {});
+    return () => {
+      notifySocket.off('disconnect');
+      notifySocket.off('connect');
+    };
   }, []);
 
   useEffect(() => {

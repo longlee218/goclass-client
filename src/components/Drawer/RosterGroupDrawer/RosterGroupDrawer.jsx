@@ -9,10 +9,6 @@ import {
   Select,
   Typography,
 } from 'antd';
-import {
-  studentRouteConfig,
-  teacherRouteConfig,
-} from '../../../config/route.config';
 import { useDispatch, useSelector } from 'react-redux';
 
 import DrawerBase from '../DrawerBase';
@@ -114,8 +110,8 @@ const RosterGroupDrawer = ({
   };
 
   const onFinish = (values) => {
-    setIsLoading(true);
-    dispatch(alertActions.loading());
+    // setIsLoading(true);
+    // dispatch(alertActions.loading());
     if (rosterGroup) {
       examService
         .updateRosterGroup(rosterGroup._id, { ...values, isFull })

@@ -98,7 +98,7 @@ const Whiteboard = ({ slide, user, libraryItems }) => {
             // width: 300,
             // height: 100,
             // exportPadding: 10,
-            exportBackground: true,
+            exportBackground: false,
           },
         }).then((svg) => {
           svg.setAttribute('viewBox', '0 0 500 304');

@@ -39,6 +39,18 @@ const examService = {
       return Promise.reject(error);
     }
   },
+  findRosterGroup: async (rosterGroupId) => {
+    try {
+      const { data } = await HttpClient({
+        url: '/exam/roster-group/' + rosterGroupId,
+        method: 'GET',
+      });
+      const { data: dataResponse } = data;
+      return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
   joinAssignment: async (assignmentId, rosterGroupId) => {
     try {
       const { data } = await HttpClient({

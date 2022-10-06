@@ -51,6 +51,9 @@ const ViewWork = () => {
     points = '0/10',
     slides = [],
   }) => {
+    const onOpenLink = (url) => {
+      window.open(url, '_blank');
+    };
     return (
       <div className='layout-column'>
         <div className='d-flex flex-row gap-10'>
@@ -63,6 +66,11 @@ const ViewWork = () => {
           {slides.map((slide) => (
             <div
               className='slide-cell'
+              {...(slide.link
+                ? {
+                    onClick: () => onOpenLink(slide.link),
+                  }
+                : {})}
               dangerouslySetInnerHTML={{
                 __html: slide.thumbnail,
               }}
@@ -168,7 +176,11 @@ const ViewWork = () => {
                   {rosterGroup?.students?.map((student) => {
                     return assignPerStudent({
                       name: student.studentName,
-                      slides: assignment?.slides ?? [],
+                      slides:
+                        student?.slideIds ??
+                        Array.from(
+                          Array(assignment?.slides?.length || 3).keys()
+                        ),
                     });
                   })}
                 </div>

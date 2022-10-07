@@ -2,15 +2,29 @@ import { Button, Card, Space, Typography } from 'antd';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { faFileLines } from '@fortawesome/free-solid-svg-icons';
 import examService from '../../../../services/exam.service';
+import { faFileLines } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
 
-const Assign = ({ _id, name, isFinish, desc, groupName, rosterGroupId }) => {
+const Assign = ({
+  _id,
+  name,
+  assignWork,
+  desc,
+  groupName,
+  rosterGroupId,
+  onlyView,
+}) => {
+  const [loading, setLoading] = useState(false);
   const onClickJoinAssign = (e) => {
-    examService.joinAssignment(_id, rosterGroupId).then((data) => {
-      const link = data.link;
-      window.open(link, '_blank');
-    });
+    setLoading(true);
+    examService
+      .joinAssignment(_id, rosterGroupId)
+      .then((data) => {
+        const link = data.link;
+        window.location.href = link;
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -19,7 +33,9 @@ const Assign = ({ _id, name, isFinish, desc, groupName, rosterGroupId }) => {
         <div className='block-body-status'>
           <FontAwesomeIcon
             icon={faFileLines}
-            style={{ color: isFinish ? 'var(--success)' : 'var(--danger)' }}
+            style={{
+              color: onlyView ? 'var(--success)' : 'var(--danger)',
+            }}
             size='4x'
           />
         </div>
@@ -29,13 +45,19 @@ const Assign = ({ _id, name, isFinish, desc, groupName, rosterGroupId }) => {
           </Typography.Title>
           <Typography.Paragraph>{desc}</Typography.Paragraph>
           <div className='d-flex gap-10' style={{ marginTop: 20 }}>
-            {!isFinish ? (
-              <Button type='primary' shape='round' onClick={onClickJoinAssign}>
-                Làm bài
-              </Button>
+            {onlyView ? (
+              // <Button type='primary' shape='round' className='btn-cyan'>
+              //   Xem lại
+              // </Button>
+              <></>
             ) : (
-              <Button type='primary' shape='round' className='btn-cyan'>
-                Xem lại
+              <Button
+                type='primary'
+                shape='round'
+                onClick={onClickJoinAssign}
+                loading={loading}
+              >
+                Làm bài
               </Button>
             )}
           </div>

@@ -1,7 +1,11 @@
 import './style.css';
 
-import { Button, Select, Tooltip, Typography } from 'antd';
-import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { Badge, Button, Select, Tooltip, Typography } from 'antd';
+import {
+  faArrowLeft,
+  faArrowRight,
+  faHand,
+} from '@fortawesome/free-solid-svg-icons';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
@@ -9,6 +13,7 @@ import React from 'react';
 import Search from 'antd/lib/input/Search';
 import { assignSelector } from '../../../redux/assign/assign.selector';
 import examService from '../../../services/exam.service';
+import { slideSocket } from '../../../services/socket.service';
 import { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { useRef } from 'react';
@@ -23,6 +28,36 @@ const ViewWork = () => {
   const refSlideButton = useRef(null);
   const [isDisable, setIsDisable] = useState(true);
   const [rosterGroup, setRosterGroup] = useState(null);
+
+  useEffect(() => {
+    slideSocket.on('connect', () => {
+      slideSocket.on('raiseHand', function (slideId, userId) {
+        const studentSocket = rosterGroup.students.map((student) => {
+          const userIdOfStudent = student.student;
+          if (userIdOfStudent === userId) {
+            if (student.slideIds) {
+              const slideIds = student.slideIds.map((slide) => {
+                if (slide._id === slideId) {
+                  return { ...slide, isRaiseHand: true };
+                }
+                return slide;
+              });
+              return { ...student, slideIds };
+            }
+            return student;
+          }
+          return student;
+        });
+        setRosterGroup({ ...rosterGroup, students: studentSocket });
+      });
+    });
+
+    slideSocket.on('disconnect', () => {});
+    return () => {
+      slideSocket.off('disconnect');
+      slideSocket.off('connect');
+    };
+  }, []);
 
   // useEffect(() => {
   //   const handleResize = () => {
@@ -63,19 +98,32 @@ const ViewWork = () => {
           </Typography.Text>
         </div>
         <div className='d-flex flex-slide'>
-          {slides.map((slide) => (
-            <div
-              className='slide-cell'
-              {...(slide.link
-                ? {
-                    onClick: () => onOpenLink(slide.link),
-                  }
-                : {})}
-              dangerouslySetInnerHTML={{
-                __html: slide.thumbnail,
-              }}
-            ></div>
-          ))}
+          {slides.map((slide) => {
+            const onClick = slide.link ? onOpenLink : () => {};
+            if (slide.isRaiseHand) {
+              return (
+                <div
+                  className='slide-cell'
+                  style={{
+                    border: '1.5px solid var(--danger)',
+                  }}
+                  onClick={() => onClick(slide.link)}
+                  dangerouslySetInnerHTML={{
+                    __html: slide.thumbnail,
+                  }}
+                />
+              );
+            }
+            return (
+              <div
+                className='slide-cell'
+                onClick={() => onClick(slide.link)}
+                dangerouslySetInnerHTML={{
+                  __html: slide.thumbnail,
+                }}
+              />
+            );
+          })}
         </div>
       </div>
     );

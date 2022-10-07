@@ -1,9 +1,6 @@
 import './style.css';
 
-import { Avatar, Card, Collapse, Space, Typography } from 'antd';
-
 import AssignGroups from './components/AssignGroups';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import Search from 'antd/lib/transfer/search';
 import alertActions from '../../../redux/alert/alert.action';
@@ -13,52 +10,60 @@ import { useEffect } from 'react';
 import { useReducer } from 'react';
 import { useState } from 'react';
 
-function todoGroupReducer(state, action) {
+function rosterGroupReducer(state, action) {
   const { type, payload } = action;
   switch (type) {
-    case 'reset':
-      return payload;
+    case 'set':
+      const todo = payload.map((e) => {
+        return {
+          ...e,
+          rosterGroups: e.rosterGroups.filter(
+            (item) =>
+              item.status === 'ready' &&
+              (!item.assignment_work || !item.assignment_work?.isFinish)
+          ),
+        };
+      });
+      const finish = payload.map((e) => {
+        return {
+          ...e,
+          rosterGroups: e.rosterGroups.filter(
+            (item) =>
+              item.status === 'finished' ||
+              (item.assignment_work && item.assignment_work.isFinish)
+          ),
+        };
+      });
+      return { todo, finish };
     default:
       break;
   }
 }
 
-function finishGroupReducer(state, action) {
-  const { type, payload } = action;
-  switch (type) {
-    case 'reset':
-      return payload;
-    default:
-      break;
-  }
-}
+// function finishGroupReducer(state, action) {
+//   const { type, payload } = action;
+//   switch (type) {
+//     case 'reset':
+//       return payload;
+//     default:
+//       break;
+//   }
+// }
 
 const StudentAssignment = () => {
   const dispatch = useDispatch();
   const [loadGroup, setLoadGroup] = useState(false);
-  const [todoGroups, dispatchTodoGroup] = useReducer(todoGroupReducer, []);
-  const [finishGroups, dispatchFinishGroup] = useReducer(
-    finishGroupReducer,
-    []
-  );
+  const [rosterGroups, dispatchRosterGroups] = useReducer(rosterGroupReducer, {
+    todo: [],
+    finish: [],
+  });
 
   useEffect(() => {
     setLoadGroup(true);
     examService
       .getToDoExam()
       .then((data) => {
-        dispatchTodoGroup({ type: 'reset', payload: data });
-      })
-      .finally(() => setLoadGroup(false))
-      .catch((error) => dispatch(alertActions.error(error.message)));
-  }, [dispatch]);
-
-  useEffect(() => {
-    setLoadGroup(true);
-    examService
-      .getFinishExam()
-      .then((data) => {
-        dispatchFinishGroup({ type: 'reset', payload: data });
+        dispatchRosterGroups({ type: 'set', payload: data });
       })
       .finally(() => setLoadGroup(false))
       .catch((error) => dispatch(alertActions.error(error.message)));
@@ -74,16 +79,16 @@ const StudentAssignment = () => {
         <div className='roster-group todo-group'>
           <h3 className='text-bold-gray'>Cần làm</h3>
           {loadGroup && 'Đang tải...'}
-          {!loadGroup && todoGroups.length === 0 && 'Không có dữ liệu'}
-          {!loadGroup && todoGroups.length !== 0 && (
-            <AssignGroups groups={todoGroups} isFinish={false} />
+          {!loadGroup && rosterGroups.todo.length === 0 && 'Không có dữ liệu'}
+          {!loadGroup && rosterGroups.todo.length !== 0 && (
+            <AssignGroups groups={rosterGroups.todo} onlyView={false} />
           )}
         </div>
         <div className='roster-group finish-group'>
           <h3 className='text-bold-gray'>Hoàn thành</h3>
-          {!loadGroup && finishGroups.length === 0 && 'Không có dữ liệu'}
-          {!loadGroup && finishGroups.length !== 0 && (
-            <AssignGroups groups={finishGroups} isFinish={true} />
+          {!loadGroup && rosterGroups.finish.length === 0 && 'Không có dữ liệu'}
+          {!loadGroup && rosterGroups.finish.length !== 0 && (
+            <AssignGroups groups={rosterGroups.finish} onlyView />
           )}
         </div>
       </div>

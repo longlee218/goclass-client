@@ -1,10 +1,11 @@
 import {
   faBookAtlas,
-  faBookOpen,
+  faFile,
   faGlobe,
   faGraduationCap,
   faHome,
   faStore,
+  faTrash,
   faTrashArrowUp,
 } from '@fortawesome/free-solid-svg-icons';
 import { studentRouteConfig, teacherRouteConfig } from '../config/route.config';
@@ -12,13 +13,13 @@ import { studentRouteConfig, teacherRouteConfig } from '../config/route.config';
 export const sidebarTeacherRoutes = [
   {
     path: teacherRouteConfig.dashboard,
-    title: 'Bảng tin',
+    title: 'Trang chủ',
     icon: faHome,
   },
   {
     path: teacherRouteConfig.assignmentStores,
-    title: 'Bài tập',
-    icon: faBookOpen,
+    title: 'Kho bài tập',
+    icon: faFile,
   },
   // {
   //   path: '#',
@@ -27,30 +28,30 @@ export const sidebarTeacherRoutes = [
   // },
   {
     path: teacherRouteConfig.myClass,
-    title: 'Lớp',
+    title: 'Quản lý lớp',
     icon: faBookAtlas,
-  },
-  {
-    path: '#',
-    title: 'Website',
-    icon: faGlobe,
-  },
-  {
-    path: teacherRouteConfig.assignmentLibrary,
-    title: 'Thư viện',
-    icon: faStore,
   },
   // {
   //   path: '#',
-  //   title: 'Thùng rác',
-  //   icon: faTrashArrowUp,
+  //   title: 'Website',
+  //   icon: faGlobe,
   // },
+  {
+    path: teacherRouteConfig.assignmentLibrary,
+    title: 'Thư viện bài tập',
+    icon: faStore,
+  },
+  {
+    path: teacherRouteConfig.trash,
+    title: 'Thùng rác',
+    icon: faTrash,
+  },
 ];
 
 export const sidebarStudentRoutes = [
   {
     path: studentRouteConfig.dashboard,
-    title: 'Home',
+    title: 'Trang chủ',
     icon: faHome,
   },
   // {
@@ -59,13 +60,13 @@ export const sidebarStudentRoutes = [
   //   icon: faBookOpen,
   // },
   {
-    path: studentRouteConfig.myClass,
-    title: 'Lớp',
-    icon: faBookAtlas,
+    path: studentRouteConfig.assignments,
+    title: 'Bài tập',
+    icon: faFile,
   },
   {
-    path: studentRouteConfig.assignments,
-    title: 'Đề thi',
-    icon: faGraduationCap,
+    path: studentRouteConfig.myClass,
+    title: 'Quản lý lớp',
+    icon: faBookAtlas,
   },
 ];

@@ -10,16 +10,16 @@ const DefaultLayout = ({ children }) => {
     <div id='main-layout'>
       <ScrollToTop />
       <ToastContainer autoClose={2000} />
-      <Header />
       <div className='app__with-sidebar'>
         <div className='app__with-sidebar_wrap'>
           <SideBar />
         </div>
-        <body className='app__with-sidebar_body'>
-          <section>{children}</section>
+        <body>
+          <Header />
+          <section className='app__with-sidebar_body'>{children}</section>
         </body>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

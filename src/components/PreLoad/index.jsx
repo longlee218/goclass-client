@@ -1,7 +1,7 @@
 import './style.css';
 
 import React from 'react';
-import { Spin, } from 'antd';
+import { Spin } from 'antd';
 import { useSelector } from 'react-redux';
 
 const PreLoad = () => {

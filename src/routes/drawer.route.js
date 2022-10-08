@@ -2,11 +2,9 @@ import {
   faBookAtlas,
   faBookOpen,
   faGlobe,
-  faGraduationCap,
   faHome,
   faKey,
   faRightFromBracket,
-  faTrashArrowUp,
   faUserGraduate,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -23,7 +21,7 @@ const drawerRoutes = [
   [
     {
       path: teacherRouteConfig.dashboard,
-      title: 'Home',
+      title: 'Trang chủ',
       icon: faHome,
     },
     {
@@ -42,18 +40,18 @@ const drawerRoutes = [
       icon: faBookAtlas,
     },
   ],
-  [
-    {
-      path: '#',
-      title: 'Website',
-      icon: faGlobe,
-    },
-    // {
-    //   path: '#',
-    //   title: 'Thùng rác',
-    //   icon: faTrashArrowUp,
-    // },
-  ],
+  // [
+  //   {
+  //     path: '#',
+  //     title: 'Website',
+  //     icon: faGlobe,
+  //   },
+  //   // {
+  //   //   path: '#',
+  //   //   title: 'Thùng rác',
+  //   //   icon: faTrashArrowUp,
+  //   // },
+  // ],
   [
     {
       path: '#',

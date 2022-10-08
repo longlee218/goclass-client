@@ -53,18 +53,20 @@ const SideBar = () => {
       <ul className='sidebar__wrapper_list'>
         {sidebarRoutes.map((route, i) => (
           <li key={`li-sidebar-${i}`} className='sidebar__wrapper_item'>
-            <Link
-              to={route.path}
-              aria-current='page'
-              className={
-                new RegExp(`^${route.path}`).test(pathname)
-                  ? 'sidebar-item-active'
-                  : ''
-              }
-            >
-              <FontAwesomeIcon icon={route.icon} fontSize={18} />
-              <span>{route.title}</span>
-            </Link>
+            <Tooltip placement='right' title={route.title}>
+              <Link
+                to={route.path}
+                aria-current='page'
+                className={
+                  new RegExp(`^${route.path}`).test(pathname)
+                    ? 'sidebar-item-active'
+                    : ''
+                }
+              >
+                <FontAwesomeIcon icon={route.icon} fontSize={18} />
+                {/* <span>{route.title}</span> */}
+              </Link>
+            </Tooltip>
           </li>
         ))}
       </ul>

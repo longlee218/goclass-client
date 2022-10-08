@@ -1,3 +1,9 @@
+.dashboard_wrapper {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
 .student_asking {
   margin-top: 5rem;
   height: auto !important;
@@ -8,4 +14,15 @@
   font-weight: 500;
   line-height: 1.8;
   text-transform: uppercase;
+}
+.dashboard_wrapper__content {
+  position: relative;
+  margin-bottom: 0.75rem;
+  margin-top: 2.5rem;
+}
+
+@media (min-width: 1024px) {
+  .dashboard_wrapper {
+    width: 80%;
+  }
 }

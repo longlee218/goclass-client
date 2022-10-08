@@ -15,6 +15,7 @@ export const teacherRouteConfig = {
     PREFIX_TEACHER + '/assignments/:assignId/watch/:rosterGroupId',
   myClass: PREFIX_TEACHER + '/my-class',
   myClassDetail: PREFIX_TEACHER + '/my-class/:id',
+  trash: PREFIX_TEACHER + '/trash',
 };
 
 export const studentRouteConfig = {

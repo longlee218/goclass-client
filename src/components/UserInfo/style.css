@@ -45,14 +45,17 @@
 }
 .fullname-user {
   color: var(--dark);
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: 600;
   white-space: nowrap;
-  width: 110px;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .action-link > a:first-child {
   height: 40px;
+}
+
+.user-title {
+  font-size: 0.75rem;
+  line-height: 1rem;
 }

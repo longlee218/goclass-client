@@ -1,10 +1,13 @@
 import './style.css';
 
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import {
+  studentRouteConfig,
+  teacherRouteConfig,
+} from '../../config/route.config';
 import { useDispatch, useSelector } from 'react-redux';
 
-import AvatarOwner from '../AvatarOwner/AvatarOwner';
-import { Link } from 'react-router-dom';
-import React from 'react';
 import { Typography } from 'antd';
 import authAction from '../../redux/auth/auth.action';
 
@@ -15,18 +18,52 @@ const UserInfo = ({ refModal }) => {
     e.preventDefault();
     dispatch(authAction.logout());
   };
+  const { pathname } = useLocation();
+  const [navigateDashboard, setNavigateDashboard] = useState(null);
+  const [title, setTitle] = useState('');
+  const navigate = useNavigate();
+
+  const onClickNavigate = (e) => {
+    e.preventDefault();
+    window.location.href = navigateDashboard.link;
+    // navigate(navigateDashboard.link);
+  };
+
+  useEffect(() => {
+    if (pathname.startsWith('/student/')) {
+      if (user.roles.includes('teacher')) {
+        // go to teacher dashboard
+        setNavigateDashboard({
+          link: teacherRouteConfig.dashboard,
+          text: 'Vào màn Giáo Viên',
+        });
+        setTitle('Học sinh');
+      }
+    }
+    if (pathname.startsWith('/teacher/')) {
+      if (user.roles.includes('student')) {
+        // go to student dashboard
+        setNavigateDashboard({
+          link: studentRouteConfig.dashboard,
+          text: 'Vào màn Học Sinh',
+        });
+        setTitle('Giáo viên');
+      }
+    }
+  }, [user, pathname]);
+
   return (
     <div className='userinfo-modal' ref={refModal}>
       <div className='userinfo-modal__tippy'>
         <div className='d-flex-center'>
-          {/* <img
-            src='https://graph.facebook.com/1615573495302871/picture?width=400&amp;height=400'
-            alt='Long Le'
-            className='user-avatar'
-          /> */}
-          <AvatarOwner fullname={user?.fullname} src={user?.avatarUrl} />
-          <div className='user-info' style={{ marginLeft: '12px' }}>
-            <div className='fullname-user'>{user.fullname}</div>
+          {/* <AvatarOwner fullname={user?.fullname} src={user?.avatarUrl} /> */}
+          <div className='user-info'>
+            {/* <div className='fullname-user'>{user.fullname}</div> */}
+            <Typography.Text className='fullname-user'>
+              {user.fullname}
+            </Typography.Text>
+            <br />
+            <Typography.Text className='user-title'>{title}</Typography.Text>
           </div>
         </div>
         <hr />
@@ -34,6 +71,11 @@ const UserInfo = ({ refModal }) => {
           <Link to='#'>
             <Typography.Text>Trang cá nhân</Typography.Text>
           </Link>
+          {user.roles.includes('teacher') && (
+            <Link to='#' onClick={onClickNavigate}>
+              <Typography.Text>{navigateDashboard?.text}</Typography.Text>
+            </Link>
+          )}
           <Link to='#' onClick={onCLickLogout}>
             <Typography.Text style={{ color: 'red' }}>
               Đăng xuất

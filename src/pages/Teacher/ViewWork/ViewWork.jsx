@@ -1,11 +1,7 @@
 import './style.css';
 
-import { Badge, Button, Select, Tooltip, Typography } from 'antd';
-import {
-  faArrowLeft,
-  faArrowRight,
-  faHand,
-} from '@fortawesome/free-solid-svg-icons';
+import { Button, Select, Tooltip, Typography } from 'antd';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
@@ -57,7 +53,7 @@ const ViewWork = () => {
       slideSocket.off('disconnect');
       slideSocket.off('connect');
     };
-  }, []);
+  }, [rosterGroup]);
 
   // useEffect(() => {
   //   const handleResize = () => {

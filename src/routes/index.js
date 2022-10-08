@@ -22,6 +22,7 @@ import StudentAssignment from '../pages/Student/Assignment/StudentAssignment';
 import StudentClassRoom from '../pages/Student/ClassRoom';
 import StudentDashboard from '../pages/Student/Dashboard';
 import TeacherDashboard from '../pages/Teacher/Dashboard';
+import Trash from '../pages/Teacher/Trash';
 import ViewWork from '../pages/Teacher/ViewWork';
 
 const publicRoutes = [
@@ -116,6 +117,12 @@ const teacherRoutes = [
     isPrivate: true,
     roles: ['teacher'],
     layout: AssignLayout,
+  },
+  {
+    path: teacherRouteConfig.trash,
+    page: Trash,
+    isPrivate: true,
+    roles: ['teacher'],
   },
 ];
 

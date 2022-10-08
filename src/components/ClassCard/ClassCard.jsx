@@ -162,7 +162,31 @@ const ClassCard = ({ classRoom, setShowAddDrawer, setShowSettingDrawer }) => {
         e.preventDefault();
         navigate(navigateLink);
       }}
-      {...(classRoom.isCanMakeAlert
+      // extra={
+      //   <Dropdown
+      //     destroyPopupOnHide
+      //     arrow
+      //     overlay={ActionMenu(
+      //       classRoom,
+      //       setShowAddDrawer,
+      //       setShowSettingDrawer,
+      //       dispatch
+      //     )}
+      //     trigger={['click']}
+      //     children={
+      //       <div
+      //         onClick={(e) => {
+      //           e.stopPropagation();
+      //         }}
+      //       >
+      //         <Button type='text'>
+      //           <FontAwesomeIcon icon={faEllipsis} size='lg' />
+      //         </Button>
+      //       </div>
+      //     }
+      //   />
+      // }
+      {...(screenRole === 'teacher'
         ? {
             extra: (
               <Dropdown

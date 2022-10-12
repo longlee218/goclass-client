@@ -140,7 +140,7 @@
   inset: 0px auto auto 0px;
   margin: 0px;
   background-color: var(--white);
-  transform: translate(750px, 65px);
+  transform: translate(705px, 65px);
 }
 
 .tippy-wrapper {

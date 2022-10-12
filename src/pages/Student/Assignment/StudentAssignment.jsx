@@ -36,22 +36,13 @@ function rosterGroupReducer(state, action) {
       });
       return { todo, finish };
     default:
-      break;
+      return state;
   }
 }
 
-// function finishGroupReducer(state, action) {
-//   const { type, payload } = action;
-//   switch (type) {
-//     case 'reset':
-//       return payload;
-//     default:
-//       break;
-//   }
-// }
-
 const StudentAssignment = () => {
   const dispatch = useDispatch();
+  const [trigger, setTrigger] = useState(false);
   const [loadGroup, setLoadGroup] = useState(false);
   const [rosterGroups, dispatchRosterGroups] = useReducer(rosterGroupReducer, {
     todo: [],
@@ -67,7 +58,7 @@ const StudentAssignment = () => {
       })
       .finally(() => setLoadGroup(false))
       .catch((error) => dispatch(alertActions.error(error.message)));
-  }, [dispatch]);
+  }, [dispatch, trigger]);
 
   return (
     <div className='assginment-wrapper'>
@@ -81,14 +72,22 @@ const StudentAssignment = () => {
           {loadGroup && 'Đang tải...'}
           {!loadGroup && rosterGroups.todo.length === 0 && 'Không có dữ liệu'}
           {!loadGroup && rosterGroups.todo.length !== 0 && (
-            <AssignGroups groups={rosterGroups.todo} onlyView={false} />
+            <AssignGroups
+              groups={rosterGroups.todo}
+              onlyView={false}
+              setTrigger={setTrigger}
+            />
           )}
         </div>
         <div className='roster-group finish-group'>
           <h3 className='text-bold-gray'>Hoàn thành</h3>
           {!loadGroup && rosterGroups.finish.length === 0 && 'Không có dữ liệu'}
           {!loadGroup && rosterGroups.finish.length !== 0 && (
-            <AssignGroups groups={rosterGroups.finish} onlyView />
+            <AssignGroups
+              groups={rosterGroups.finish}
+              onlyView
+              setTrigger={setTrigger}
+            />
           )}
         </div>
       </div>

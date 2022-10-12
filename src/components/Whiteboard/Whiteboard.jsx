@@ -19,7 +19,7 @@ const resolvablePromise = () => {
   return promise;
 };
 
-const Whiteboard = ({ slide, user, libraryItems }) => {
+const Whiteboard = ({ slide, user, libraryItems, onlyView }) => {
   const [excalidrawAPI, setExcalidrawAPI] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSave, setIsSave] = useState(false);
@@ -39,25 +39,26 @@ const Whiteboard = ({ slide, user, libraryItems }) => {
   }
 
   useEffect(() => {
-    slideSocket.on('connect', () => {
-      slideSocket.emit('join', slide._id);
-      slideSocket.on('updated', (data) => {
-        setInitData((pre) => {
-          return { ...pre, ...data };
+    if (!onlyView) {
+      slideSocket.on('connect', () => {
+        slideSocket.emit('join', slide._id);
+        slideSocket.on('updated', (data) => {
+          setInitData((pre) => {
+            return { ...pre, ...data };
+          });
         });
       });
-    });
 
-    slideSocket.on('disconnect', () => {});
+      slideSocket.on('disconnect', () => {});
 
-    return () => {
-      slideSocket.off('disconnect');
-      slideSocket.off('connect');
-    };
-  }, [slide._id]);
+      return () => {
+        slideSocket.off('disconnect');
+        slideSocket.off('connect');
+      };
+    }
+  }, [onlyView, slide._id]);
 
   useEffect(() => {
-    console.log('running...');
     setIsLoading(true);
     const timeoutId = setTimeout(() => {
       setInitData({
@@ -130,7 +131,7 @@ const Whiteboard = ({ slide, user, libraryItems }) => {
         <Excalidraw
           name={slide.name}
           ref={(api) => setExcalidrawAPI(api)}
-          onChange={onSaveExcalidraw}
+          {...(!onlyView ? { onChange: onSaveExcalidraw } : {})}
           initialData={initData}
           langCode='vi-VN'
           autoFocus={true}
@@ -138,6 +139,7 @@ const Whiteboard = ({ slide, user, libraryItems }) => {
           UIOptions={{ canvasActions: { loadScene: isLoading } }}
           onLibraryChange={onSaveLibrary}
           libraryReturnUrl={window.location.href}
+          viewModeEnabled={onlyView}
         />
       ) : (
         <Typography.Text>Đang tải...</Typography.Text>

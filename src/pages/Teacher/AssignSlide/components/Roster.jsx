@@ -121,8 +121,8 @@ const Roster = ({
       .catch((error) => dispatch(alertActions.error(error.message)));
   };
 
-  const onChangeSwitch = (e) => {
-    console.log(e);
+  const onChangeSwitch = (field, value) => {
+    examService.updateRosterGroup(item._id, { [field]: value }).then(() => {});
   };
 
   return (
@@ -168,9 +168,9 @@ const Roster = ({
                 <Switch
                   checkedChildren={<FontAwesomeIcon icon={faCheck} />}
                   unCheckedChildren={<FontAwesomeIcon icon={faClose} />}
-                  defaultChecked={item?.iShowResult}
+                  defaultChecked={item?.isShowResult}
                   name='isShowResult'
-                  onChange={onChangeSwitch}
+                  onChange={(value) => onChangeSwitch('isShowResult', value)}
                 />
               </Col>
               <Col xs={12} sm={8} md={6} lg={6} xl={6}>
@@ -180,7 +180,7 @@ const Roster = ({
                   unCheckedChildren={<FontAwesomeIcon icon={faClose} />}
                   defaultChecked={item?.isHide}
                   name='isHide'
-                  onChange={onChangeSwitch}
+                  onChange={(value) => onChangeSwitch('isHide', value)}
                 />
               </Col>
               <Col xs={12} sm={8} md={6} lg={6} xl={6}>
@@ -190,7 +190,7 @@ const Roster = ({
                   unCheckedChildren={<FontAwesomeIcon icon={faClose} />}
                   defaultChecked={item?.isBlock}
                   name='isBlock'
-                  onChange={onChangeSwitch}
+                  onChange={(value) => onChangeSwitch('isBlock', value)}
                 />
               </Col>
               <Col xs={12} sm={8} md={6} lg={6} xl={6}>
@@ -199,8 +199,8 @@ const Roster = ({
                   checkedChildren={<FontAwesomeIcon icon={faCheck} />}
                   unCheckedChildren={<FontAwesomeIcon icon={faClose} />}
                   defaultChecked={item?.isCanHelp}
-                  name='isCanHelp'
-                  onChange={onChangeSwitch}
+                  name=''
+                  onChange={(value) => onChangeSwitch('isCanHelp', value)}
                 />
               </Col>
             </Row>

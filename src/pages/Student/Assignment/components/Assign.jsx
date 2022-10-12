@@ -14,9 +14,12 @@ const Assign = ({
   groupName,
   rosterGroupId,
   onlyView,
+  setTrigger,
 }) => {
   const [loading, setLoading] = useState(false);
+  const [loadingReject, setLoadingReject] = useState(false);
   const onClickJoinAssign = (e) => {
+    e.preventDefault();
     setLoading(true);
     examService
       .joinAssignment(_id, rosterGroupId)
@@ -25,6 +28,17 @@ const Assign = ({
         window.location.href = link;
       })
       .finally(() => setLoading(false));
+  };
+
+  const onClickRejectAssign = (e) => {
+    e.preventDefault();
+    setLoadingReject(false);
+    examService
+      .rejectAssignment(assignWork._id)
+      .then(() => {
+        setTrigger((prev) => !prev);
+      })
+      .finally(() => setLoadingReject(false));
   };
 
   return (
@@ -51,14 +65,25 @@ const Assign = ({
               // </Button>
               <></>
             ) : (
-              <Button
-                type='primary'
-                shape='round'
-                onClick={onClickJoinAssign}
-                loading={loading}
-              >
-                Làm bài
-              </Button>
+              <>
+                <Button
+                  type='primary'
+                  shape='round'
+                  onClick={onClickJoinAssign}
+                  loading={loading}
+                >
+                  Làm bài
+                </Button>
+                <Button
+                  type='primary'
+                  shape='round'
+                  danger
+                  onClick={onClickRejectAssign}
+                  loading={loadingReject}
+                >
+                  Từ chối làm
+                </Button>
+              </>
             )}
           </div>
         </div>

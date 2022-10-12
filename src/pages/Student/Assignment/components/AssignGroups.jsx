@@ -6,7 +6,7 @@ import React from 'react';
 
 const { Panel } = Collapse;
 
-const AssignGroups = ({ groups, onlyView }) => {
+const AssignGroups = ({ groups, onlyView, setTrigger }) => {
   return (
     <Collapse className='callapse-roster' defaultActiveKey={['1']}>
       {groups.map(({ owner, classRoom, rosterGroups }, index) => {
@@ -50,6 +50,7 @@ const AssignGroups = ({ groups, onlyView }) => {
                       rosterGroupId={_id}
                       desc={assignment.desc}
                       groupName={isFull ? 'Cả lớp' : `Nhóm ${name}`}
+                      setTrigger={setTrigger}
                     />
                   </div>
                 )

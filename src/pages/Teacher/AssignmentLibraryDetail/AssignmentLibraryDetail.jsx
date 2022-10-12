@@ -11,7 +11,8 @@ import { teacherRouteConfig } from '../../../config/route.config';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
-const SlideBox = ({ thumbnail, name }) => {
+const SlideBox = ({ thumbnail, name, slideId, assignId }) => {
+  const navigate = useNavigate();
   return (
     <Card
       hoverable
@@ -27,6 +28,9 @@ const SlideBox = ({ thumbnail, name }) => {
       actions={[
         <Typography.Text className='text-bold-gray'>{name}</Typography.Text>,
       ]}
+      onClick={() =>
+        navigate(`/teacher/lib-assignments/${assignId}/slide/${slideId}`)
+      }
     >
       <div
         dangerouslySetInnerHTML={{
@@ -143,6 +147,8 @@ const AssignmentLibraryDetail = () => {
             <>
               {assignShared.slides.map((slide) => (
                 <SlideBox
+                  slideId={slide._id}
+                  assignId={slide.assignment}
                   thumbnail={slide.thumbnail}
                   order={slide.order}
                   points={slide.points}

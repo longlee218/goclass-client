@@ -41,11 +41,11 @@ export const sidebarTeacherRoutes = [
     title: 'Thư viện bài tập',
     icon: faStore,
   },
-  {
-    path: teacherRouteConfig.trash,
-    title: 'Thùng rác',
-    icon: faTrash,
-  },
+  // {
+  //   path: teacherRouteConfig.trash,
+  //   title: 'Thùng rác',
+  //   icon: faTrash,
+  // },
 ];
 
 export const sidebarStudentRoutes = [

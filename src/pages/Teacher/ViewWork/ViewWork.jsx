@@ -27,24 +27,27 @@ const ViewWork = () => {
 
   useEffect(() => {
     slideSocket.on('connect', () => {
+      slideSocket.emit('join-assign', params.rosterGroupId);
       slideSocket.on('raiseHand', function (slideId, userId) {
-        const studentSocket = rosterGroup.students.map((student) => {
-          const userIdOfStudent = student.student;
-          if (userIdOfStudent === userId) {
-            if (student.slideIds) {
-              const slideIds = student.slideIds.map((slide) => {
-                if (slide._id === slideId) {
-                  return { ...slide, isRaiseHand: true };
-                }
-                return slide;
-              });
-              return { ...student, slideIds };
+        setRosterGroup((prev) => {
+          const studentSocket = prev.students.map((student) => {
+            const userIdOfStudent = student.student;
+            if (userIdOfStudent === userId) {
+              if (student.slideIds) {
+                const slideIds = student.slideIds.map((slide) => {
+                  if (slide._id === slideId) {
+                    return { ...slide, isRaiseHand: true };
+                  }
+                  return slide;
+                });
+                return { ...student, slideIds };
+              }
+              return student;
             }
             return student;
-          }
-          return student;
+          });
+          return { ...prev, students: studentSocket };
         });
-        setRosterGroup({ ...rosterGroup, students: studentSocket });
       });
     });
 
@@ -52,20 +55,9 @@ const ViewWork = () => {
     return () => {
       slideSocket.off('disconnect');
       slideSocket.off('connect');
+      slideSocket.off('raiseHand');
     };
-  }, [rosterGroup]);
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     const { innerWidth } = window;
-  //     const widthOffButton = 133;
-  //     const marginOffButton = 20;
-  //     //   const numDisplayButton =
-  //     //     (innerWidth - 32 * 2) / (widthOffButton + marginOffButton);
-  //   };
-  //   window.addEventListener('resize', handleResize);
-  //   return () => window.removeEventListener('resize', handleResize);
-  // }, []);
+  }, [params.rosterGroupId]);
 
   useEffect(() => {
     const rosterGroupId = params.rosterGroupId;
@@ -78,42 +70,65 @@ const ViewWork = () => {
   }, [params]);
 
   const assignPerStudent = ({
+    userId = null,
     name = 'Vô danh',
     points = '0/10',
     slides = [],
+    setRosterGroup,
   }) => {
-    const onOpenLink = (url) => {
-      window.open(url, '_blank');
+    const onClickThumbnail = (url, slideId) => {
+      setRosterGroup((prev) => {
+        const studentSocket = prev.students.map((student) => {
+          const userIdOfStudent = student.student;
+          if (userIdOfStudent === userId) {
+            if (student.slideIds) {
+              const slideIds = student.slideIds.map((slide) => {
+                if (slide._id === slideId) {
+                  return { ...slide, isRaiseHand: false };
+                }
+                return slide;
+              });
+              return { ...student, slideIds };
+            }
+            return student;
+          }
+          return student;
+        });
+        return { ...prev, students: studentSocket };
+      });
+      // window.open(url, '_blank');
     };
     return (
       <div className='layout-column'>
         <div className='d-flex flex-row gap-10'>
           <Typography.Text className='text-extra-gray'>{name}</Typography.Text>
-          <Typography.Text className='text-extra-gray'>
+          {/* <Typography.Text className='text-extra-gray'>
             {points} điểm
-          </Typography.Text>
+          </Typography.Text> */}
         </div>
         <div className='d-flex flex-slide'>
           {slides.map((slide) => {
-            const onClick = slide.link ? onOpenLink : () => {};
+            const onClick = slide.link ? onClickThumbnail : () => {};
             if (slide.isRaiseHand) {
               return (
-                <div
-                  className='slide-cell'
-                  style={{
-                    border: '1.5px solid var(--danger)',
-                  }}
-                  onClick={() => onClick(slide.link)}
-                  dangerouslySetInnerHTML={{
-                    __html: slide.thumbnail,
-                  }}
-                />
+                <Tooltip title='Học sinh xin trợ giúp'>
+                  <div
+                    className='slide-cell'
+                    style={{
+                      border: '1.5px solid var(--danger)',
+                    }}
+                    onClick={() => onClick(slide.link, slide._id)}
+                    dangerouslySetInnerHTML={{
+                      __html: slide.thumbnail,
+                    }}
+                  />
+                </Tooltip>
               );
             }
             return (
               <div
                 className='slide-cell'
-                onClick={() => onClick(slide.link)}
+                onClick={() => onClick(slide.link, slide._id)}
                 dangerouslySetInnerHTML={{
                   __html: slide.thumbnail,
                 }}
@@ -136,11 +151,11 @@ const ViewWork = () => {
             </Typography.Text>
           </Typography.Text>
         </div>
-        <div className='md-input'>
+        {/* <div className='md-input'>
           <Tooltip title='Mã đề' placement='bottom'>
             <Button disabled={isDisable}>239048203</Button>
           </Tooltip>
-        </div>
+        </div> */}
         <div className='divider'></div>
         <div className='md-input'>
           <Select
@@ -219,6 +234,8 @@ const ViewWork = () => {
                 <div className='horizontall-scroll-content column'>
                   {rosterGroup?.students?.map((student) => {
                     return assignPerStudent({
+                      setRosterGroup: setRosterGroup,
+                      userId: student.student,
                       name: student.studentName,
                       slides:
                         student?.slideIds ??

@@ -9,7 +9,7 @@ const EditAssignLayout = ({ children }) => {
       <ToastContainer autoClose={2000} />
       <ScrollToTop />
       <Header />
-      <div className='app__with-sidebar'>
+      <div>
         <body className='app__with-sidebar_body--assignment'>
           <section>{children}</section>
         </body>

@@ -20,6 +20,17 @@ const assignActions = {
         .catch((error) => dispatch(alertAction.error(error.message)));
     };
   },
+  findSharedAssignment: function (id) {
+    return async (dispatch) => {
+      assignmentService
+        .findByIdShared(id)
+        .then((assignment) => {
+          dispatch(this.getAssignmentSuccess(assignment));
+          dispatch(alertAction.clear());
+        })
+        .catch((error) => dispatch(alertAction.error(error.message)));
+    };
+  },
   updateAssignment: function (id, payload) {
     return async (dispatch) => {
       // dispatch(alertAction.loading());

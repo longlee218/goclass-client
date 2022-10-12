@@ -24,6 +24,8 @@ import StudentDashboard from '../pages/Student/Dashboard';
 import TeacherDashboard from '../pages/Teacher/Dashboard';
 import Trash from '../pages/Teacher/Trash';
 import ViewWork from '../pages/Teacher/ViewWork';
+import SlideOnlyView from '../pages/Teacher/SlideOnlyView';
+import AssignLayoutNoDirector from '../components/Layout/AssignLayoutNoDirector/AssignLayoutNoDirector';
 
 const publicRoutes = [
   { path: publicRouteConfig.login, page: Login, layout: AuthLayout },
@@ -118,11 +120,18 @@ const teacherRoutes = [
     roles: ['teacher'],
     layout: AssignLayout,
   },
+  // {
+  //   path: teacherRouteConfig.trash,
+  //   page: Trash,
+  //   isPrivate: true,
+  //   roles: ['teacher'],
+  // },
   {
-    path: teacherRouteConfig.trash,
-    page: Trash,
+    path: teacherRouteConfig.slideLibraryWithParam,
+    page: SlideOnlyView,
     isPrivate: true,
     roles: ['teacher'],
+    layout: AssignLayoutNoDirector,
   },
 ];
 

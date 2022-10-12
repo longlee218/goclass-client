@@ -4,7 +4,7 @@ import { RosterProvider } from '../../../hooks/useRosterContext';
 import ScrollToTop from '../../ScrollToTop/ScrollToTop';
 import { ToastContainer } from 'react-toastify';
 
-const AssignLayout = ({ children }) => {
+const AssignLayoutNoDirector = ({ children }) => {
   return (
     <div id='main-layout'>
       <ScrollToTop />
@@ -21,4 +21,4 @@ const AssignLayout = ({ children }) => {
   );
 };
 
-export default AssignLayout;
+export default AssignLayoutNoDirector;

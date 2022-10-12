@@ -147,14 +147,14 @@ const ClassDetail = () => {
               </Button>
             </div> */}
           </div>
-          {/* <Typography.Paragraph
-            editable={{
-              tooltip: 'Sửa mô tả lớp học',
-              onChange: onChangeDesc,
-            }}
+          <Typography.Text
+          // editable={{
+          //   tooltip: 'Sửa mô tả lớp học',
+          //   onChange: onChangeDesc,
+          // }}
           >
             {classRoom?.desc}
-          </Typography.Paragraph> */}
+          </Typography.Text>
         </Space>
       </div>
       <Tabs

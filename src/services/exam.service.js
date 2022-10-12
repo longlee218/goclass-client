@@ -67,6 +67,21 @@ const examService = {
       return Promise.reject(error);
     }
   },
+  rejectAssignment: async (assignWorkId) => {
+    try {
+      const { data } = await HttpClient({
+        url: '/assignment-work/reject',
+        method: 'POST',
+        data: {
+          assignWorkId,
+        },
+      });
+      const { data: dataResponse } = data;
+      return dataResponse;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
   deleteRosterGroup: async (id) => {
     try {
       const { data } = await HttpClient({
